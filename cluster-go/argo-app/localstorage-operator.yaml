@@ -7,6 +7,7 @@ metadata:
     type: operator
     odf: core
     localstorage: core
+    storage-type: mno
 spec:
   destination:
     name: hub
