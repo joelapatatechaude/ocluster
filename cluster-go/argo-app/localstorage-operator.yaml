@@ -10,7 +10,7 @@ metadata:
     storage-type: mno
 spec:
   destination:
-    name: hub
+    name: in-cluster
   project: hub
   source:
     directory:
