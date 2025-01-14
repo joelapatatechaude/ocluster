@@ -32,6 +32,11 @@ function cluster {
     openshift-install create cluster
 }
 
+function reshuffle {
+    cp auth/kubeconfig ~/.secrets/$MYDIR
+    cp auth/kubeadmin-password ~/.secrets/$MYDIR
+}
+
 function trust {
     A=$(oc get configmap/kube-root-ca.crt -n openshift-service-ca -o jsonpath='{.data.ca\.crt}')
     echo "$A" | sudo tee /etc/pki/ca-trust/source/anchors/$(uuidgen)-$CLUSTER_NAME-OCPDEMO-ca.crt > /dev/null
@@ -42,6 +47,8 @@ function trust {
 
 cluster
 
-echo "skipping updating ca for now, fix code"
-#KUBECONFIG=$MYDIR/auth/kubeconfig trust
-#echo "done updating ca, you might need to restart your browser"
+reshuffle
+
+KUBECONFIG=$KUBECONFIG trust
+
+echo "done updating ca, you might need to restart your browser..."
