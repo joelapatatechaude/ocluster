@@ -1,0 +1,13 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: ingress-certificate-staging
+  namespace: openshift-ingress
+spec:
+  secretName: ingress-certificate-staging
+  issuerRef:
+    name: letsencrypt-cloudflare-staging
+    kind: ClusterIssuer
+  commonName: "*.apps.{{ .Values.clustername }}.{{ .Values.clusterdomain }}"
+  dnsNames:
+    - "*.apps.{{ .Values.clustername }}.{{ .Values.clusterdomain }}"

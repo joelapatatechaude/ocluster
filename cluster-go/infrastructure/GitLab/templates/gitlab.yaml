@@ -1,0 +1,48 @@
+apiVersion: apps.gitlab.com/v1beta1
+kind: GitLab
+metadata:
+  name: gitlab
+  namespace: gitlab-system
+  labels:
+    mutate-cpu: 'true'
+spec:
+  chart:
+    values:
+      gitlab:
+        sidekiq:
+          minReplicas: 1
+          maxReplicas: 1
+        registry:
+          hpa:
+            minReplicas: 1
+            maxReplicas: 1
+        gitlab-shell:
+          minReplicas: 1
+          maxReplicas: 1
+        kas:
+          minReplicas: 1
+          maxReplicas: 1
+        webservice:
+          minReplicas: 1
+          maxReplicas: 1
+          resources:
+            requests:
+              memory: 2.5G
+          workerProcesses: 2
+      certmanager:
+        install: false
+      prometheus:
+        install: false
+      global:
+        hosts:
+          domain: apps.{{ .Values.clustername }}.{{ .Values.clusterdomain }}
+        ingress:
+          annotations:
+            route.openshift.io/termination: edge
+          class: none
+          configureCertmanager: false
+          tls:
+            enabled: false
+      nginx-ingress:
+        enabled: false
+    version: 8.1.2

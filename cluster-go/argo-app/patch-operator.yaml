@@ -1,0 +1,25 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: patch-operator
+  namespace: openshift-gitops
+  labels:
+    type: operator
+    patch: core
+    bootstrap: bootstrap
+spec:
+  destination:
+    name: in-cluster
+  project: hub
+  source:
+    directory:
+      jsonnet: {}
+      recurse: true
+    path: cluster-go/operators/PatchOperator
+    repoURL: https://github.com/joelapatatechaude/hub
+  syncPolicy:
+    automated: {}
+    syncOptions:
+      - Prune=true
+      - CreateNamespace=true
+

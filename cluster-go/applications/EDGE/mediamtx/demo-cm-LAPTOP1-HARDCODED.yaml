@@ -1,0 +1,9 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: demo-cm
+  namespace: edge
+data:
+  INGRESS_IP: "10.76.19.236"
+  LIMIT_CPU: "7"
+  REQUEST_CPU: "4"

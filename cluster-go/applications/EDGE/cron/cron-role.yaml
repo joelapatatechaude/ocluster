@@ -1,0 +1,13 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: cron-role
+  namespace: edge
+rules:
+  - apiGroups: ["apps", "extensions"]
+    resources: ["deployments"]
+    resourceNames: ["*"]
+    verbs: ["get", "patch", "list", "watch", "update"]
+  - apiGroups: [""]
+    resources: ["replicationcontrollers"]
+    verbs: ["get"]

@@ -1,0 +1,29 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: in-cluster-users
+  namespace: openshift-gitops
+  labels:
+    bootstrap: bootstrap
+spec:
+  destination:
+    name: in-cluster
+    namespace: default
+  project: hub
+  source:
+    directory:
+      jsonnet: {}
+      recurse: true
+    path: cluster-go/bootstrap/users
+    repoURL: https://github.com/joelapatatechaude/hub
+  syncPolicy:
+    automated: {}
+    syncOptions:
+    - Prune=true
+  ignoreDifferences:
+  - group: null
+    kind: Secret
+    jsonPointers:
+    - /data
+    - /metadata
+    namespace: openshift-authentication

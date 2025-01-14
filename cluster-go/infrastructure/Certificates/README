@@ -1,0 +1,15 @@
+REMEMBER I NOW USE akeylesse with teh external secret operator
+
+REMEMBER, TECH DEBT with the dns:53 being blocked by the firewall. Need to patch the cert manager cluster with:
+
+spec:
+  controllerConfig:
+    overrideArgs:
+      - '--dns01-recursive-nameservers=10.64.135.1:53,10.68.5.26:53'
+      - '--dns01-recursive-nameservers-only=true'
+
+Patch ingress controller with:
+oc patch ingresscontroller.operator default --type=merge -p '{"spec":{"defaultCertificate":{"name":"ingress-certificate-production"}}}' -n openshift-ingress-operator
+
+Patch API with:
+oc patch apiserver cluster --type=merge -p '{"spec":{"servingCerts": {"namedCertificates": [{"names": ["api.hub.cszevaco.com"], "servingCertificate": {"name": "ingress-certificate-production"}}]}}}'

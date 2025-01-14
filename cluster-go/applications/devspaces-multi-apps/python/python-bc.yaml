@@ -1,0 +1,53 @@
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  annotations:
+    app.openshift.io/vcs-ref: ""
+    app.openshift.io/vcs-uri: https://github.com/joelapatatechaude/python-hello-world
+    openshift.io/generated-by: OpenShiftWebConsole
+  labels:
+    app: python-hello-world
+    app.kubernetes.io/component: python-hello-world
+    app.kubernetes.io/instance: python-hello-world
+    app.kubernetes.io/name: python-hello-world
+    app.kubernetes.io/part-of: python-hello-world-app
+    app.openshift.io/runtime: python
+    app.openshift.io/runtime-version: 3.9-ubi8
+  name: python-hello-world
+  namespace: multi-apps
+
+spec:
+  nodeSelector: null
+  output:
+    to:
+      kind: ImageStreamTag
+      name: 'python-hello-world:latest'
+  resources: {}
+  successfulBuildsHistoryLimit: 5
+  failedBuildsHistoryLimit: 5
+  strategy:
+    type: Source
+    sourceStrategy:
+      from:
+        kind: ImageStreamTag
+        namespace: openshift
+        name: 'python:3.9-ubi8'
+  postCommit: {}
+  source:
+    type: Git
+    git:
+      uri: 'https://github.com/joelapatatechaude/python-hello-world'
+    contextDir: /
+  triggers:
+    - type: Generic
+      generic:
+        secretReference:
+          name: python-hello-world-generic-webhook-secret
+    - type: GitHub
+      github:
+        secretReference:
+          name: python-hello-world-github-webhook-secret
+    - type: ImageChange
+      imageChange: {}
+    - type: ConfigChange
+  runPolicy: Serial

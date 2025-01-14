@@ -1,0 +1,14 @@
+.openshift_install.log
+cluster/
+cluster-local/
+cluster-local
+STUFF/
+OLD/
+github-oauth-secret.yaml*
+git-projects/
+.github-oauth-secret-sealed*
+cloudflare-secret.yaml*
+.cloudflare-secret-sealed*
+env.sh
+env-local-sno.sh
+env-local-hub.sh

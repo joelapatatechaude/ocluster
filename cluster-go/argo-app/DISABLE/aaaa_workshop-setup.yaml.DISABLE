@@ -1,0 +1,22 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: workshop-setup
+  namespace: openshift-gitops
+  labels:
+    type: workshop
+spec:
+  destination:
+    name: hub
+    namespace: default
+  project: hub
+  source:
+    path: cluster-go/trbl-workshop/setup/user-setup
+    repoURL: https://github.com/joelapatatechaude/hub/
+    targetRevision: main
+    helm:
+      parameters:
+      - name: "userCount"
+        value: "21"
+
+

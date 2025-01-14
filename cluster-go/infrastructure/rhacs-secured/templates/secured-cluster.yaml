@@ -1,0 +1,63 @@
+apiVersion: platform.stackrox.io/v1alpha1
+kind: SecuredCluster
+metadata:
+  name: cluster-services
+  namespace: stackrox-secured
+spec:
+  sensor:
+    resources:
+      requests:
+        cpu: 10m
+        memory: 1Gi
+      limits:
+        memory: 2Gi
+  auditLogs:
+    collection: Auto
+  admissionControl:
+    listenOnUpdates: true
+    bypass: BreakGlassAnnotation
+    contactImageScanners: ScanIfMissing
+    listenOnCreates: true
+    timeoutSeconds: 20
+    listenOnEvents: true
+    replicas: 1
+    resources:
+      requests:
+        cpu: 10m
+        memory: 100Mi
+      limits:
+        memory: 500Mi
+  scanner:
+    db:
+      resources:
+        requests:
+          cpu: 10m
+          memory: 302Mi
+        limits:
+          memory: 512Mi
+    analyzer:
+      resources:
+        requests:
+          cpu: 10m
+          memory: 301Mi
+        limits:
+          memory: 1Gi
+      scaling:
+        autoScaling: Enabled
+        maxReplicas: 1
+        minReplicas: 1
+        replicas: 1
+    scannerComponent: AutoSense
+  perNode:
+    collector:
+      collection: EBPF
+      imageFlavor: Regular
+      resources:
+        requests:
+          cpu: 10m
+          memory: 115Mi
+        limits:
+          memory: 340Mi
+    taintToleration: TolerateTaints
+  clusterName: ocp-hub
+  centralEndpoint: 'central-stackrox.apps.{{ .Values.clustername }}.{{ .Values.clusterdomain }}:443'

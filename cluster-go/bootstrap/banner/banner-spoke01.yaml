@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: banner-spoke01
+  namespace: openshift-gitops
+  labels:
+    bootstrap: bootstrap
+spec:
+  destination:
+    name: in-cluster
+    namespace: default
+  project: hub
+  source:
+    directory:
+      jsonnet: {}
+      recurse: true
+    path: cluster-go/bootstrap/banner/banner-spoke01
+    repoURL: https://github.com/joelapatatechaude/hub
+  syncPolicy:
+    syncOptions:
+      - Prune=true

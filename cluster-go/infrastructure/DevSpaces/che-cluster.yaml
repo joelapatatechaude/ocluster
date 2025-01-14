@@ -1,0 +1,48 @@
+apiVersion: org.eclipse.che/v2
+kind: CheCluster
+metadata:
+  name: devspaces
+  namespace: openshift-devspaces
+  annotations:
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+    argocd.argoproj.io/sync-wave: '2'
+spec:
+  components:
+    imagePuller:
+      enable: true
+    pluginRegistry:
+      openVSXURL: "https://open-vsx.org"
+    cheServer:
+      debug: false
+      logLevel: INFO
+    dashboard:
+      logLevel: ERROR
+    metrics:
+      enable: true
+  containerRegistry: {}
+  devEnvironments:
+    startTimeoutSeconds: 300
+    secondsOfRunBeforeIdling: -1
+    maxNumberOfWorkspacesPerUser: 10
+    maxNumberOfRunningWorkspacesPerUser: 7
+    containerBuildConfiguration:
+      openShiftSecurityContextConstraint: container-build
+    defaultNamespace:
+      autoProvision: true
+      template: <username>-devspaces
+    secondsOfInactivityBeforeIdling: 9000
+    storage:
+      pvcStrategy: per-workspace
+  gitServices:
+    github:
+      - endpoint: "https://github.com"
+        secretName: github-oauth-secret
+  networking:
+    auth:
+      gateway:
+        kubeRbacProxy:
+          logLevel: 0
+        oAuthProxy:
+          cookieExpireSeconds: 86400
+        traefik:
+          logLevel: INFO

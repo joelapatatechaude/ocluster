@@ -1,0 +1,120 @@
+apiVersion: kubevirt.io/v1
+kind: VirtualMachine
+metadata:
+  annotations:
+    vm.kubevirt.io/validations: |
+      [
+        {
+          "name": "minimal-required-memory",
+          "path": "jsonpath::.spec.domain.memory.guest",
+          "rule": "integer",
+          "message": "This VM requires more memory.",
+          "min": 1073741824
+        }
+      ]
+  labels:
+    app: postgresql
+    kubevirt.io/dynamic-credentials-support: 'true'
+    vm.kubevirt.io/template: fedora-server-small
+    vm.kubevirt.io/template.namespace: openshift
+    vm.kubevirt.io/template.revision: '1'
+    vm.kubevirt.io/template.version: v0.27.0
+  name: postgresql
+  namespace: rhsi-3-tier-vm
+spec:
+  dataVolumeTemplates:
+    - apiVersion: cdi.kubevirt.io/v1beta1
+      kind: DataVolume
+      metadata:
+        creationTimestamp: null
+        name: postgresql
+      spec:
+        sourceRef:
+          kind: DataSource
+          name: fedora
+          namespace: openshift-virtualization-os-images
+        storage:
+          resources:
+            requests:
+              storage: 30Gi
+  running: true
+  template:
+    metadata:
+      annotations:
+        vm.kubevirt.io/flavor: small
+        vm.kubevirt.io/os: fedora
+        vm.kubevirt.io/workload: server
+      creationTimestamp: null
+      labels:
+        kubevirt.io/domain: postgresql
+        kubevirt.io/size: small
+        app: postgresql
+    spec:
+      architecture: amd64
+      domain:
+        cpu:
+          cores: 1
+          sockets: 1
+          threads: 1
+        devices:
+          disks:
+            - disk:
+                bus: virtio
+              name: rootdisk
+            - disk:
+                bus: virtio
+              name: cloudinitdisk
+          interfaces:
+            - macAddress: '02:cf:eb:00:00:02'
+              masquerade: {}
+              model: virtio
+              name: default
+          networkInterfaceMultiqueue: true
+          rng: {}
+        features:
+          acpi: {}
+          smm:
+            enabled: true
+        firmware:
+          bootloader:
+            efi: {}
+        machine:
+          type: pc-q35-rhel9.2.0
+        memory:
+          guest: 2Gi
+        resources: {}
+      networks:
+        - name: default
+          pod: {}
+      terminationGracePeriodSeconds: 180
+      volumes:
+        - dataVolume:
+            name: postgresql
+          name: rootdisk
+        - cloudInitNoCloud:
+            userData: |-
+              #cloud-config
+              user: fedora
+              password: jbgj-13jp-vj6e
+              chpasswd: { expire: False }
+              packages:
+                - postgresql-server
+                - podman
+                - wget
+              runcmd:
+                - postgresql-setup --initdb --unit postgresql
+                - sleep 1
+                - echo "host all all all md5" >> /var/lib/pgsql/data/pg_hba.conf
+                - sed -i 's/trust/md5/g' /var/lib/pgsql/data/pg_hba.conf
+                - sed -i 's/ident/md5/g' /var/lib/pgsql/data/pg_hba.conf
+                - echo "listen_addresses = '*'" >> /var/lib/pgsql/data/postgresql.conf
+                - systemctl enable postgresql
+                - systemctl start postgresql
+                - sudo -u postgres createuser redhat
+                - sudo -u postgres createdb rhsi
+                - sudo -u postgres psql -c "alter user redhat with encrypted password 'IloveOpenShift4';"
+                - sudo -u postgres psql -c "grant all privileges on database rhsi to redhat ;"
+                - sudo -u postgres psql -d rhsi -c "GRANT ALL ON SCHEMA public TO redhat;"
+                - wget "https://drive.usercontent.google.com/download?id=1WtUCDS1tn0sqi_b__Bb3PYlgRomAra8_&export=download&authuser=1&confirm=t" -O oc.tar.gz && tar -xzvf oc.tar.gz && mv oc /usr/local/bin
+                - su -c 'curl https://skupper.io/install.sh | sh' fedora
+          name: cloudinitdisk
