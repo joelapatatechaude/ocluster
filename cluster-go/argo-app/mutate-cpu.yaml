@@ -12,7 +12,7 @@ spec:
   project: hub
   source:
     path: cluster-go/bootstrap/mutate-cpu
-    repoURL: https://github.com/joelapatatechaude/hub
+    repoURL: https://github.com/joelapatatechaude/ocluster
   syncPolicy:
     automated: {}
     syncOptions:

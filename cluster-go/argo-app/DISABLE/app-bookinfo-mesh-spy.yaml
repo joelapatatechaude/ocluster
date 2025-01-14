@@ -16,7 +16,7 @@ spec:
         recurse: true
         exclude: '{occm/*}'
       path: cluster-go/applications/bookinfo-mesh-spy
-      repoURL: https://github.com/joelapatatechaude/hub
+      repoURL: https://github.com/joelapatatechaude/ocluster
   syncPolicy:
     syncOptions:
     - Prune=true

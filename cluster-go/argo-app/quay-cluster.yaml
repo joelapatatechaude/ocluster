@@ -14,7 +14,7 @@ spec:
       jsonnet: {}
       recurse: true
     path: cluster-go/infrastructure/Quay
-    repoURL: https://github.com/joelapatatechaude/hub
+    repoURL: https://github.com/joelapatatechaude/ocluster
   syncPolicy:
     syncOptions:
       - Prune=true

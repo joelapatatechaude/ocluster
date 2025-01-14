@@ -15,7 +15,7 @@ spec:
       jsonnet: {}
       recurse: true
     path: cluster-go/operators/ImagePuller
-    repoURL: https://github.com/joelapatatechaude/hub
+    repoURL: https://github.com/joelapatatechaude/ocluster
   syncPolicy:
     syncOptions:
     - Prune=true

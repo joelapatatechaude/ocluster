@@ -15,7 +15,7 @@ spec:
       jsonnet: {}
       recurse: false
     path: cluster-go/bootstrap/banner
-    repoURL: https://github.com/joelapatatechaude/hub
+    repoURL: https://github.com/joelapatatechaude/ocluster
   syncPolicy:
     automated: {}
     syncOptions:

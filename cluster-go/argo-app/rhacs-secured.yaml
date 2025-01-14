@@ -16,7 +16,7 @@ spec:
       - CreateNamespace=true
   source:
     path: cluster-go/infrastructure/rhacs-secured
-    repoURL: https://github.com/joelapatatechaude/hub/
+    repoURL: https://github.com/joelapatatechaude/ocluster/
     targetRevision: main
     helm:
       parameters:

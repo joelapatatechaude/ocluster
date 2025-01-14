@@ -17,7 +17,7 @@ spec:
       jsonnet: {}
       recurse: true
     path: cluster-go/applications/rhsi-3-tier-vm-siteBM
-    repoURL: https://github.com/joelapatatechaude/hub
+    repoURL: https://github.com/joelapatatechaude/ocluster
   syncPolicy:
     syncOptions:
     - Prune=true

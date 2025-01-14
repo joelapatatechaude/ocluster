@@ -14,7 +14,7 @@ spec:
       jsonnet: {}
       recurse: true
     path: cluster-go/bootstrap/KubeletConfig
-    repoURL: https://github.com/joelapatatechaude/hub
+    repoURL: https://github.com/joelapatatechaude/ocluster
   syncPolicy:
     automated: {}
     syncOptions:
