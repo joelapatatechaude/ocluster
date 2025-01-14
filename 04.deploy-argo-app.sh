@@ -56,3 +56,5 @@ echo "next"
 KUBECONFIG=$KUBECONFIG  deploy_app
 
 echo "it could be I lost OpenShift connectivity, maybe due to auth changes, for a few minutes"
+
+echo "I t could be I need to reapply the 03.argo-setup.sh to fix some permission agina..."
