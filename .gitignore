@@ -12,3 +12,4 @@ cloudflare-secret.yaml*
 env.sh
 env-local-sno.sh
 env-local-hub.sh
+install-config.yaml
