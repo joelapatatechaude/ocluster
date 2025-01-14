@@ -17,6 +17,8 @@ fi
 
 source ~/.secrets/pullsecret
 source ~/.secrets/$MYDIR/route53
+source ~/.secrets/$MYDIR/aws-creds
+
 
 function cluster {
     date
@@ -27,7 +29,7 @@ function cluster {
     sed -i "s/PULL_SECRET/$PULL_SECRET/g" ./install-config.yaml
     sed -i "s/MASTER_INSTANCE_TYPE/$MASTER_INSTANCE_TYPE/g" ./install-config.yaml
     sed -i "s/WORKER_INSTANCE_TYPE/$WORKER_INSTANCE_TYPE/g" ./install-config.yaml
-    #openshift-install create cluster
+    openshift-install create cluster
 }
 
 function trust {
