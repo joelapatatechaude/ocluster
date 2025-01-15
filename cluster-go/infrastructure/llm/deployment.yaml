@@ -20,6 +20,8 @@ spec:
     spec:
       containers:
         - name: granite
+          args:
+            - '-s'
           image: quay.io/redhatai/granite-3-8b-instruct:latest
           ports:
             - containerPort: 8080
