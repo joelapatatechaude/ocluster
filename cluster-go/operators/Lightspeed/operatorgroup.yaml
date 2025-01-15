@@ -1,7 +1,7 @@
 apiVersion: operators.coreos.com/v1
 kind: OperatorGroup
 metadata:
-  generateName: openshift-lightspeed-
+  name: openshift-lightspeed-xyz
   namespace: openshift-lightspeed
 spec:
   upgradeStrategy: Default
