@@ -1,0 +1,6 @@
+After deploying the HELM via the chart via argocd I had to do the following:
+./oc project open-webui
+./oc adm policy add-scc-to-user anyuid -z open-webui-ollama
+./oc adm policy add-scc-to-user anyuid -z open-webui
+
+NEXT, I probably need to add a route or something
