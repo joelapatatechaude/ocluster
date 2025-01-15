@@ -1,10 +1,10 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: lightspeed-operator
+  name: lightspeed
   namespace: openshift-gitops
   labels:
-    type: operator
+    type: infrastructure
 spec:
   destination:
     name: in-cluster
@@ -13,10 +13,9 @@ spec:
     directory:
       jsonnet: {}
       recurse: true
-    path: cluster-go/operators/Lightspeed
+    path: cluster-go/infrastructure/Lightspeed
     repoURL: https://github.com/joelapatatechaude/ocluster
   syncPolicy:
-    automated: {}
     syncOptions:
       - Prune=true
       - CreateNamespace=true

@@ -32,8 +32,21 @@ function deploy_app {
     for i in $(ls ${THEDIR:=cluster-go}/argo-app/*.yaml); do
 	echo $i
 	envsubst < $i | oc apply -f -
-	#oc apply -f $i
     done
+}
+
+function deploy_solo_app {
+    THEFILE=cluster-go/argo-app/$1
+    if ! test -f $THEFILE; then
+	echo "File $THEFILE does not exist."
+	echo "exiting"
+	exit
+    else
+	echo "File $THEFILE exits"
+	echo "Deploying $THEFILE"
+	envsubst < $THEFILE | oc apply -f -
+
+    fi
 }
 
 
@@ -52,9 +65,16 @@ function deploy_app {
 
 KUBECONFIG=$KUBECONFIG  create_app_project
 
-echo "next"
-KUBECONFIG=$KUBECONFIG  deploy_app
 
+if [ -n "$1" ]
+then
+    echo "First argument present: doing solo app"
+    KUBECONFIG=$KUBECONFIG  deploy_solo_app $1
+else
+    echo "No argument present, deploy all"
+    KUBECONFIG=$KUBECONFIG  deploy_app
+fi
+echo""
 echo "it could be I lost OpenShift connectivity, maybe due to auth changes, for a few minutes"
 
 echo "I t could be I need to reapply the 03.argo-setup.sh to fix some permission agina..."
