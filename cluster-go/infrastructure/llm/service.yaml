@@ -1,7 +1,8 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: pacman
+  name: granite
+  namespace: llm
 spec:
   ports:
   - name: 8080-tcp
