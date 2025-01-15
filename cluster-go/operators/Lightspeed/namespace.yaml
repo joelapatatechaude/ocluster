@@ -1,9 +1,6 @@
 apiVersion: project.openshift.io/v1
-kind: Project
+kind: Namespace
 metadata:
-  labels:
-    kubernetes.io/metadata.name: openshift-lightspeed
   name: openshift-lightspeed
-spec:
-  finalizers:
-  - kubernetes
+
+
