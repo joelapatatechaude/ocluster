@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: openwebui
+  namespace: openshift-gitops
+spec:
+  destination:
+    name: in-cluster
+    namespace: open-webui
+  project: hub
+  source:
+    chart: open-webui
+    repoURL: https://helm.openwebui.com
+    targetRevision: 5.*.*
+    helm:
+      releaseName: open-webui
+  syncPolicy:
+    syncOptions:
+    - Prune=true
+    - CreateNamespace=true
