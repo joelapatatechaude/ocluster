@@ -27,7 +27,7 @@ spec:
             - containerPort: 8080
               protocol: TCP
           env:
-            - name: DISABLELLAMA_API_KEY
+            - name: DISABLELLAMYYYY_API_KEY
               value: "this-is-cool"
           resources:
             limits:
