@@ -1,0 +1,46 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  annotations:
+  name: granite-3-8b
+  namespace: llm
+  labels:
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: granite-3-8b
+  template:
+    metadata:
+      annotations:
+        alpha.image.policy.openshift.io/resolve-names: '*'
+      labels:
+        app: granite-3-8b
+        deployment: granite-3-8b
+    spec:
+      containers:
+        - name: granite-3-8b
+          args:
+            - '-s'
+          image: quay.io/redhatai/granite-3-8b-instruct:latest
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          env:
+            - name: key
+              value: value
+          resources:
+            limits:
+              cpu: 8
+              memory: 3Gi
+            requests:
+              cpu: 0.25
+              memory: 1Gi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          imagePullPolicy: Always
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      securityContext: {}
+      schedulerName: default-scheduler

@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: granite-3-2b
+  namespace: llm
+spec:
+  ports:
+  - name: 8080-tcp
+    port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: granite-3-2b
+    deployment: granite-3-2b
+  sessionAffinity: None
+  type: ClusterIP
+status:
+  loadBalancer: {}

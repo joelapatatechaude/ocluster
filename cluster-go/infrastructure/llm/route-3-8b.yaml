@@ -1,7 +1,7 @@
 apiVersion: route.openshift.io/v1
 kind: Route
 metadata:
-  name: granite
+  name: granite-3-8b
   namespace: llm
 spec:
   port:
@@ -11,6 +11,6 @@ spec:
     termination: edge
   to:
     kind: Service
-    name: granite
+    name: granite-3-8b
     weight: 100
   wildcardPolicy: None
