@@ -32,9 +32,9 @@ spec:
           env:
             - name: LLAMA_NO_MMAP
             - name: LLAMA_PARALLEL
-              value: "4"
+              value: "1"
             - name: LLAMA_CTX_SIZE
-              value: "16384"
+              value: "4096"
             - name: LLAMA_THREADS
               value: "8"
           resources:
