@@ -31,11 +31,11 @@ spec:
           env:
             - name: LLAMA_NO_MMAP
             - name: LLAMA_PARALLEL
-              value: 4
+              value: "4"
             - name: LLAMA_CTX_SIZE
-              value: 16384
+              value: "16384"
             - name: LLAMA_THREADS
-              value: 8
+              value: "8"
           resources:
             limits:
               cpu: 8
@@ -50,4 +50,3 @@ spec:
       dnsPolicy: ClusterFirst
       securityContext: {}
       schedulerName: default-scheduler
-
