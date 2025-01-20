@@ -6,7 +6,9 @@ metadata:
   namespace: llm
   labels:
 spec:
-  replicas: 1
+  strategy:
+    type: Recreate
+  replicas: 0
   selector:
     matchLabels:
       app: granite-3-2b
@@ -27,14 +29,18 @@ spec:
             - containerPort: 8080
               protocol: TCP
           env:
-            - name: key
-              value: value
+            - name: LLAMA_NO_MMAP
+            - name: LLAMA_PARALLEL
+              value: "2"
+            - name: LLAMA_CTX_SIZE
+              value: "8192"
+            - name: LLAMA_THREADS
+              value: "8"
           resources:
             limits:
               cpu: 8
               memory: 3Gi
             requests:
-              cpu: 4
               memory: 3Gi
           terminationMessagePath: /dev/termination-log
           terminationMessagePolicy: File
