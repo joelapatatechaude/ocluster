@@ -9,7 +9,7 @@ metadata:
 spec:
   strategy:
     type: Recreate
-  replicas: 1
+  replicas: 0
   selector:
     matchLabels:
       app: granite-3-8b
@@ -43,6 +43,7 @@ spec:
               memory: 5.5Gi
             requests:
               memory: 5.5Gi
+              cpu: 8
           terminationMessagePath: /dev/termination-log
           terminationMessagePolicy: File
           imagePullPolicy: Always
