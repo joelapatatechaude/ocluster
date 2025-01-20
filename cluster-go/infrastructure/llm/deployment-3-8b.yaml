@@ -6,6 +6,8 @@ metadata:
   namespace: llm
   labels:
 spec:
+  strategy:
+    type: Recreate
   replicas: 1
   selector:
     matchLabels:
@@ -48,5 +50,4 @@ spec:
       dnsPolicy: ClusterFirst
       securityContext: {}
       schedulerName: default-scheduler
-      strategy:
-        type: Recreate
+
