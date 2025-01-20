@@ -40,9 +40,9 @@ spec:
           resources:
             limits:
               cpu: 8
-              memory: 8Gi
+              memory: 5.5Gi
             requests:
-              memory: 8Gi
+              memory: 5.5Gi
           terminationMessagePath: /dev/termination-log
           terminationMessagePolicy: File
           imagePullPolicy: Always
