@@ -17,7 +17,7 @@ spec:
       serviceAccountName: sa-odm
       containers:
         - name: nodeodm
-          image: opendronemap/nodeodm
+          image: quay.io/rh_ee_cschmitz/nodeodm
           ports:
             - containerPort: 3000
           volumeMounts:
@@ -47,7 +47,7 @@ spec:
       serviceAccountName: sa-odm
       containers:
         - name: webodm
-          image: opendronemap/webodm_webapp
+          image: quay.io/rh_ee_cschmitz/webodm_webapp
           ports:
             - containerPort: 8000
           volumeMounts:
@@ -70,7 +70,7 @@ spec:
               exec:
                 command: ["/bin/bash", "-c", "python manage.py addnode nodeodm 3000"]
         - name: webodm-worker
-          image: opendronemap/webodm_webapp
+          image: quay.io/rh_ee_cschmitz/webodm_webapp
           volumeMounts:
             - name: data-volume
               mountPath: /webodm/app/media
