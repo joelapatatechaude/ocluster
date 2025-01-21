@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: multicloud-demo
+  namespace: openshift-gitops
+  labels:
+    type: demo
+    app: multicloud-demo
+spec:
+  destination:
+    name: in-cluster
+    namespace: multicloud-demo
+  project: hub
+  source:
+    directory:
+      jsonnet: {}
+      recurse: true
+    path: cluster-go/applications/multicloud-demo
+    repoURL: https://github.com/joelapatatechaude/ocluster
+  syncPolicy:
+    syncOptions:
+    - Prune=true
+    - CreateNamespace=true
