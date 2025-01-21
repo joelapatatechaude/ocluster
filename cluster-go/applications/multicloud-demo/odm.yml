@@ -14,7 +14,7 @@ spec:
       labels:
         app: nodeodm
     spec:
-      serviceAccountName: odm-sa
+      serviceAccountName: sa-odm
       containers:
         - name: nodeodm
           image: opendronemap/nodeodm
@@ -44,7 +44,7 @@ spec:
       labels:
         app: webodm 
     spec:
-      serviceAccountName: odm-sa
+      serviceAccountName: sa-odm
       containers:
         - name: webodm
           image: opendronemap/webodm_webapp
