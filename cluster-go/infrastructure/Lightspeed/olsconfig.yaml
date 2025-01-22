@@ -26,6 +26,13 @@ spec:
           - name: models/granite-3.0-8b-instruct-Q4_K_M.gguf
         type: openai
         url: 'http://granite-3-8b.llm.svc.cluster.local:8080/v1/'
+      - name: local-llm-deepsparse
+        credentialsSecretRef:
+          name: local-llm-api-keys
+        models:
+          - name: /ModelDir/
+        type: openai
+        url: 'http://deepsparse-llama.llm.svc.cluster.local:5543/v1/'
   ols:
-    defaultModel: models/granite-3.0-8b-instruct-Q4_K_M.gguf
-    defaultProvider: local-llm-3-8b
+    defaultModel: /ModelDir/
+    defaultProvider: local-llm-deepsparse
