@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: nodeodm
   labels:
-    app.openshift.io/runtime: js
+    app.openshift.io/runtime: python
 spec:
   replicas: 1
   selector:
