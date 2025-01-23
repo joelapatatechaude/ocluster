@@ -2,7 +2,7 @@ kind: Deployment
 apiVersion: apps/v1
 metadata:
   annotations:
-  name: deepsparse-llama
+  name: deepsparse
   namespace: llm
   labels:
 spec:
@@ -11,20 +11,20 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: deepsparse-llama
+      app: deepsparse
   template:
     metadata:
       annotations:
         alpha.image.policy.openshift.io/resolve-names: '*'
       labels:
-        app: deepsparse-llama
-        deployment: deepsparse-llama
+        app: deepsparse
+        deployment: deepsparse
     spec:
       containers:
-        - name: deepsparse-llama
-          image: quay.io/rh_ee_cschmitz/openshift-deepsparse-llama
+        - name: deepsparse
+          image: "quay.io/rh_ee_cschmitz/openshift-deepsparse-llama:chris-v1.8.0-TinyLlama-1.1B-Chat-v0.4-pruned50-quant-ds"
           ports:
-            - containerPort: 5543
+            - containerPort: 8080
               protocol: TCP
           resources:
             limits:

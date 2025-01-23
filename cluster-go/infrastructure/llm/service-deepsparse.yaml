@@ -1,17 +1,17 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: deepsparse-llama
+  name: deepsparse
   namespace: llm
 spec:
   ports:
-  - name: 5543-tcp
-    port: 5543
+  - name: 8080-tcp
+    port: 8080
     protocol: TCP
-    targetPort: 5543
+    targetPort: 8080
   selector:
-    app: deepsparse-llama
-    deployment: deepsparse-llama
+    app: deepsparse
+    deployment: deepsparse
   sessionAffinity: None
   type: ClusterIP
 status:
