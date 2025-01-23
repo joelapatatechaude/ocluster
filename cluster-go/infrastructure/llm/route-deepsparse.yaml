@@ -5,7 +5,7 @@ metadata:
   namespace: llm
 spec:
   port:
-    targetPort: 5543-tcp
+    targetPort: 8080-tcp
   tls:
     insecureEdgeTerminationPolicy: Redirect
     termination: edge
