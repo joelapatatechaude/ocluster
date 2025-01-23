@@ -1,7 +1,7 @@
 apiVersion: redhatcop.redhat.io/v1alpha1
 kind: Patch
 metadata:
-  name: add-label-to-namespace
+  name: add-label-to-cert-manager-namespace
   namespace: patch-operator
 spec:
   serviceAccountRef:
