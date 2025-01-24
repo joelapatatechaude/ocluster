@@ -8,7 +8,7 @@ metadata:
 spec:
   strategy:
     type: Recreate
-  replicas: 1
+  replicas: 0
   selector:
     matchLabels:
       app: deepsparse
@@ -22,16 +22,16 @@ spec:
     spec:
       containers:
         - name: deepsparse
-          image: "quay.io/rh_ee_cschmitz/openshift-deepsparse-llama:chris-v1.8.0-TinyLlama-1.1B-Chat-v0.4-pruned50-quant-ds"
+          image: "quay.io/rh_ee_cschmitz/openshift-deepsparse-llama:v1.8.0-Llama2-7b-chat-pruned50-quant-ds"
           ports:
             - containerPort: 8080
               protocol: TCP
           resources:
             limits:
-              cpu: 8
-              memory: 14Gi
+              cpu: 16
+              memory: 10Gi
             requests:
-              memory: 14Gi
+              memory: 10Gi
               cpu: 8
           terminationMessagePath: /dev/termination-log
           terminationMessagePolicy: File
