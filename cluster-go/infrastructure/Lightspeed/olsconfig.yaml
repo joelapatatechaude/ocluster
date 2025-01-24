@@ -5,34 +5,48 @@ metadata:
 spec:
   llm:
     providers:
-      - name: myOpenai
-        type: openai
-        credentialsSecretRef:
+      - credentialsSecretRef:
           name: openai-api-keys
-        url: https://api.openai.com/v1
         models:
           - name: gpt-3.5-turbo
-      - name: local-llm-3-2b
-        credentialsSecretRef:
+        name: myOpenai
+        type: openai
+        url: https://api.openai.com/v1
+      - credentialsSecretRef:
           name: local-llm-api-keys
         models:
           - name: models/granite-3.0-2b-instruct-Q4_K_M.gguf
+        name: local-llm-3-2b
         type: openai
-        url: 'http://granite-3-2b.llm.svc.cluster.local:8080/v1/'
-      - name: local-llm-3-8b
-        credentialsSecretRef:
+        url: http://granite-3-2b.llm.svc.cluster.local:8080/v1/
+      - credentialsSecretRef:
           name: local-llm-api-keys
         models:
           - name: models/granite-3.0-8b-instruct-Q4_K_M.gguf
+        name: local-llm-3-8b
         type: openai
-        url: 'http://granite-3-8b.llm.svc.cluster.local:8080/v1/'
-      - name: local-llm-deepsparse
-        credentialsSecretRef:
+        url: http://granite-3-8b.llm.svc.cluster.local:8080/v1/
+      - credentialsSecretRef:
           name: local-llm-api-keys
         models:
-          - name: 
+          - name: hf:neuralmagic/Llama2-7b-chat-pruned50-quant-ds
+        name: local-llm-deepsparse
         type: openai
-        url: 'http://deepsparse.llm.svc.cluster.local:8080/v1/'
+        url: http://deepsparse.llm.svc.cluster.local:8080/v1/
+      - credentialsSecretRef:
+          name: local-llm-api-keys
+        models:
+          - name: hf:nm-testing/granite-7b-lab-pruned50-quant-ds
+        name: deepsparse
+        type: openai
+        url: >-
+          http://deepsparse-text-generation.deepsparse-text-generation.svc.cluster.local:8080/v1/
   ols:
-    defaultModel: /ModelDir/
-    defaultProvider: local-llm-deepsparse
+    defaultModel: gpt-3.5-turbo
+    defaultProvider: myOpenai
+    logLevel: INFO
+    userDataCollection:
+      feedbackDisabled: false
+      transcriptsDisabled: false
+  olsDataCollector:
+    logLevel: INFO
