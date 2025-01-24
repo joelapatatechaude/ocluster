@@ -30,9 +30,9 @@ spec:
         credentialsSecretRef:
           name: local-llm-api-keys
         models:
-          - name: /ModelDir/
+          - name: 
         type: openai
-        url: 'http://deepsparse-llama.llm.svc.cluster.local:5543/v1/'
+        url: 'http://deepsparse.llm.svc.cluster.local:8080/v1/'
   ols:
     defaultModel: /ModelDir/
     defaultProvider: local-llm-deepsparse
