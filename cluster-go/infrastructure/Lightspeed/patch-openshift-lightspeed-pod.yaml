@@ -1,0 +1,21 @@
+apiVersion: redhatcop.redhat.io/v1alpha1
+kind: Patch
+metadata:
+  name: fix-image-lightspeed
+  namespace: patch-operator
+spec:
+  serviceAccountRef:
+    name: patch-operator-sa
+  patches:
+    add-label:
+      targetObjectRef:
+        apiVersion: v1
+        kind: Pod
+        namespace: openshift-lightspeed
+        labelSelector:
+          app.kubernetes.io/name: lightspeed-service-api
+      patchTemplate: |
+        metadata:
+          labels:
+            test: haha
+      patchType: application/merge-patch+json
