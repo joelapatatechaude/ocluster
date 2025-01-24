@@ -13,7 +13,8 @@ spec:
         kind: Pod
         namespace: openshift-lightspeed
         labelSelector:
-          app.kubernetes.io/name: lightspeed-service-api
+          matchLabels:
+            app.kubernetes.io/name: lightspeed-service-api
       patchTemplate: |
         metadata:
           labels:
