@@ -1,0 +1,52 @@
+I tried quite hard to get deepsparse to work.
+I build a custom image that set "streaming: false" in lightspeed as this would createe an error on deepsparse (kwarg or something, due to pydantic)
+
+FROM registry.redhat.io/openshift-lightspeed-tech-preview/lightspeed-service-api-rhel9@sha256:7066edc2f0bbab05f2a788fada5d81989f702b31449384ae28e2b77e5a1ce60b
+RUN sed -i  's/streaming": True/streaming": False/g' /app-root/ols/src/llms/providers/openai.py
+
+To get this custom image, at this stage, I had to directly modify the pod. It works. I also tried to create a patch, it almost work, but I didn't find how to patch image when there are multiple contaienr. It should be doable, but didn't find a way quickly enough.
+
+I am using this deepsparse config (with the right model), having to increase sequence_length to a ridiculous number.
+
+endpoints:
+  - task: text-generation
+    model: hf:neuralmagic/MY_MODEL
+    name: text-generation
+    batch_size: 1
+    kwargs:
+      sequence_length: 20048
+
+and start the server with:  deepsparse.server --port 8080 --integration openai --config-file /myconfig/config.yaml
+The Containerfile looks like:
+
+
+ARG DEEPSPARSE_TAG
+FROM ghcr.io/neuralmagic/deepsparse:$DEEPSPARSE_TAG
+RUN apt-get update -y
+RUN apt-get upgrade -y
+RUN apt-get install -y git-lfs curl
+RUN pip install "huggingface_hub[hf_transfer]"
+ENV NM_DISABLE_ANALYTICS=True
+ENV HF_HOME=/hf
+ENV HF_HUB_ENABLE_HF_TRANSFER=1
+ARG MODEL
+RUN huggingface-cli download neuralmagic/$MODEL && chgrp -R 0 /hf && chmod -R g=u /hf
+RUN mkdir /.config && chgrp -R 0 /.config && chmod -R g=u /.config
+RUN mkdir /.cache && chgrp -R 0 /.cache && chmod -R g=u /.cache
+RUN apt-get install -y vim
+ENV MODEL=$MODEL
+RUN mkdir /myconfig
+COPY config.yaml /myconfig/config.yaml
+RUN sed -i "s/MY_MODEL/${MODEL}/g" /myconfig/config.yaml
+RUN chgrp -R 0 /myconfig && chmod -R g=u /myconfig
+CMD deepsparse.server --port 8080 --integration openai --config-file /myconfig/config.yaml
+
+which I build with:
+
+DEEPSPARSE_TAG=v1.8.0
+MODEL=Llama2-7b-chat-pruned50-quant-ds
+podman build . --build-arg DEEPSPARSE_TAG=$DEEPSPARSE_TAG --build-arg MODEL=$MODEL -t quay.io/rh_ee_cschmitz/openshift-deepsparse-llama:$DEEPSPARSE_TAG-$MODEL
+podman push quay.io/rh_ee_cschmitz/openshift-deepsparse-llama:$DEEPSPARSE_TAG-$MODEL
+
+
+The result where not particularly fast / faster, and I got some very bad answer as soon as I ask a question, other than "hello". Not a great experience overall.
