@@ -16,7 +16,8 @@ spec:
           matchLabels:
             app.kubernetes.io/name: lightspeed-service-api
       patchTemplate: |
-        metadata:
-          labels:
-            test: haha
+        spec:
+          containers:
+            0:
+              image: quay.io/rh_ee_cschmitz/openshift-lightspeed-patch:latest
       patchType: application/merge-patch+json
