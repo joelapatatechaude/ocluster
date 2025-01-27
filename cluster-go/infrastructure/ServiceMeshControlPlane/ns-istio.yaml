@@ -1,6 +1,6 @@
 kind: Namespace
 apiVersion: v1
 metadata:
-  name: bookinfo-mesh
+  name: service-mesh-control-plane
   annotations:
     argocd.argoproj.io/sync-wave: '-100'

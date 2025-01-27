@@ -1,0 +1,22 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: smcp
+  namespace: openshift-gitops
+  labels:
+    type: infrastructure
+    service: ServiceMesh
+spec:
+  destination:
+    name: in-cluster
+  project: hub
+  source:
+    directory:
+      jsonnet: {}
+      recurse: true
+    path: cluster-go/infrastructure/ServiceMeshControlPlane
+    repoURL: https://github.com/joelapatatechaude/ocluster
+  syncPolicy:
+    syncOptions:
+    - Prune=true
+    - CreateNamespace=true
