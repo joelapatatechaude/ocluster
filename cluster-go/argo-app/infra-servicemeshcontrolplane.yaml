@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: smcp
+  name: service-mesh-control-plane
   namespace: openshift-gitops
   labels:
     type: infrastructure
