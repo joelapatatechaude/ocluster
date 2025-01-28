@@ -5,6 +5,8 @@ metadata:
   namespace: openshift-gitops
   labels:
     app: bookinfo
+    type: applications
+    service: ServiceMesh
 spec:
   destination:
     name: in-cluster
@@ -18,5 +20,5 @@ spec:
     repoURL: https://github.com/joelapatatechaude/ocluster
   syncPolicy:
     syncOptions:
-    - Prune=true
-    - CreateNamespace=true
+      - Prune=true
+      - CreateNamespace=true
