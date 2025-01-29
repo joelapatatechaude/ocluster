@@ -2,7 +2,7 @@
 source ./env.sh
 source ~/.secrets/$MYDIR/route53
 
-NSG=bookinfo-servicemesh-istio
+NSG=bookinfo-compromised-istio
 
 ENDPOINT="http://istio-ingressgateway-$NSG.apps.${CLUSTER_NAME}.${ROUTE53_DOMAIN}/productpage"
 

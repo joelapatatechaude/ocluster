@@ -9,6 +9,7 @@
 # - explain the changes I am about to do through argocd diff and sync
 
 NS=bookinfo-tosecure
+NSG=${NS}-istio
 function un_inject () {
     LIST=$($OC get deployments -n bookinfo-tosecure -o json | jq .items[].metadata.name -r)
     for dep in $LIST; do
@@ -22,6 +23,7 @@ function clean_resource () {
     $OC delete gateway bookinfo-gateway -n $NS
     $OC delete virtualservices bookinfo -n $NS
     $OC delete smm default -n $NS
+    $OC delete smcp basic -n $NSG
 }
 
 

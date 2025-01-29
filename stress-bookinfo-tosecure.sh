@@ -2,7 +2,7 @@
 source ./env.sh
 source ~/.secrets/$MYDIR/route53
 
-NSG=bookinfo-servicemesh-istio
+NSG=bookinfo-tosecure-istio
 
 ENDPOINT="http://istio-ingressgateway-$NSG.apps.${CLUSTER_NAME}.${ROUTE53_DOMAIN}/productpage"
 
@@ -13,4 +13,3 @@ siege \
     -c 5 \
     -d 0.5 \
     $ENDPOINT
-
