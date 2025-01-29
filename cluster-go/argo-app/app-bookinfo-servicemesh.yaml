@@ -19,8 +19,6 @@ spec:
     path: cluster-go/applications/bookinfo-servicemesh
     repoURL: https://github.com/joelapatatechaude/ocluster
   syncPolicy:
-    automated:
-      prune: true
     managedNamespaceMetadata:
       labels:
         app.kubernetes.io/instance: my-argocd-application-name
