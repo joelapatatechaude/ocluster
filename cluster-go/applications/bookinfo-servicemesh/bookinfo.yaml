@@ -57,6 +57,7 @@ metadata:
   labels:
     app: details
     version: v1
+    app.openshift.io/runtime: ruby
 spec:
   replicas: 1
   selector:
@@ -107,9 +108,12 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ratings-v1
+  annotations:
+    app.openshift.io/connects-to: '[{"apiVersion":"apps/v1","kind":"Deployment","name":"mongodb-v1"}]'
   labels:
     app: ratings
     version: v1
+    app.openshift.io/runtime: nodejs
 spec:
   replicas: 1
   selector:
@@ -131,6 +135,11 @@ spec:
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 9080
+        env:
+          - name: MONGO_DB_URL
+            value: 'mongodb://mongodb'
+          - name: SERVICE_VERSION
+            value: v2
 ---
 ##################################################################################################
 # Reviews service
@@ -163,6 +172,7 @@ metadata:
   labels:
     app: reviews
     version: v1
+    app.openshift.io/runtime: java
 spec:
   replicas: 1
   selector:
@@ -205,6 +215,9 @@ metadata:
   labels:
     app: reviews
     version: v2
+    app.openshift.io/runtime: java
+  annotations:
+    app.openshift.io/connects-to: '[{"apiVersion":"apps/v1","kind":"Deployment","name":"ratings-v1"}]'
 spec:
   replicas: 1
   selector:
@@ -247,6 +260,9 @@ metadata:
   labels:
     app: reviews
     version: v3
+    app.openshift.io/runtime: java
+  annotations:
+    app.openshift.io/connects-to: '[{"apiVersion":"apps/v1","kind":"Deployment","name":"ratings-v1"}]'
 spec:
   replicas: 1
   selector:
@@ -313,6 +329,9 @@ metadata:
   labels:
     app: productpage
     version: v1
+    app.openshift.io/runtime: python
+  annotations:
+    app.openshift.io/connects-to: '[{"apiVersion":"apps/v1","kind":"Deployment","name":"details-v1"},{"apiVersion":"apps/v1","kind":"Deployment","name":"reviews-v1"},{"apiVersion":"apps/v1","kind":"Deployment","name":"reviews-v2"},{"apiVersion":"apps/v1","kind":"Deployment","name":"reviews-v3"}]'
 spec:
   replicas: 1
   selector:

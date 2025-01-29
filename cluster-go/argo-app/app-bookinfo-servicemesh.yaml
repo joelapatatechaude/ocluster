@@ -10,7 +10,7 @@ metadata:
 spec:
   destination:
     name: in-cluster
-    namespace: bookinfo
+    namespace: bookinfo-servicemesh
   project: hub
   source:
     directory:

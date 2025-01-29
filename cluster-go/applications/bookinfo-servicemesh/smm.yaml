@@ -6,5 +6,5 @@ metadata:
     argocd.argoproj.io/sync-wave: "-10"
 spec:
   controlPlaneRef:
-    namespace: service-mesh-control-plane
+    namespace: bookinfo-servicemesh-istio
     name: basic

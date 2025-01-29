@@ -33,6 +33,7 @@ metadata:
   labels:
     app: mongodb
     version: v1
+    app.openshift.io/runtime: mongodb
 spec:
   replicas: 1
   selector:
@@ -47,8 +48,24 @@ spec:
         app: mongodb
         version: v1
     spec:
+      initContainers:
+        - resources: {}
+          terminationMessagePath: /dev/termination-log
+          name: load-mongo-data
+          command:
+            - sh
+            - load-data.sh
+          imagePullPolicy: IfNotPresent
+          volumeMounts:
+            - name: db-init
+              mountPath: /docker-entrypoint-preinitdb.d
+            - name: db-init-data
+              mountPath: /docker-entrypoint-initdb.d
+          terminationMessagePolicy: File
+          image: 'registry.access.redhat.com/ubi8-minimal:8.6'
+          workingDir: /docker-entrypoint-preinitdb.d
       containers:
-      - name: mongodb 
+      - name: mongodb
         image: quay.io/maistra/examples-bookinfo-mongodb:2.4.0
         imagePullPolicy: IfNotPresent
         ports:
@@ -56,7 +73,15 @@ spec:
         volumeMounts:
         - name: data-db
           mountPath: /data/db
+        - name: db-init-data
+          mountPath: /docker-entrypoint-initdb.d
       volumes:
       - name: data-db
         emptyDir: {}
+      - name: db-init-data
+        emptyDir: {}
+      - name: db-init
+        configMap:
+          name: mongo-init
+          defaultMode: 420
 ---
