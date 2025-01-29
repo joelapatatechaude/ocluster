@@ -20,5 +20,5 @@ spec:
     repoURL: https://github.com/joelapatatechaude/ocluster
   syncPolicy:
     syncOptions:
+      - CreateNamespace=false
       - Prune=true
-      - CreateNamespace=true

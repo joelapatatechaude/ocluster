@@ -1,22 +1,22 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: bookinfo-mesh-authpol
+  name: bookinfo-compromised
   namespace: openshift-gitops
   labels:
     app: bookinfo
 spec:
   destination:
     name: in-cluster
-    namespace: bookinfo
+    namespace: bookinfo-compromised
   project: hub
   sources:
     - directory:
         jsonnet: {}
         recurse: true
-      path: cluster-go/applications/bookinfo-mesh-authpol
+      path: cluster-go/applications/bookinfo-compromised
       repoURL: https://github.com/joelapatatechaude/ocluster
   syncPolicy:
     syncOptions:
-    - Prune=true
-    - CreateNamespace=false
+      - Prune=true
+      - CreateNamespace=false
