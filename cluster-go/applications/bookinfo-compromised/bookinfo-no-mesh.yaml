@@ -3,6 +3,7 @@ kind: Deployment
 metadata:
   labels:
     app: bookinfo-no-mesh
+    app.openshift.io/runtime: other-unknown
   name: bookinfo-no-mesh
 spec:
   replicas: 1

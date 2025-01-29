@@ -3,6 +3,7 @@ kind: Deployment
 metadata:
   labels:
     app: review-compromised
+    app.openshift.io/runtime: codeigniter
   name: review-compromised
 spec:
   replicas: 1
