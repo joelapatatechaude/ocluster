@@ -1,0 +1,6 @@
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: bookinfo-servicemesh
+  annotations:
+    argocd.argoproj.io/sync-wave: '-100'
