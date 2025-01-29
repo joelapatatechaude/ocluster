@@ -19,7 +19,13 @@ spec:
     path: cluster-go/applications/bookinfo-nomesh
     repoURL: https://github.com/joelapatatechaude/ocluster
   syncPolicy:
+    automated:
+      prune: true
+    managedNamespaceMetadata:
+      labels:
+        app.kubernetes.io/instance: my-argocd-application-name
+      annotations:
+        argocd.argoproj.io/tracking-id: >-
+          <argocd-application-name>:/Namespace:<namespace>/<namespace>
     syncOptions:
-      - Prune=true
       - CreateNamespace=true
-      - PrunePropagationPolicy=foreground
