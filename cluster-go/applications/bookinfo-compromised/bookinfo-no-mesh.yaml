@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: bookinfo-no-mesh
+  name: bookinfo-no-mesh
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bookinfo-no-mesh
+  template:
+    metadata:
+      annotations:
+        sidecar.istio.io/inject: 'false'
+      creationTimestamp: null
+      labels:
+        app: bookinfo-no-mesh
+    spec:
+      containers:
+      - image: quay.io/redhat-cop/tool-box
+        imagePullPolicy: Always
+        command: ["/bin/bash", "-c", "--"]
+        args: ["while true; do curl -s http://ratings.bookinfo-compromised.svc.cluster.local:9080/health | jq .status; sleep 0.5; curl -s http://ratings.bookinfo-compromised.svc.cluster.local:9080/ratings/1; echo; sleep 0.5; done"]
+        name: bookinfo-no-mesh
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
