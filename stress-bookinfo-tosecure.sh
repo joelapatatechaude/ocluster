@@ -6,7 +6,11 @@ NSG=bookinfo-tosecure-istio
 
 ENDPOINT="http://istio-ingressgateway-$NSG.apps.${CLUSTER_NAME}.${ROUTE53_DOMAIN}/productpage"
 
+echo "Going to hit the following endpoint:"
 echo $ENDPOINT
+echo "press a key to start siege"
+read a
+
 
 siege \
     --no-parser \
