@@ -2,27 +2,27 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: bookinfo-compromised
-  name: bookinfo-compromised
+    app: review-compromised
+  name: review-compromised
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: bookinfo-compromised
+      app: review-compromised
   template:
     metadata:
       annotations:
         sidecar.istio.io/inject: 'true'
       creationTimestamp: null
       labels:
-        app: bookinfo-compromised
+        app: review-compromised
     spec:
       containers:
       - image: quay.io/redhat-cop/tool-box
         imagePullPolicy: Always
         command: ["/bin/bash", "-c", "--"]
         args: ["while true; do curl -s http://ratings.bookinfo-compromised.svc.cluster.local:9080/health | jq .status; sleep 0.5; curl -s http://ratings.bookinfo-compromised.svc.cluster.local:9080/ratings/1; echo; sleep 0.5; done"]
-        name: bookinfo-compromised
+        name: review-compromised
         resources: {}
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
