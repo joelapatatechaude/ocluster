@@ -20,6 +20,8 @@ spec:
       containers:
       - image: quay.io/redhat-cop/tool-box
         imagePullPolicy: Always
+        command:
+          - 'while true; do curl -s http://ratings.bookinfo-compromised.svc.cluster.local:9080/health | jq .status; sleep 0.5; curl -s http://ratings.bookinfo-compromised.svc.cluster.local:9080/ratings/1; echo; sleep 0.5; done'
         name: bookinfo-compromised
         resources: {}
         terminationMessagePath: /dev/termination-log
