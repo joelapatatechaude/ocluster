@@ -1,7 +1,7 @@
 apiVersion: maistra.io/v2
 kind: ServiceMeshControlPlane
 metadata:
-  namespace: bookinf-servicemesh-istio
+  namespace: bookinfo-servicemesh-istio
   name: basic
   annotations:
     argocd.argoproj.io/sync-wave: '-50'
