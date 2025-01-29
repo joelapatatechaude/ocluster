@@ -22,3 +22,4 @@ spec:
     syncOptions:
       - Prune=true
       - CreateNamespace=true
+      - PrunePropagationPolicy=foreground
