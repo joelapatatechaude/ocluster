@@ -3,29 +3,30 @@ kind: Deployment
 metadata:
   annotations:
     app.openshift.io/connects-to: '[{"apiVersion":"apps/v1","kind":"Deployment","name":"ratings-v1"}]'
+
   labels:
-    app: bookinfo-no-mesh
-    app.openshift.io/runtime: other-unknown
-  name: bookinfo-no-mesh
+    app: ratings-compromised
+    app.openshift.io/runtime: codeigniter
+  name: ratings-compromised
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: bookinfo-no-mesh
+      app: ratings-compromised
   template:
     metadata:
       annotations:
-        sidecar.istio.io/inject: 'false'
+        sidecar.istio.io/inject: 'true'
       creationTimestamp: null
       labels:
-        app: bookinfo-no-mesh
+        app: ratings-compromised
     spec:
       containers:
       - image: quay.io/redhat-cop/tool-box
         imagePullPolicy: Always
         command: ["/bin/bash", "-c", "--"]
         args: ["while true; do curl -s http://ratings.bookinfo-compromised.svc.cluster.local:9080/health | jq .status; sleep 0.5; curl -s http://ratings.bookinfo-compromised.svc.cluster.local:9080/ratings/1; echo; sleep 0.5; done"]
-        name: bookinfo-no-mesh
+        name: ratings-compromised
         resources: {}
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
