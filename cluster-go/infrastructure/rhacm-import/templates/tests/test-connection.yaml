@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ include "rhacm-import.fullname" . }}-test-connection"
+  labels:
+    {{- include "rhacm-import.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": test
+spec:
+  containers:
+    - name: wget
+      image: busybox
+      command: ['wget']
+      args: ['{{ include "rhacm-import.fullname" . }}:{{ .Values.service.port }}']
+  restartPolicy: Never

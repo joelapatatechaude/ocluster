@@ -10,13 +10,20 @@ spec:
   destination:
     name: in-cluster
   project: hub
+
   source:
-    directory:
-      jsonnet: {}
-      recurse: true
     path: cluster-go/infrastructure/rhacm-import
     repoURL: https://github.com/joelapatatechaude/ocluster
+    targetRevision: main
+    helm:
+      parameters:
+        - name: "spoke_clustername"
+          value: "SPOKE_$CLUSTER_NAME"
+        - name: "spoke_clusterdomain"
+          value: "$SPOKE_ROUTE53_DOMAIN"
+        - name: "spoke_token"
+          value: "$SPOKE_TOKEN"
   syncPolicy:
     syncOptions:
-    - Prune=true
-    - CreateNamespace=true
+      - Prune=true
+      - CreateNamespace=true
