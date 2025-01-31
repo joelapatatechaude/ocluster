@@ -1,0 +1,133 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nodeodm
+  labels:
+    app.openshift.io/runtime: python
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nodeodm
+  template:
+    metadata:
+      labels:
+        app: nodeodm
+    spec:
+      serviceAccountName: sa-odm
+      containers:
+        - name: nodeodm
+          image: quay.io/rh_ee_cschmitz/nodeodm
+          ports:
+            - containerPort: 3000
+          volumeMounts:
+            - name: data-volume
+              mountPath: /cm/local
+      volumes:
+        - name: data-volume
+          emptyDir: {}
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webodm
+  labels:
+    app.openshift.io/runtime: js
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: webodm 
+  template:
+    metadata:
+      labels:
+        app: webodm 
+    spec:
+      serviceAccountName: sa-odm
+      containers:
+        - name: webodm
+          image: quay.io/rh_ee_cschmitz/webodm_webapp
+          ports:
+            - containerPort: 8000
+          volumeMounts:
+            - name: data-volume
+              mountPath: /webodm/app/media
+          env:
+            - name: WO_BROKER
+              value: "redis://odm-broker:6379"
+            - name: WO_DATABASE_HOST 
+              value: "odm-db"
+            - name: WO_DATABASE_NAME
+              value: "postgres"
+            - name: WO_DEBUG
+              value: "no"
+            - name: WO_DEV
+              value: "no"
+          command: ["/bin/bash", "-c", "chmod +x /webodm/*.sh && /bin/bash -c \"/webodm/wait-for-postgres.sh odm-db /webodm/wait-for-it.sh -t 0 odm-broker:6379 -- /webodm/start.sh\""]
+          lifecycle:
+            postStart:
+              exec:
+                command: ["/bin/bash", "-c", "python manage.py addnode nodeodm 3000"]
+        - name: webodm-worker
+          image: quay.io/rh_ee_cschmitz/webodm_webapp
+          volumeMounts:
+            - name: data-volume
+              mountPath: /webodm/app/media
+          env:
+            - name: WO_BROKER
+              value: "redis://odm-broker:6379"
+            - name: WO_DATABASE_HOST 
+              value: "odm-db"
+            - name: WO_DATABASE_NAME
+              value: "postgres"
+            - name: WO_DEBUG
+              value: "no"
+            - name: WO_DEV
+              value: "no"
+          command: ["/bin/bash", "-c", "chmod +x /webodm/*.sh && /bin/bash -c \"/webodm/wait-for-postgres.sh odm-db /webodm/wait-for-it.sh -t 0 odm-broker:6379 -- /webodm/wait-for-it.sh -t 0 webodm:8000 -- /webodm/worker.sh start\""]
+      volumes:
+        - name: data-volume
+          persistentVolumeClaim:
+            claimName: odm-webodm
+---
+
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: nodeodm
+spec:
+  selector:
+    app: nodeodm
+  ports:
+    - protocol: TCP
+      port: 3000
+      targetPort: 3000
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: webodm
+spec:
+  selector:
+    app: webodm
+  ports:
+    - protocol: TCP
+      port: 8000
+      targetPort: 8000
+
+---
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: odm-webodm
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Gi
