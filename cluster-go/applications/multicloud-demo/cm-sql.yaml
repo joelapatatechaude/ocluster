@@ -6,4 +6,4 @@ data:
 kind: ConfigMap
 metadata:
   name: init-sql
-  namespace: multicloud-demo
+

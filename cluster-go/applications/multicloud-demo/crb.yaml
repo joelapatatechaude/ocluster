@@ -8,5 +8,5 @@ roleRef:
   name: system:openshift:scc:anyuid
 subjects:
 - kind: ServiceAccount
-  name: sa-odm
-  namespace: multicloud-demo
+  name: sa-odmm
+

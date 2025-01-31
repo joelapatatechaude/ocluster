@@ -14,7 +14,7 @@ spec:
       labels:
         app: nodeodm
     spec:
-      serviceAccountName: sa-odm
+      serviceAccountName: sa-odmm
       containers:
         - name: nodeodm
           image: quay.io/rh_ee_cschmitz/nodeodm
@@ -44,7 +44,7 @@ spec:
       labels:
         app: webodm 
     spec:
-      serviceAccountName: sa-odm
+      serviceAccountName: sa-odmm
       containers:
         - name: webodm
           image: quay.io/rh_ee_cschmitz/webodm_webapp
