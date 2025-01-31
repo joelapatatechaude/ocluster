@@ -18,7 +18,7 @@ spec:
     helm:
       parameters:
         - name: "spoke_clustername"
-          value: "SPOKE_CLUSTER_NAME"
+          value: "$SPOKE_CLUSTER_NAME"
         - name: "spoke_clusterdomain"
           value: "$SPOKE_ROUTE53_DOMAIN"
         - name: "spoke_token"
