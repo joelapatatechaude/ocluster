@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: nodeodm
+  namespace: odm
   labels:
     app.openshift.io/runtime: python
 spec:
@@ -32,6 +33,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: webodm
+  namespace: odm
   labels:
     app.openshift.io/runtime: js
 spec:
@@ -97,6 +99,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: nodeodm
+  namespace: odm
 spec:
   selector:
     app: nodeodm
