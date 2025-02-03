@@ -8,7 +8,7 @@ echo "If it works (If I don't get some authorization issue when deploying an arg
 echo "If it doesnt work, keep investigating"
 echo "remember, the issue, is that usually, I need to run this script a second time at a later stage, essentailly when I see the authorization messages in argocd interface"
 echo "exiting"
-exit
+#exit
 
 
 
