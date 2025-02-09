@@ -1,5 +1,6 @@
 #!/bin/sh
 source ./env.sh
+source ~/.secrets/$MYDIR/route53
 set -a
 source ~/.secrets/$MYDIR/aws-creds
 set +a
@@ -8,8 +9,21 @@ set +a
 IDS=$(cat aws-instances-to-resume.txt)
 echo $IDS
 
-echo "Remember I only implemented this for on ID. If more, I need to update this script, use aws ec2 ... --dry-run to make it easier. Maybe I don't need a loop after all."
-echo "type a key to continue"
-read a
-
 aws ec2 start-instances --instance-ids $IDS
+
+function test {
+    echo "testing $1 kubernetes enpoint"
+    while true; do
+	echo "testing..."
+	ANSWER=$(curl -k -s https://api.$CLUSTER_NAME.$ROUTE53_DOMAIN:6443/$1)
+	echo $ANSWER
+	if [ "$ANSWER" == "ok" ]
+	then
+	    break
+	fi
+	sleep 5;
+    done
+}
+
+test livez
+test readyz

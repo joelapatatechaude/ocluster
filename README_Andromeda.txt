@@ -27,3 +27,7 @@ regenerate rox api token and update secret-rox-token.yaml file, commit and push 
 Un-enforced the "Fixable.." policy via RHACS dashbaord
 
 
+TECH DEBT
+Looks like in the deploytottest pipepeline, we have some tasks that try to use two PVC. If those PVCs are in different AZ, the pod can't be scheduled (ebs is az specific)
+ Looks like if I run the ci-cd java AND a deploytottest, those try to mount the same vpc, and it fails.
+ 

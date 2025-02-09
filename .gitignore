@@ -22,3 +22,5 @@ terraform.platform.auto.tfvars.json
 terraform.tfvars.json
 tls/
 aws-instances-to-resume.txt
+andromeda-secret-ssh-keys.yaml
+secret-github-basic-auth.yaml
