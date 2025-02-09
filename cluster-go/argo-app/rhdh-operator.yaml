@@ -1,0 +1,19 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: developer-hub-operator
+  namespace: openshift-gitops
+  annotations:
+    argocd.argoproj.io/sync-wave: "5"
+spec:
+  destination:
+    server: 'https://kubernetes.default.svc'
+  project: hub
+  source:
+    path: cluster-go/operators/RHDHOperator/operator/overlays/fast
+    repoURL: https://github.com/joelapatatechaude/ocluster
+  syncPolicy:
+    syncOptions:
+      - Prune=true
+      - CreateNamespace=true
+
