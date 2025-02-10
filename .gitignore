@@ -24,3 +24,4 @@ tls/
 aws-instances-to-resume.txt
 andromeda-secret-ssh-keys.yaml
 secret-github-basic-auth.yaml
+secret-rhdh.yaml
