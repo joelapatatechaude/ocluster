@@ -1,7 +1,7 @@
 kind: ConfigMap
 apiVersion: v1
 metadata:
-  name: my-rhdh-app-config 
+  name: my-rhdh-app-config
   namespace: rhdh-operator
   labels:
     app.kubernetes.io/instance: developer-hub
@@ -10,23 +10,5 @@ data:
   default.app-config.yaml: |
     app:
       title: RHDEVHUB
-    auth:
-      environment: production
-      providers:
-        github:
-          production:
-            clientId: ${AUTH_GITHUB_CLIENT_ID}
-            clientSecret: ${AUTH_GITHUB_CLIENT_SECRET}
-    integrations:
-      github:
-        - host: ${GITHUB_HOST_DOMAIN}
-          apps:
-            - appId: ${AUTH_GITHUB_APP_ID}
-              clientId: ${AUTH_GITHUB_CLIENT_ID}
-              clientSecret: ${GITHUB_CLIENT_SECRET}
-              webhookUrl: ${GITHUB_WEBHOOK_URL}
-              webhookSecret: ${GITHUB_WEBHOOK_SECRET}
-              privateKey: |
-                ${GITHUB_PRIVATE_KEY_FILE}
     signInPage: github
     dangerouslyAllowSignInWithoutUserInCatalog: true
