@@ -12,3 +12,5 @@ data:
       title: RHDEVHUB
     signInPage: github
     dangerouslyAllowSignInWithoutUserInCatalog: true
+    auth:
+      providers: {}
