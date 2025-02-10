@@ -10,7 +10,6 @@ data:
   default.app-config.yaml: |
     app:
       title: RHDEVHUB
-      baseurl: https://backstage-developer-hub-rhdh-operator.apps.hub.cszevaco.com/
     auth:
       environment: production
       providers:
