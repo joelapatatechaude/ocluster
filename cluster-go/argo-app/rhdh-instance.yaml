@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: developer-hub-instance
+  namespace: openshift-gitops
+  annotations:
+    argocd.argoproj.io/sync-wave: "5"
+  labels:
+    type: infrastructure
+    rhdh: core
+spec:
+  destination:
+    server: 'https://kubernetes.default.svc'
+  project: hub
+  source:
+    path: cluster-go/infrastructure/devhub
+    repoURL: >-
+      https://github.com/joelapatatechaude/ocluste
+    targetRevision: HEAD
+  syncPolicy:
