@@ -7,8 +7,6 @@ spec:
   application:
     appConfig:
       mountPath: /opt/app-root/src
-      configMaps:
-        - name: my-rhdh-app-config
     extraEnvs:
       secrets:
         - name: my-rhdh-secrets
