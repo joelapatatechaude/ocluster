@@ -12,8 +12,6 @@ data:
       title: RHDEVHUB
       baseurl: https://backstage-developer-hub-rhdh-operator.apps.hub.cszevaco.com/
     auth:
-      providers: {}
-    auth:
       environment: production
       providers:
         github:
