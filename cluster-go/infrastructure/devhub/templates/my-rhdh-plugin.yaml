@@ -3,6 +3,8 @@ kind: ConfigMap
 metadata:
   name: my-rhdh-plugin
   namespace: rhdh-operator
+  labels:
+    test-label: "test1"
 data:
   dynamic-plugins.yaml: |-
     includes:
