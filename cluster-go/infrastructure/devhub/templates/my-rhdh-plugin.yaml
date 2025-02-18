@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: my-rhdh-plugin
+  name: my-rhdh-plugins
   namespace: rhdh-operator
 data:
   dynamic-plugins.yaml: |-
