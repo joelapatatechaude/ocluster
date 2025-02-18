@@ -1,3 +1,5 @@
+
+
 kind: ConfigMap
 apiVersion: v1
 metadata:
@@ -9,8 +11,29 @@ metadata:
 data:
   app-config.yaml: |
     app:
-      title: RHDEVHUB
+      title: Services Australia Developer Hub ONE
+      baseurl: https://backstage-developer-hub-rhdh-operator.apps.hub.cszevaco.com/
+    backend:
+      baseUrl: https://backstage-developer-hub-rhdh-operator.apps.hub.cszevaco.com/
+      cors:
+        origin: https://backstage-developer-hub-rhdh-operator.apps.hub.cszevaco.com/
+    auth:
+      environment: production
+      providers:
+        github:
+          production:
+            clientId: ${AUTH_GITHUB_CLIENT_ID}
+            clientSecret: ${AUTH_GITHUB_CLIENT_SECRET}
+    integrations:
+      github:
+        - host: ${GITHUB_HOST_DOMAIN}
+          apps:
+            - appId: ${AUTH_GITHUB_APP_ID}
+              clientId: ${AUTH_GITHUB_CLIENT_ID}
+              clientSecret: ${GITHUB_CLIENT_SECRET}
+              webhookUrl: ${GITHUB_WEBHOOK_URL}
+              webhookSecret: ${GITHUB_WEBHOOK_SECRET}
+              privateKey: |
+                ${GITHUB_PRIVATE_KEY_FILE}
     signInPage: github
     dangerouslyAllowSignInWithoutUserInCatalog: true
-    auth:
-      providers: {}
