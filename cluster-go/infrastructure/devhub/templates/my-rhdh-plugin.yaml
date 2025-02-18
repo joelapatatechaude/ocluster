@@ -4,7 +4,7 @@ metadata:
   name: my-rhdh-plugin
   namespace: rhdh-operator
   labels:
-    test-label: "test3"
+    test-label: "test4"
 data:
   dynamic-plugins.yaml: |-
     includes:
