@@ -11,6 +11,10 @@ spec:
       mountPath: /opt/app-root/src
     dynamicPluginsConfigMapName: my-rhdh-plugin
     extraEnvs:
+      envs:
+        # Disabling TLS verification
+        - name: NODE_TLS_REJECT_UNAUTHORIZED
+          value: '0'
       secrets:
         - name: my-rhdh-secrets
     extraFiles:
@@ -20,3 +24,13 @@ spec:
       enabled: true
   database:
     enableLocalDb: true
+  deployment:
+    patch:
+      spec:
+        template:
+          spec:
+            volumes:
+              - $patch: replace
+                name: dynamic-plugins-root
+                persistentVolumeClaim:
+                  claimName: dynamic-plugins-root
