@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: my-rhdh-plugin
+  namespace: rhdh-operator
+  labels:
+    test-label: "test4"
+data:
+  dynamic-plugins.yaml: |-
+    includes:
+      - dynamic-plugins.default.yaml
