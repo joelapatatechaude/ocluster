@@ -45,8 +45,8 @@ data:
               navigation:
                 background: "#BE2113"
                 indicator: "#0066CC"
-                color: "#ffffff"
-                selectedColor: "#ffffff"
+                color: "#BE2113"
+                selectedColor: "#ff0000"
                 navItem:
                   hoverBackground: "#BE0000"
                 submenu:
