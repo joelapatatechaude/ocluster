@@ -197,7 +197,7 @@ data:
                   headerBackgroundColor: "#0f1214"
                   headerBackgroundImage: "none"
 
-      title: Services Australia Developer Hub
+      title: Services Australia Developer Hub!
       baseUrl: https://backstage-developer-hub-rhdh-operator.apps.hub.cszevaco.com/
     backend:
       baseUrl: https://backstage-developer-hub-rhdh-operator.apps.hub.cszevaco.com/
