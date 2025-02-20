@@ -219,8 +219,8 @@ data:
             - appId: ${RHDH_GITHUB_APP_ID}
               clientId: ${RHDH_GITHUB_APP_CLIENT_ID}
               clientSecret: ${RHDH_GITHUB_APP_CLIENT_SECRET}
-              webhookUrl:
-              webhookSecret:
+              webhookUrl: ${RHDH_GITHUB_APP_WEBHOOK_URL}
+              webhookSecret: ${RHDH_GITHUB_APP_WEBHOOK_SECRET}
               privateKey: |
                 ${RHDH_GITHUB_APP_PRIVATE_KEY}
     catalog:
