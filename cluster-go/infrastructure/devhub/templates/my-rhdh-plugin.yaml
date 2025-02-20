@@ -20,3 +20,10 @@ data:
         # to be used when you want to use GitHub as a source of users and groups. Users and group will be imported when configured
       - package: ./dynamic-plugins/dist/backstage-plugin-catalog-backend-module-github-org-dynamic
         disabled: false
+
+        ## --- TECHDOCS_PLUGIN ---
+      - package: ./dynamic-plugins/dist/backstage-plugin-techdocs-backend-dynamic
+        disabled: false
+      - package: ./dynamic-plugins/dist/backstage-plugin-techdocs
+        disabled: false
+      ## --- TECHDOCS_PLUGIN ---
