@@ -43,14 +43,14 @@ data:
               linkHover: "#2196F3"
               mode: "light"
               navigation:
-                background: "#BE2113"
+                background: "#222427"
                 indicator: "#0066CC"
-                color: "#BE2113"
-                selectedColor: "#ff0000"
+                color: "#ffffff"
+                selectedColor: "#ffffff"
                 navItem:
-                  hoverBackground: "#BE0000"
+                  hoverBackground: "#3c3f42"
                 submenu:
-                  background: "#555555"
+                  background: "#222427"
               pinSidebarButton:
                 background: "#BDBDBD"
                 icon: "#181818"
