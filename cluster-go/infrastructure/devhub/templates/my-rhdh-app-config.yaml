@@ -210,15 +210,15 @@ data:
       providers:
         github:
           production:
-            clientId: ${RHDH_GITHUB_CLIENT_ID}
-            clientSecret: ${RHDH_GITHUB_CLIENT_SECRET}
+            clientId: ${RHDH_GITHUB_APP_CLIENT_ID}
+            clientSecret: ${RHDH_GITHUB_APP_CLIENT_SECRET}
     integrations:
       github:
         - host: github.com
           apps:
             - appId: ${RHDH_GITHUB_APP_ID}
-              clientId: ${RHDH_GITHUB_CLIENT_ID}
-              clientSecret: ${RHDH_GITHUB_CLIENT_SECRET}
+              clientId: ${RHDH_GITHUB_APP_CLIENT_ID}
+              clientSecret: ${RHDH_GITHUB_APP_CLIENT_SECRET}
               webhookUrl:
               webhookSecret:
               privateKey: |
