@@ -200,11 +200,11 @@ data:
                   headerBackgroundImage: "none"
 
       title: Services Australia Developer Hub!
-      baseUrl: https://backstage-developer-hub-rhdh-operator.apps.hub.cszevaco.com/
+      baseUrl: https://backstage-developer-hub-rhdh-operator.apps.{{ .Values.clustername }}.{{ .Values.clusterdomain }}/
     backend:
-      baseUrl: https://backstage-developer-hub-rhdh-operator.apps.hub.cszevaco.com/
+      baseUrl: https://backstage-developer-hub-rhdh-operator.apps.{{ .Values.clustername }}.{{ .Values.clusterdomain }}/
       cors:
-        origin: https://backstage-developer-hub-rhdh-operator.apps.hub.cszevaco.com/
+        origin: https://backstage-developer-hub-rhdh-operator.apps.{{ .Values.clustername }}.{{ .Values.clusterdomain }}/
     auth:
       environment: production
       providers:
