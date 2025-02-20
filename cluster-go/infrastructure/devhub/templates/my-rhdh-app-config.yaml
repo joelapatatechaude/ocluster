@@ -210,19 +210,19 @@ data:
       providers:
         github:
           production:
-            clientId: ${AUTH_GITHUB_CLIENT_ID}
-            clientSecret: ${AUTH_GITHUB_CLIENT_SECRET}
+            clientId: ${RHDH_GITHUB_CLIENT_ID}
+            clientSecret: ${RHDH_GITHUB_CLIENT_SECRET}
     integrations:
       github:
         - host: github.com
           apps:
-            - appId: ${AUTH_GITHUB_APP_ID}
-              clientId: ${AUTH_GITHUB_CLIENT_ID}
-              clientSecret: ${GITHUB_CLIENT_SECRET}
-              webhookUrl: ${GITHUB_WEBHOOK_URL}
-              webhookSecret: ${GITHUB_WEBHOOK_SECRET}
+            - appId: ${RHDH_GITHUB_APP_ID}
+              clientId: ${RHDH_GITHUB_CLIENT_ID}
+              clientSecret: ${RHDH_GITHUB_CLIENT_SECRET}
+              webhookUrl:
+              webhookSecret:
               privateKey: |
-                ${GITHUB_PRIVATE_KEY_FILE}
+                ${RHDH_GITHUB_APP_PRIVATE_KEY}
     catalog:
       processingInterval: { minutes: 1 }
       processing:
@@ -244,7 +244,7 @@ data:
         github:
           # the provider ID can be any camelCase string
           providerId:
-            organization: ${GITHUB_ORGANIZATION} # the name of the GitHub organization
+            organization: ${RHDH_GITHUB_ORGANIZATION} # the name of the GitHub organization
             catalogPath: '/catalog-info.yaml' # the path where your catalog info file will be placed within projects than need to be scanned
             filters:
               branch: 'master' # string
@@ -257,7 +257,7 @@ data:
               initialDelay: { seconds: 15 }
           # This one is needed for the demo-import repository: default branch on GitHub is 'main' now
           mainBranchProvider: # to enable scanning on the main branch
-            organization: ${GITHUB_ORGANIZATION} # the name of the GitHub organization
+            organization: ${RHDH_GITHUB_ORGANIZATION} # the name of the GitHub organization
             catalogPath: '/catalog-info.yaml' # the path where your catalog info file will be placed within projects than need to be scanned
             filters:
               branch: 'main' # string
@@ -273,7 +273,7 @@ data:
           # the provider ID can be any camelCase string
           id: github-org
           orgs:
-            - ${GITHUB_ORGANIZATION}
+            - ${RHDH_GITHUB_ORGANIZATION}
           githubUrl: https://github.com # 'https://' is required!
           schedule: # optional; same options as in TaskScheduleDefinition
             # supports cron, ISO duration, "human duration" as used in code
