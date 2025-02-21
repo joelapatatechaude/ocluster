@@ -216,7 +216,7 @@ data:
       appLocatorMethods:
         - type: 'config'
           instances:
-            - name: argoInstance1
+            - name: default
               url: ${ARGOCD_URL}
 
             
