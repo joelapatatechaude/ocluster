@@ -5,10 +5,11 @@
 ./04.deploy-argo-app.sh patch-operator.yaml
 ./04.deploy-argo-app.sh imagepuller-operator.yaml
 ./04.deploy-argo-app.sh devspaces-operator.yaml
+./04.deploy-argo-app.sh rhdh-operator.yaml
 ./04.deploy-argo-app.sh bootstrap-banner.yaml
 
 
-SYNC via argocd
+SYNC all via argocd, pick a banner if needed
 
 ./04.deploy-argo-app.sh patch-serviceaccount.yaml
 ./04.deploy-argo-app.sh external-secret-cluster.yaml
@@ -28,8 +29,9 @@ echo -n "central-acs-instance.apps.andromeda.sandbox1562.opentlc.com:443" | base
 
 ./oc apply -f andromeda-secret-github-basic-auth.yaml
 
+## NOT REQURED
 #update the links below if sandbox has changed, then:
-./oc apply  -f ~/gitlab-consulting/summer-camp-2023-github/links/
+## NOT REQUIRED< THOSE LINK COME FROM OCLUSTER ANYWAY ./oc apply  -f ~/gitlab-consulting/summer-camp-2023-github/links/
 
 regenerate rox api token and update secret-rox-token.yaml file, commit and push (if I edit directly, argocd will overwrite)
 Un-enforced the "Fixable.." policy via RHACS dashbaord

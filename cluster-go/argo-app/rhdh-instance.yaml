@@ -8,6 +8,7 @@ metadata:
   labels:
     type: infrastructure
     rhdh: core
+    devhub: core
 spec:
   destination:
     server: 'https://kubernetes.default.svc'
