@@ -5,6 +5,8 @@
 ./04.deploy-argo-app.sh patch-operator.yaml
 ./04.deploy-argo-app.sh imagepuller-operator.yaml
 ./04.deploy-argo-app.sh devspaces-operator.yaml
+./04.deploy-argo-app.sh bootstrap-banner.yaml
+
 
 SYNC via argocd
 
