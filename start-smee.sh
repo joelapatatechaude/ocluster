@@ -19,8 +19,9 @@ githubauthapp_rhdh () {
     echo "
 Starting smee github app -> RHDH. Don't forget to check or update the gitapp webhook at:
 https://github.com/organizations/rhdh-chris/settings/apps/rhdh-demo-chris
+Note that I am not sure the webhook actually does anything or work. Currently I am getting 404 :(
 "
-    smee -u https://smee.io/$SMEE_GITHUBAUTHAPP_RHDH -t https://backstage-developer-hub-rhdh-operator.apps.$CLUSTER_NAME.$ROUTE53_DOMAIN/
+    smee -u https://smee.io/$SMEE_GITHUBAUTHAPP_RHDH -t https://backstage-developer-hub-rhdh-operator.apps.$CLUSTER_NAME.$ROUTE53_DOMAIN
 }
 
 github_argocd &
