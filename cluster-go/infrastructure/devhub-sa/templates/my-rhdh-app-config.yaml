@@ -212,6 +212,17 @@ data:
           production:
             clientId: ${RHDH_GITHUB_APP_CLIENT_ID}
             clientSecret: ${RHDH_GITHUB_APP_CLIENT_SECRET}
+
+    argocd:
+      username: ${ARGOCD_USERNAME}
+      password: ${ARGOCD_PASSWORD}
+      appLocatorMethods:
+        - type: 'config'
+          instances:
+            - name: default
+              url: ${ARGOCD_URL}
+
+            
     integrations:
       github:
         - host: github.com

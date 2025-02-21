@@ -27,3 +27,17 @@ data:
       - package: ./dynamic-plugins/dist/backstage-plugin-techdocs
         disabled: false
       ## --- TECHDOCS_PLUGIN ---
+
+      ## ARGOCD_PLUGIN
+
+      - package: ./dynamic-plugins/dist/backstage-community-plugin-redhat-argocd
+        disabled: false
+      - package: ./dynamic-plugins/dist/roadiehq-backstage-plugin-argo-cd
+        disabled: false
+      - package: ./dynamic-plugins/dist/roadiehq-backstage-plugin-argo-cd-backend-dynamic
+        disabled: false
+      - package: ./dynamic-plugins/dist/roadiehq-scaffolder-backend-argocd-dynamic
+        disabled: false
+
+      - package: ./dynamic-plugins/dist/backstage-community-plugin-tekton
+        disabled: false
