@@ -4,4 +4,6 @@ metadata:
   name: openshift-lightspeed-xyz
   namespace: openshift-lightspeed
 spec:
+  targetNamespaces:
+  - openshift-lightspeed
   upgradeStrategy: Default
