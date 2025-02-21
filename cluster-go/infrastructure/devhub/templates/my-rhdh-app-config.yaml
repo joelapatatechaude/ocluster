@@ -217,9 +217,8 @@ data:
         - type: 'config'
           instances:
             - name: argoInstance1
-              url: https://argoInstance1.com
-              token: ${ARGOCD_AUTH_TOKEN} # optional
-            
+              url: ${ARGOCD_URL}
+
             
     integrations:
       github:
