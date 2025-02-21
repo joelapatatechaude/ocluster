@@ -209,17 +209,19 @@ data:
           production:
             clientId: ${RHDH_GITHUB_APP_CLIENT_ID}
             clientSecret: ${RHDH_GITHUB_APP_CLIENT_SECRET}
-    integrations:
-      argocd:
-        username: ${ARGOCD_USERNAME}
-        password: ${ARGOCD_PASSWORD}
-        appLocatorMethods:
-          - type: 'config'
-            instances:
-              - name: argoInstance1
-                url: https://argoInstance1.com
-                token: ${ARGOCD_AUTH_TOKEN} # optional
 
+    argocd:
+      username: ${ARGOCD_USERNAME}
+      password: ${ARGOCD_PASSWORD}
+      appLocatorMethods:
+        - type: 'config'
+          instances:
+            - name: argoInstance1
+              url: https://argoInstance1.com
+              token: ${ARGOCD_AUTH_TOKEN} # optional
+            
+            
+    integrations:
       github:
         - host: github.com
           apps:
