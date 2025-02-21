@@ -5,7 +5,8 @@ metadata:
   namespace: openshift-gitops
   labels:
     type: operator
-
+    devhub: core
+    rhdh: core
   annotations:
     argocd.argoproj.io/sync-wave: "5"
 spec:
