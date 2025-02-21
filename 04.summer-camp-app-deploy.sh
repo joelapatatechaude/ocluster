@@ -67,8 +67,7 @@ function auth_token_summercamp {
     echo $ARGO_SERVER
     ARGO_PASSWORD=$(KUBECONFIG=$KUBECONFIG oc get secret openshift-gitops-cluster -n openshift-gitops -o json | jq -r '.data."admin.password"' | base64 -d)
     argocd login --username admin --password $ARGO_PASSWORD $ARGO_SERVER --config=$ARGO_CONFIG --insecure
-    argocd repo add https://github.com/joelapatatechaude/summer-camp --username $GITHUB_USERNAME --password $GITHUB_TOKEN --insecure --server $ARGO_SERVER --config=$ARGO_CONFIG
-
+    argocd repo add https://github.com/itil-sa/summer-camp --username $GITHUB_ITIL_SA_USERNAME --password $GITHUB_ITIL_SA_TOKEN --insecure --server $ARGO_SERVER --config=$ARGO_CONFIG
 
 }
 
@@ -76,9 +75,10 @@ function patch_acs_health {
     KUBECONFIG=$KUBECONFIG oc patch argocds openshift-gitops -n openshift-gitops --type='merge' --patch-file ArgoCD-patch_acs-health.yaml
 }
 
-
 KUBECONFIG=$KUBECONFIG auth_token_summercamp
+
 KUBECONFIG=$KUBECONFIG patch_acs_health
+
 KUBECONFIG=$KUBECONFIG deploy_summer_camp
 
 #KUBECONFIG=$KUBECONFIG  create_app_project

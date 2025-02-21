@@ -26,3 +26,4 @@ andromeda-secret-ssh-keys.yaml
 secret-github-basic-auth.yaml
 secret-rhdh.yaml
 secret-rhdh2.yaml
+andromeda-secret-github-basic-auth.yaml
