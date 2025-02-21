@@ -15,6 +15,7 @@ SYNC all via argocd, pick a banner if needed
 ./04.deploy-argo-app.sh external-secret-cluster.yaml
 ./04.deploy-argo-app.sh lightspeed.yaml
 ./04.deploy-argo-app.sh devspaces-che.yaml
+./04.deploy-argo-app.sh rhdh-instance-sa.yaml
 #Apply all gitops above via argocd
 
 replace the cluster number (search for sandbox)
