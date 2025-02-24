@@ -48,3 +48,4 @@ data:
         disabled: false
 
       - package: ./dynamic-plugins/dist/backstage-community-plugin-topology
+        disabled: false
