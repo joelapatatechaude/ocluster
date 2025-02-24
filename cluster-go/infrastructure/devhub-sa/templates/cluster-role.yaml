@@ -17,6 +17,8 @@ rules:
       - limitranges
       - resourcequotas
       - daemonsets
+      - jobs
+      - cronjobs
     verbs:
       - get
       - list
