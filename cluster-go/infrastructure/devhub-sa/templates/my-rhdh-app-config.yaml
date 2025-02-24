@@ -57,7 +57,7 @@ data:
                 background: "#BDBDBD"
                 icon: "#181818"
               primary:
-                main: "#324A51"
+                main: "#199CB6"
               secondary:
                 main: "#8476D1"
               status:
@@ -97,8 +97,8 @@ data:
                   tabsBottomBorderColor: "#D2D2D2"
                   contrastText: "#FFF"
                 primary:
-                  main: "#324A51"
-                  focusVisibleBorder: "#324A51"
+                  main: "#199CB6"
+                  focusVisibleBorder: "#199CB6"
                 secondary:
                   main: "#8476D1"
                   focusVisibleBorder: "#8476D1"
