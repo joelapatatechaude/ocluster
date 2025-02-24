@@ -41,3 +41,8 @@ data:
 
       - package: ./dynamic-plugins/dist/backstage-community-plugin-tekton
         disabled: false
+
+      - package: ./dynamic-plugins/dist/backstage-plugin-kubernetes-backend-dynamic
+        disabled: false
+      - package: ./dynamic-plugins/dist/backstage-plugin-kubernetes
+        disabled: false

@@ -222,7 +222,16 @@ data:
             - name: default
               url: ${ARGOCD_URL}
 
-            
+    kubernetes:
+      clusterLocatorMethods:
+      - clusters:
+        - authProvider: serviceAccount
+          name: andromeda
+          serviceAccountToken: ${K8S_SERVICE_ACCOUNT_TOKEN}
+          skipTLSVerify: true
+          url: https://api.{{ .Values.clustername }}.{{ .Values.clusterdomain }}:6443
+        type: config
+
     integrations:
       github:
         - host: github.com
