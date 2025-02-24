@@ -223,22 +223,22 @@ data:
               url: ${ARGOCD_URL}
 
     kubernetes:
-     customResources:
-      - group: 'route.openshift.io'
-        apiVersion: 'v1'
-        plural: 'routes'
-      - group: 'tekton.dev'
-        apiVersion: 'v1beta1'
-        plural: 'pipelines'
-      - group: 'tekton.dev'
-        apiVersion: 'v1beta1'
-        plural: 'pipelineruns'
-      - group: 'tekton.dev'
-        apiVersion: 'v1beta1'
-        plural: 'taskruns'
-      - group: 'org.eclipse.che'
-        apiVersion: 'v2'
-        plural: 'checlusters'
+      customResources:
+       - group: 'route.openshift.io'
+         apiVersion: 'v1'
+         plural: 'routes'
+       - group: 'tekton.dev'
+         apiVersion: 'v1beta1'
+         plural: 'pipelines'
+       - group: 'tekton.dev'
+         apiVersion: 'v1beta1'
+         plural: 'pipelineruns'
+       - group: 'tekton.dev'
+         apiVersion: 'v1beta1'
+         plural: 'taskruns'
+       - group: 'org.eclipse.che'
+         apiVersion: 'v2'
+         plural: 'checlusters'
 
       clusterLocatorMethods:
       - clusters:
