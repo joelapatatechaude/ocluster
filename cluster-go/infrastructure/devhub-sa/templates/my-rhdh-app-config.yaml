@@ -46,7 +46,7 @@ data:
               mode: "light"
               navigation:
                 background: "#222427"
-                indicator: "#0066CC"
+                indicator: "#66D3EE"
                 color: "#ffffff"
                 selectedColor: "#ffffff"
                 navItem:
@@ -57,7 +57,7 @@ data:
                 background: "#BDBDBD"
                 icon: "#181818"
               primary:
-                main: "#0066CC"
+                main: "#66D3EE"
               secondary:
                 main: "#8476D1"
               status:
@@ -97,8 +97,8 @@ data:
                   tabsBottomBorderColor: "#D2D2D2"
                   contrastText: "#FFF"
                 primary:
-                  main: "#0066CC"
-                  focusVisibleBorder: "#0066CC"
+                  main: "#66D3EE"
+                  focusVisibleBorder: "#66D3EE"
                 secondary:
                   main: "#8476D1"
                   focusVisibleBorder: "#8476D1"
@@ -140,7 +140,7 @@ data:
               mode: "dark"
               navigation:
                 background: "#0f1214"
-                indicator: "#0066CC"
+                indicator: "#66D3EE"
                 color: "#ffffff"
                 selectedColor: "#ffffff"
                 navItem:
