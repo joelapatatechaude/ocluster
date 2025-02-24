@@ -224,9 +224,9 @@ data:
 
     kubernetes:
      customResources:
-       - group: 'route.openshift.io'
-         apiVersion: 'v1'
-         plural: 'routes'
+      - group: 'route.openshift.io'
+        apiVersion: 'v1'
+        plural: 'routes'
       - group: 'tekton.dev'
         apiVersion: 'v1beta1'
         plural: 'pipelines'
