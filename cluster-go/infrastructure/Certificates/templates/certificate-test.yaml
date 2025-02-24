@@ -3,6 +3,8 @@ kind: Certificate
 metadata:
   name: certificate-test
   namespace: cert-manager-operator
+  label:
+    this: that
 spec:
   secretName: certificate-test
   issuerRef:
