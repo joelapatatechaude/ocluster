@@ -5,7 +5,7 @@ metadata:
     - uninstall-helm-release
   name: stackrox-central-services
   namespace: stackrox
-  label:
+  labels:
     this: that
 spec:
   central:
