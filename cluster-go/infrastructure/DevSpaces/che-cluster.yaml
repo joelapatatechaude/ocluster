@@ -36,7 +36,7 @@ spec:
   gitServices:
     github:
       - endpoint: "https://github.com"
-        secretName: github-oauth-secret
+        secretName: github-oauth-andromeda-secret
   networking:
     auth:
       gateway:
