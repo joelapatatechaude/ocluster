@@ -85,7 +85,7 @@ data:
                   formControlBackgroundColor: "#FFF"
                   mainSectionBackgroundColor: "#FFF"
                   headerBottomBorderColor: "#C7C7C7"
-                  cardBackgroundColor: "#FFF"
+                  cardBackgroundColor: "#EFBF04"
                   sideBarBackgroundColor: "#BE2113"
                   cardBorderColor: "#C7C7C7"
                   tableTitleColor: "#181818"
@@ -104,7 +104,7 @@ data:
                   focusVisibleBorder: "#8476D1"
                 cards:
                   headerTextColor: "#151515"
-                  headerBackgroundColor: "#EFBF04"
+                  headerBackgroundColor: "#FFFFF#
                   headerBackgroundImage: "none"
     
           dark:
