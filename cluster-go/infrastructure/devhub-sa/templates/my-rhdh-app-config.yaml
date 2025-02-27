@@ -104,7 +104,7 @@ data:
                   focusVisibleBorder: "#8476D1"
                 cards:
                   headerTextColor: "#151515"
-                  headerBackgroundColor: "#FFFFF#
+                  headerBackgroundColor: "#FFFFF"
                   headerBackgroundImage: "none"
     
           dark:
