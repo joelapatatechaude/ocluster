@@ -3,7 +3,7 @@ kind: Namespace
 metadata:
   labels:
     mutate-cpu: 'true'
-    github-oauth-hub-cszevaco-joe-secret: yes-please
+    github-oauth-hub-cszevaco-joe-secret: no-please
     github-oauth-hub-cszevaco-itil-sa-secret: yes-please
   annotations:
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
