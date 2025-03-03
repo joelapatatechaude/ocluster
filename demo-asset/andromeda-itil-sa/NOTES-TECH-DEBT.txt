@@ -8,4 +8,7 @@
 
 8. Remember that the latest version of quarkus-super-heroes does not seem to go through the pipeline smoothly.
 
+9. remember to pick a beefy node type. For the demo, I was running on: c5.18xlarge, for the development, c5.9xlarge
+
+10 https://summercamp2023.atlassian.net/jira/software/projects/CID/boards/1 and remember to update the webhooks.
 
