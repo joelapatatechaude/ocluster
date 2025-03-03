@@ -1,0 +1,11 @@
+1. Remember that most assets are in github.com/itil-sa/summer-camp
+2. Remember that some stuff are deployed via summer-camp, and some via ocluster.
+3. Remember that some secrets may be stored in akeyless, but not all. Check carefully.
+4. Try and run on SNO. That's because multuiple EBS PVC are created, and in AWS, nodes in one zone can't mount EBS of another zone. That's a major issue if the same pud tries to mount multiple pods.
+5. Remember to specify a large size (300GB?) of volume on openshift-install. The default one (120) was too small. Something based on 1. resize ebs, and 2. growpart /dev/vda 4 && unshare --mount && mount -o rw,remount /sysroot && xfs_growfs /sysroot DID work but was stresfull.
+6. Remember that running pipelines in parallel is not such a good idea.
+7. remember that ui-super-heroes build was introduced in the ci-piepline, (java-ci), but I think there is some additional changes required in other pipelines.
+
+8. Remember that the latest version of quarkus-super-heroes does not seem to go through the pipeline smoothly.
+
+

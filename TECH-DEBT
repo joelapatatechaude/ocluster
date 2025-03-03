@@ -1,1 +1,4 @@
 understand why some of the Operator I install via argocd are correctly seen as "installed" (External secret operator, patch operator) and some are not (cert-manager, ODF, local-storage). This could be due to a wrongly configured operatorgroup, or subscription... I believe it's a bug. Even installing some of those operators directly doesn't mean they are marked as installed. Weird.
+
+
+WARNING, the devspaces oauth is against itil-sa at the moment
