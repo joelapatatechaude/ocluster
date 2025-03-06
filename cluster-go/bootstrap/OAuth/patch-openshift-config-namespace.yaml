@@ -1,7 +1,7 @@
 apiVersion: redhatcop.redhat.io/v1alpha1
 kind: Patch
 metadata:
-  name: add-label-to-lightspeed-namespace
+  name: add-label-to-openshift-config-namespace
   namespace: patch-operator
 spec:
   serviceAccountRef:
@@ -11,9 +11,9 @@ spec:
       targetObjectRef:
         apiVersion: v1
         kind: Namespace
-        name: openshift-lightspeed
+        name: openshift-config
       patchTemplate: |
         metadata:
           labels:
-            openai-token: yes-please
+            github-oauth-ocp: yes-please
       patchType: application/merge-patch+json
