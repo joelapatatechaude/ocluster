@@ -9,6 +9,10 @@ controlPlane:
   platform:
     aws:
       type: MASTER_INSTANCE_TYPE
+      rootVolume:
+        size: 350
+        type: gp3
+
   replicas: 1
 compute:
 - architecture: amd64
@@ -17,6 +21,10 @@ compute:
   platform:
     aws:
       type: WORKER_INSTANCE_TYPE
+      rootVolume:
+        size: 350
+        type: gp3
+
   replicas: 0
 networking:
   networkType: OVNKubernetes
@@ -30,8 +38,5 @@ networking:
 platform:
   aws:
     region: REGION
-      rootVolume:
-        size: 350
-	type: gp3
 publish: External
 pullSecret: 'PULL_SECRET'

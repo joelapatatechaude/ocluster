@@ -17,7 +17,7 @@ function deploy_app {
 }
 
 function deploy_solo_app {
-    THEFILE=cluster-go/argo-app/$1
+    THEFILE=$1
     if ! test -f $THEFILE; then
 	echo "File $THEFILE does not exist."
 	echo "exiting"
