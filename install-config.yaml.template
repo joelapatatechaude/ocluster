@@ -30,5 +30,8 @@ networking:
 platform:
   aws:
     region: REGION
+      rootVolume:
+        size: 350
+	type: gp3
 publish: External
 pullSecret: 'PULL_SECRET'
