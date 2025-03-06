@@ -9,7 +9,7 @@ spec:
   destination:
     name: in-cluster
     namespace: default
-  project: hub
+  project: bootstrap
   source:
     directory:
       jsonnet: {}

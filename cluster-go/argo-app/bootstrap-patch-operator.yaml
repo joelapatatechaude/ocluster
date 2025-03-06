@@ -15,7 +15,7 @@ spec:
     directory:
       jsonnet: {}
       recurse: true
-    path: cluster-go/operators/PatchOperator
+    path: cluster-go/bootstrap/PatchOperator
     repoURL: https://github.com/joelapatatechaude/ocluster
   syncPolicy:
     automated: {}

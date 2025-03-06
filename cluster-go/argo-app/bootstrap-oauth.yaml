@@ -8,13 +8,12 @@ metadata:
 spec:
   destination:
     name: in-cluster
-    namespace: default
-  project: hub
+  project: bootstrap
   source:
     directory:
       jsonnet: {}
       recurse: true
-    path: cluster-go/bootstrap/users
+    path: cluster-go/bootstrap/OAuth
     repoURL: https://github.com/joelapatatechaude/ocluster
   syncPolicy:
     automated: {}
