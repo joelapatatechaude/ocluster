@@ -10,14 +10,32 @@ echo "remember, the issue, is that usually, I need to run this script a second t
 echo "exiting"
 #exit
 
-
+function create_app_project {
+    echo "creating app project for my cluster"
+    cat <<EOF | oc apply -f -
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: $1
+  namespace: openshift-gitops
+spec:
+  clusterResourceWhitelist:
+    - group: '*'
+      kind: '*'
+  destinations:
+    - namespace: '*'
+      server: '*'
+  sourceRepos:
+    - '*'
+EOF
+}
 
 function patch_label {
     KUBECONFIG=$KUBECONFIG oc patch argocds openshift-gitops -n openshift-gitops --type='merge' -p '{"spec":{"applicationInstanceLabelKey":"argocd.argoproj.io/instance"}}'
 }
 
-function patch_sub_health {
-    KUBECONFIG=$KUBECONFIG oc patch argocds openshift-gitops -n openshift-gitops --type='merge' --patch-file ArgoCD-patch_sub_health.yaml
+function patch_health {
+    KUBECONFIG=$KUBECONFIG oc patch argocds openshift-gitops -n openshift-gitops --type='merge' --patch-file ArgoCD-patch_health.yaml
 }
 
 function fix_permissions {
@@ -26,5 +44,12 @@ function fix_permissions {
 }
 
 KUBECONFIG=$KUBECONFIG patch_label
-KUBECONFIG=$KUBECONFIG patch_sub_health
+KUBECONFIG=$KUBECONFIG patch_health
 KUBECONFIG=$KUBECONFIG fix_permissions
+
+
+KUBECONFIG=$KUBECONFIG  create_app_project hub
+KUBECONFIG=$KUBECONFIG  create_app_project bootstrap
+KUBECONFIG=$KUBECONFIG  create_app_project operator
+KUBECONFIG=$KUBECONFIG  create_app_project infrastructure
+KUBECONFIG=$KUBECONFIG  create_app_project apps

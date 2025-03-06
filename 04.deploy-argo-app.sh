@@ -8,25 +8,6 @@ set +a
 
 echo "NEED TO DEPLOY APP FROM GITHUB MAYBE?"
 
-function create_app_project {
-    echo "creating app project for my cluster"
-    cat <<EOF | oc apply -f -
-apiVersion: argoproj.io/v1alpha1
-kind: AppProject
-metadata:
-  name: hub
-  namespace: openshift-gitops
-spec:
-  clusterResourceWhitelist:
-    - group: '*'
-      kind: '*'
-  destinations:
-    - namespace: '*'
-      server: '*'
-  sourceRepos:
-    - '*'
-EOF
-}
 
 function deploy_app {
     for i in $(ls ${THEDIR:=cluster-go}/argo-app/*.yaml); do
@@ -63,18 +44,16 @@ function deploy_solo_app {
 #manual_webhook
 
 
-KUBECONFIG=$KUBECONFIG  create_app_project
-
 
 if [ -n "$1" ]
 then
     echo "First argument present: doing solo app"
     KUBECONFIG=$KUBECONFIG  deploy_solo_app $1
 else
-    echo "No argument present, deploy all"
+    echo "No argument present, deploy all in 2 seconds"
+    sleep 2
     KUBECONFIG=$KUBECONFIG  deploy_app
 fi
-echo""
 echo "it could be I lost OpenShift connectivity, maybe due to auth changes, for a few minutes"
 
 echo "I t could be I need to reapply the 03.argo-setup.sh to fix some permission agina..."
