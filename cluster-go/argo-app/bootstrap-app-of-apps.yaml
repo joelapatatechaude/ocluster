@@ -1,10 +1,10 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: app-of-apps-banner
+  name: bootsrap-app-of-apps
   namespace: openshift-gitops
   labels:
-    bootstrap: bootstrap
+    app-of-apps: app-of-apps
 spec:
   destination:
     name: in-cluster
@@ -14,7 +14,7 @@ spec:
     directory:
       jsonnet: {}
       recurse: false
-    path: cluster-go/bootstrap/banner
+    path: cluster-go/argo-app/bootstrap
     repoURL: https://github.com/joelapatatechaude/ocluster
   syncPolicy:
     automated: {}
