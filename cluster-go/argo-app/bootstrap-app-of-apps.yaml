@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: bootsrap-app-of-apps
+  name: bootstrap-app-of-apps
   namespace: openshift-gitops
   labels:
     app-of-apps: app-of-apps
