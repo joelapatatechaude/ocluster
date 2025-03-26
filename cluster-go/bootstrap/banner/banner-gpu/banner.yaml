@@ -1,0 +1,9 @@
+apiVersion: console.openshift.io/v1
+kind: ConsoleNotification
+metadata:
+  name: gitops-banner
+spec:
+  backgroundColor: '#74B200'
+  color: '#FFFFF'
+  location: BannerTop
+  text: "GPU cluster"
