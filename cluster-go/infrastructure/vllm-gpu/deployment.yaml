@@ -52,7 +52,7 @@ spec:
             memory: 20G
             nvidia.com/gpu: "1"
         volumeMounts:
-        - mountPath: /root/.cache/huggingface
+        - mountPath: /.cache
           name: cache-volume
         - name: shm
           mountPath: /dev/shm
