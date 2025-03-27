@@ -16,6 +16,7 @@ spec:
       labels:
         app: vllm
     spec:
+      serviceAccountName: sa-vllm
       restartPolicy: Always
       schedulerName: default-scheduler
       affinity: {}
