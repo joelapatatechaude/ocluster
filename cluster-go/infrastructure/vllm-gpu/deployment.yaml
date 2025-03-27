@@ -25,7 +25,7 @@ spec:
       - name: shm
         emptyDir:
           medium: Memory
-          sizeLimit: "2Gi"
+          sizeLimit: "10Gi"
       containers:
       - name: vllm-gpu
         image: vllm/vllm-openai:latest
