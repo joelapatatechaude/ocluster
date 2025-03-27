@@ -76,9 +76,7 @@ spec:
             failureThreshold: 24
           volumeMounts:
             - name: models-cache
-              mountPath: /models-cache
-            - name: shm
-              mountPath: /dev/shm
+              mountPath: /root/.cache/huggingface
           terminationMessagePolicy: File
           image: vllm/vllm-openai:latest
           command: ["sleep", "infinity"]
@@ -86,10 +84,6 @@ spec:
         - name: models-cache
           persistentVolumeClaim:
             claimName: vllm-models-cache
-        - name: shm
-          emptyDir:
-            medium: Memory
-            sizeLimit: 1Gi
       dnsPolicy: ClusterFirst
       tolerations:
         - key: nvidia.com/gpu
