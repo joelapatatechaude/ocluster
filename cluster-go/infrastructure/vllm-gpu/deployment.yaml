@@ -1,39 +1,38 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: mistral-7b
+  name: vllm-gpu
   namespace: vllm-gpu
   labels:
-    app: mistral-7b
+    app: vllm-gpu
 spec:
   strategy:
     type: Recreate
   replicas: 1
   selector:
     matchLabels:
-      app: mistral-7b
+      app: vllm-gpu
   template:
     metadata:
       labels:
-        app: mistral-7b
+        app: vllm-gpu
     spec:
       volumes:
       - name: cache-volume
         persistentVolumeClaim:
-          claimName: mistral-7b
+          claimName: vllm-gpu
       # vLLM needs to access the host's shared memory for tensor parallel inference.
       - name: shm
         emptyDir:
           medium: Memory
           sizeLimit: "2Gi"
       containers:
-      - name: mistral-7b
+      - name: vllm-gpu
         image: vllm/vllm-openai:latest
         command: ["/bin/sh", "-c"]
-        args: ["sleep infinity"]
-        #args: [
-        #  "vllm serve ibm-granite/granite-3.2-8b-instruct --trust-remote-code --enable-chunked-prefill --max_num_batched_tokens 1024"
-        #]
+        args: [
+          "vllm serve ibm-granite/granite-3.2-8b-instruct"
+        ]
         env:
         - name: HUGGING_FACE_HUB_TOKEN
           valueFrom:
@@ -44,12 +43,12 @@ spec:
         - containerPort: 8000
         resources:
           limits:
-            cpu: "10"
-            memory: 20G
+            cpu: "8"
+            memory: 25G
             nvidia.com/gpu: "1"
           requests:
             cpu: "2"
-            memory: 20G
+            memory: 25G
             nvidia.com/gpu: "1"
         volumeMounts:
         - mountPath: /.cache
