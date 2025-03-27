@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: mistral-7b
-  namespace: default
+  namespace: vllm-gpu
   labels:
     app: mistral-7b
 spec:
