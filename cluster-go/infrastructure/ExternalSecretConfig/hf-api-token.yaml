@@ -1,0 +1,24 @@
+apiVersion: external-secrets.io/v1beta1
+kind: ClusterExternalSecret
+metadata:
+  name: hf-api-token-secret
+  namespace: external-secrets
+spec:
+  externalSecretName: "hf-api-token-secret-generated"
+  refreshTime: "1m"
+  namespaceSelector:
+    matchLabels:
+      hf-api-token: yes-please
+  externalSecretSpec:
+    secretStoreRef:
+      kind: ClusterSecretStore
+      name: hf-api-token
+
+    refreshInterval: 1h
+    target:
+      name: hf-api-token
+      creationPolicy: Owner
+    data:
+      - secretKey: hf-api-token
+        remoteRef:
+          key: /openshift-hub/hf-api-token
