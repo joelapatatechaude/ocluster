@@ -12,6 +12,15 @@ spec:
         name: myOpenai
         type: openai
         url: https://api.openai.com/v1
+
+      - credentialsSecretRef:
+          name: local-llm-api-keys
+        models:
+          - name: ibm-granite/granite-3.2-8b-instruct
+        name: vllm-gpu-granite
+        type: openai
+        url: http://vllm-gpu.vllm-gpu.svc.cluster.local/v1/
+
       - credentialsSecretRef:
           name: local-llm-api-keys
         models:
