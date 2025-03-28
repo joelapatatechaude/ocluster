@@ -17,7 +17,7 @@ spec:
           name: local-llm-api-keys
         models:
           - name: ibm-granite/granite-3.2-8b-instruct
-        name: vllm-gpu-granite
+        name: vllm-gpu
         type: openai
         url: http://vllm-gpu.vllm-gpu.svc.cluster.local/v1/
 
@@ -25,40 +25,10 @@ spec:
           name: local-llm-api-keys
         models:
           - name: ibm-granite/granite-3.2-2b-instruct
-        name: vllm-cpu-granite
+        name: vllm-cpu
         type: openai
         url: http://vllm-cpu.vllm-cpu.svc.cluster.local/v1/
 
-
-      - credentialsSecretRef:
-          name: local-llm-api-keys
-        models:
-          - name: models/granite-3.0-2b-instruct-Q4_K_M.gguf
-        name: local-llm-3-2b
-        type: openai
-        url: http://granite-3-2b.llm.svc.cluster.local:8080/v1/
-      - credentialsSecretRef:
-          name: local-llm-api-keys
-        models:
-          - name: models/granite-3.0-8b-instruct-Q4_K_M.gguf
-        name: local-llm-3-8b
-        type: openai
-        url: http://granite-3-8b.llm.svc.cluster.local:8080/v1/
-      - credentialsSecretRef:
-          name: local-llm-api-keys
-        models:
-          - name: hf:neuralmagic/Llama2-7b-chat-pruned50-quant-ds
-        name: local-llm-deepsparse
-        type: openai
-        url: http://deepsparse.llm.svc.cluster.local:8080/v1/
-      - credentialsSecretRef:
-          name: local-llm-api-keys
-        models:
-          - name: hf:nm-testing/granite-7b-lab-pruned50-quant-ds
-        name: deepsparse
-        type: openai
-        url: >-
-          http://deepsparse-text-generation.deepsparse-text-generation.svc.cluster.local:8080/v1/
   ols:
     defaultModel: gpt-3.5-turbo
     defaultProvider: myOpenai
