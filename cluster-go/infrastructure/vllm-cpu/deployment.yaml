@@ -18,6 +18,10 @@ spec:
         app: vllm-cpu
     spec:
       volumes:
+      - name: config-volume
+        persistentVolumeClaim:
+          claimName: vllm-cpu-config
+
       - name: cache-volume
         persistentVolumeClaim:
           claimName: vllm-cpu
@@ -49,6 +53,8 @@ spec:
             cpu: "8"
             memory: 25G
         volumeMounts:
+        - mountPath: /.config
+          name: config-volume
         - mountPath: /.cache
           name: cache-volume
         - name: shm
