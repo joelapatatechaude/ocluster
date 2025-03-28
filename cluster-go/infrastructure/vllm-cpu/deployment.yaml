@@ -28,10 +28,10 @@ spec:
           sizeLimit: "10Gi"
       containers:
       - name: vllm-cpu
-        image: vllm/vllm-openai:latest
+        image: quay.io/rh_ee_cschmitz/vllm-openai-cpu
         command: ["/bin/sh", "-c"]
         args: [
-          "vllm serve ibm-granite/granite-3.2-8b-instruct --trust-remote-code --enable-chunked-prefill --max-model-len 8192"
+          "vllm serve ibm-granite/granite-3.2-8b-instruct --trust-remote-code --enable-chunked-prefill --max-model-len 8192 --device cpu"
         ]
         env:
         - name: HUGGING_FACE_HUB_TOKEN
