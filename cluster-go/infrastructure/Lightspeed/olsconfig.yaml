@@ -24,6 +24,15 @@ spec:
       - credentialsSecretRef:
           name: local-llm-api-keys
         models:
+          - name: ibm-granite/granite-3.2-2b-instruct
+        name: vllm-cpu-granite
+        type: openai
+        url: http://vllm-cpu.vllm-cpu.svc.cluster.local/v1/
+
+
+      - credentialsSecretRef:
+          name: local-llm-api-keys
+        models:
           - name: models/granite-3.0-2b-instruct-Q4_K_M.gguf
         name: local-llm-3-2b
         type: openai
