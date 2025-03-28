@@ -12,7 +12,7 @@ spec:
   externalSecretSpec:
     secretStoreRef:
       kind: ClusterSecretStore
-      name: hf-api-token
+      name: akeyless-cluster-secret-store
 
     refreshInterval: 1h
     target:
