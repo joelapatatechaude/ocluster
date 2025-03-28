@@ -31,7 +31,7 @@ spec:
         image: quay.io/rh_ee_cschmitz/vllm-openai-cpu
         command: ["/bin/sh", "-c"]
         args: [
-          "vllm serve ibm-granite/granite-3.2-8b-instruct --trust-remote-code --enable-chunked-prefill --max-model-len 8192 --device cpu"
+          "vllm serve ibm-granite/granite-3.2-2b-instruct --trust-remote-code --enable-chunked-prefill --max-model-len 8192 --device cpu"
         ]
         env:
         - name: HUGGING_FACE_HUB_TOKEN
