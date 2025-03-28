@@ -43,12 +43,12 @@ spec:
         - containerPort: 8000
         resources:
           limits:
-            cpu: "8"
-            memory: 25G
+            cpu: "2"
+            memory: 5G
             nvidia.com/gpu: "1"
           requests:
-            cpu: "2"
-            memory: 25G
+            cpu: "1"
+            memory: 5G
             nvidia.com/gpu: "1"
         volumeMounts:
         - mountPath: /.cache
