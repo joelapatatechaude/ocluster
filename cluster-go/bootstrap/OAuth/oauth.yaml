@@ -10,3 +10,10 @@ spec:
     htpasswd:
       fileData:
         name: htpass-my-secret
+  - name: github
+    clientID: Ov23li5G9ToHvT5DNhEV
+    clientSecret:
+      name: github-oauth-sandbox
+    organizations:
+      - openshift-chris
+
