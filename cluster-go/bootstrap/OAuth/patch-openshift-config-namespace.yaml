@@ -16,4 +16,5 @@ spec:
         metadata:
           labels:
             github-oauth-ocp: yes-please
+            github-oauth-sandbox: yes-please
       patchType: application/merge-patch+json
