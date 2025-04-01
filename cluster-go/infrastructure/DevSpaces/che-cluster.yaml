@@ -32,11 +32,8 @@ spec:
       template: <username>-devspaces
     secondsOfInactivityBeforeIdling: 9000
     storage:
-      pvcStrategy: per-workspace
-  gitServices:
-    github:
-      - endpoint: "https://github.com"
-        secretName: github-oauth-andromeda-secret
+      pvcStrategy: per-user
+  gitServices: {}
   networking:
     auth:
       gateway:
