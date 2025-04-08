@@ -115,7 +115,7 @@ metadata:
     version: v1
     app.openshift.io/runtime: nodejs
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: ratings
