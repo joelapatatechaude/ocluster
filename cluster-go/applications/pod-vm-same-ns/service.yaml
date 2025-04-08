@@ -1,0 +1,27 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: postgres
+  namespace: pod-vm
+  labels:
+    app: postgres
+    app.kubernetes.io/component: postgres
+    app.kubernetes.io/instance: postgres
+    app.kubernetes.io/name: postgres
+    app.openshift.io/runtime-version: '16.8'
+spec:
+  ipFamilies:
+    - IPv4
+  ports:
+    - name: 5432-tcp
+      protocol: TCP
+      port: 5432
+      targetPort: 5432
+  internalTrafficPolicy: Cluster
+  type: ClusterIP
+  ipFamilyPolicy: SingleStack
+  sessionAffinity: None
+  selector:
+    app: postgres
+    deployment: postgres
+
