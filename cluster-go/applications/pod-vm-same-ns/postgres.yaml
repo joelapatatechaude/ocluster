@@ -30,7 +30,7 @@ spec:
           env:
             - name: POSTGRES_PASSWORD
               value: the-password
-          image: 'postgres:16.8'
+          image: 'registry.redhat.io/rhel9/postgresql-16:16.5'
           ports:
             - containerPort: 5432
               protocol: TCP
