@@ -28,8 +28,8 @@ spec:
       containers:
         - name: postgres
           env:
-            name: POSTGRES_PASSWORD
-            value: the-password
+            - name: POSTGRES_PASSWORD
+              value: the-password
           image: 'postgres:16.8'
           ports:
             - containerPort: 5432
