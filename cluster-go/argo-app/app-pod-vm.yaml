@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: pod-vm
+  namespace: openshift-gitops
+  labels:
+    type: demo
+    app: pod-vm
+spec:
+  destination:
+    name: in-cluster
+  project: apps
+  source:
+    directory:
+      jsonnet: {}
+      recurse: true
+    path: cluster-go/applications/pod-vm-same-ns
+    repoURL: https://github.com/joelapatatechaude/ocluster
+  syncPolicy:
+    syncOptions:
+    - Prune=true
