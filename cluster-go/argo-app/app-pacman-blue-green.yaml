@@ -1,24 +1,23 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: bookinfo-nomesh
+  name: pacman-blue-green
   namespace: openshift-gitops
   labels:
-    app: bookinfo
     type: applications
-    service: ServiceMesh
+    app: pacman
 spec:
   destination:
     name: in-cluster
-    namespace: bookinfo-nomesh
+    namespace: pacman-dev
   project: apps
   source:
     directory:
       jsonnet: {}
       recurse: true
-    path: cluster-go/applications/bookinfo-nomesh
+    path: cluster-go/applications/pacman-blue-green
     repoURL: https://github.com/joelapatatechaude/ocluster
   syncPolicy:
     syncOptions:
-      - CreateNamespace=false
-      - Prune=true
+    - Prune=true
+    - CreateNamespace=true
