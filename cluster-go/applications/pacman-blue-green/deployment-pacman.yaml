@@ -35,7 +35,7 @@ spec:
         version: black
     spec:
       containers:
-      - image: quay.io/rh_ee_cschmitz/pacman:green
+      - image: quay.io/rh_ee_cschmitz/pacman:blue
         imagePullPolicy: Always
         name: pacman
         ports:
