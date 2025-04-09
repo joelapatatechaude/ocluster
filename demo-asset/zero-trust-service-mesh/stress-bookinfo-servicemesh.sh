@@ -1,5 +1,5 @@
 #!/bin/sh
-source ./env.sh
+source ../../env.sh
 source ~/.secrets/$MYDIR/route53
 
 NSG=bookinfo-servicemesh-istio
