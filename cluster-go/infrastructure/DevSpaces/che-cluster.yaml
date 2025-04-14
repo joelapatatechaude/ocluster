@@ -21,7 +21,7 @@ spec:
       enable: true
   containerRegistry: {}
   devEnvironments:
-    startTimeoutSeconds: 300
+    startTimeoutSeconds: 600
     secondsOfRunBeforeIdling: -1
     maxNumberOfWorkspacesPerUser: 10
     maxNumberOfRunningWorkspacesPerUser: 7
