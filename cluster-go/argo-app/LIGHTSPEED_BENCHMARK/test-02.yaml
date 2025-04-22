@@ -1,0 +1,16 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: lightspeed-test-02
+  namespace: openshift-gitops
+spec:
+  destination:
+    name: in-cluster
+    namespace: default
+  project: hub
+  source:
+    path: cluster-go/lightspeed-benchmark/test-02
+    repoURL: https://github.com/joelapatatechaude/ocluster/
+    targetRevision: main
+    helm:
+
