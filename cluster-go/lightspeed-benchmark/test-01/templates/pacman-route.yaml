@@ -1,0 +1,16 @@
+---
+
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: pacman
+  namespace: ols-test-01
+  labels: {}
+spec:
+  to:
+    kind: Service
+    name: pacman
+  tls: {}
+  port:
+    targetPort: 8080
+

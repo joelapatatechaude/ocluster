@@ -1,0 +1,15 @@
+---
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: puzzle2048
+  namespace: ols-test-03
+  labels: {}
+spec:
+  to:
+    kind: Service
+    name: puzzle2048
+  tls: {}
+  port:
+    targetPort: 8080
+

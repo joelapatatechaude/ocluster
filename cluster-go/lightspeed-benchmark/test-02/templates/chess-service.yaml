@@ -1,0 +1,15 @@
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: chess
+  namespace: ols-test-02
+spec:
+  selector:
+    app: chess
+  ports:
+    - protocol: TCP
+      port: 3000
+      targetPort: 3000
+

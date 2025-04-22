@@ -1,0 +1,14 @@
+---
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: tetris
+  namespace: ols-test-05
+  labels: {}
+spec:
+  to:
+    kind: Service
+    name: tetris
+  tls: {}
+  port:
+    targetPort: 3000

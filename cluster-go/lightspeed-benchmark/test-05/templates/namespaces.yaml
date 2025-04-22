@@ -1,0 +1,8 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ols-test-05
+  labels:
+    musthavenodeselector: "true"
+

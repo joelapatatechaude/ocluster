@@ -1,0 +1,14 @@
+---
+
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: compute-resources
+  namespace: ols-test-03
+spec:
+  hard:
+    requests.memory: 15Mi
+    limits.memory: 30Mi
+    requests.cpu: 20m
+    limits.cpu: 30m
+
