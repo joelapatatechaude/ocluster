@@ -5,7 +5,7 @@ metadata:
 subjects:
   - kind: ServiceAccount
     name: terminator
-    namespace: exercise06-admin-terminator
+    namespace: ols-test-06-admin-terminator
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole

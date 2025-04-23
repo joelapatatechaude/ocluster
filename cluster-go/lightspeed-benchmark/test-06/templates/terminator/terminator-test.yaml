@@ -2,7 +2,7 @@ kind: Pod
 apiVersion: v1
 metadata:
   name: terminator-test
-  namespace: exercise06-admin-terminator
+  namespace: ols-test-06-admin-terminator
   labels:
     app: terminator-test
 spec:
