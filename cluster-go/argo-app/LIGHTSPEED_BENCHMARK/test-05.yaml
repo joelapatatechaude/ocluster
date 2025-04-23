@@ -3,6 +3,8 @@ kind: Application
 metadata:
   name: lightspeed-test-05
   namespace: openshift-gitops
+  labels:
+    type: benchmark
 spec:
   destination:
     name: in-cluster

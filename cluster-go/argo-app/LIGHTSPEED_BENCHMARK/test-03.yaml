@@ -1,8 +1,10 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: ligthspeed-test-03
+  name: lightspeed-test-03
   namespace: openshift-gitops
+  labels:
+    type: benchmark
 spec:
   destination:
     name: in-cluster
