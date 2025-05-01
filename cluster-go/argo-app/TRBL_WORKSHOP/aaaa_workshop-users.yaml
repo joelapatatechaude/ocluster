@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: workshop-users
+  namespace: openshift-gitops
+  labels:
+    type: workshop-trbl
+spec:
+  destination:
+    name: in-cluster
+    namespace: default
+  project: trbl-workshop
+  source:
+    path: cluster-go/trbl-workshop/users
+    repoURL: https://github.com/joelapatatechaude/ocluster/
+    targetRevision: main
+    helm:
+      parameters:
+      - name: "userCount"
+        value: "4"
