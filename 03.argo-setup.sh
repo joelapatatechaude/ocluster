@@ -53,3 +53,4 @@ KUBECONFIG=$KUBECONFIG  create_app_project bootstrap
 KUBECONFIG=$KUBECONFIG  create_app_project operator
 KUBECONFIG=$KUBECONFIG  create_app_project infrastructure
 KUBECONFIG=$KUBECONFIG  create_app_project apps
+KUBECONFIG=$KUBECONFIG  create_app_project trbl-workshop
