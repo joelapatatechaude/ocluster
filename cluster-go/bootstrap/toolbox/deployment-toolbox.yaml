@@ -13,8 +13,6 @@ spec:
   selector:
     matchLabels:
       app: toolbox
-  strategy:
-    type: Recreate
   template:
     metadata:
       labels:
@@ -39,3 +37,5 @@ spec:
       schedulerName: default-scheduler
       securityContext: {}
       terminationGracePeriodSeconds: 30
+      serviceAccountName: sa-toolbox
+
