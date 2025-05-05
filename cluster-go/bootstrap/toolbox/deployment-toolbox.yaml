@@ -5,6 +5,7 @@ metadata:
     alpha.image.policy.openshift.io/resolve-names: '*'
     app.openshift.io/route-disabled: "false"
   name: toolbox
+  namespace: toolbox
 spec:
   progressDeadlineSeconds: 600
   replicas: 1
