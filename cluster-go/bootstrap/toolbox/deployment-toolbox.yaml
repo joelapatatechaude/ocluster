@@ -24,6 +24,9 @@ spec:
       containers:
       - image: quay.io/rh_ee_cschmitz/toolbox:latest
         imagePullPolicy: Always
+        commands:
+          - sleep
+          - infinity
         name: toolbox
         ports:
         - containerPort: 8000
