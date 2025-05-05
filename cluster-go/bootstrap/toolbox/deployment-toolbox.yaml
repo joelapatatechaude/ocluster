@@ -24,7 +24,7 @@ spec:
       containers:
       - image: quay.io/rh_ee_cschmitz/toolbox:latest
         imagePullPolicy: Always
-        commands:
+        command:
           - sleep
           - infinity
         name: toolbox
