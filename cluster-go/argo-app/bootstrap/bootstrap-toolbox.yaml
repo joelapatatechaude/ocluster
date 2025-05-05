@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "4"
+  name: in-cluster-users
+  namespace: openshift-gitops
+  labels:
+    bootstrap: bootstrap
+spec:
+  destination:
+    name: in-cluster
+  project: bootstrap
+  source:
+    directory:
+      jsonnet: {}
+      recurse: true
+    path: cluster-go/bootstrap/toolbox
+    repoURL: https://github.com/joelapatatechaude/ocluster
+  syncPolicy:
+    automated: {}
+    syncOptions:
+    - Prune=true
