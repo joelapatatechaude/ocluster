@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    alpha.image.policy.openshift.io/resolve-names: '*'
+    app.openshift.io/route-disabled: "false"
+  name: http-win-iso
+  namespace: http-win-iso
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: http-win-iso
+  template:
+    metadata:
+      labels:
+        app: http-win-iso
+        deployment: http-win-iso
+    spec:
+      containers:
+      - image: quay.io/rh_ee_cschmitz/win-iso:latest
+        imagePullPolicy: Always
+        name: http-win-iso
+        ports:
+        - containerPort: 8000
+          protocol: TCP
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30

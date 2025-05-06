@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: http-win-iso
+  namespace: openshift-gitops
+  labels:
+    citrix-vdi: citrix-vdi
+spec:
+  destination:
+    name: in-cluster
+  project: citrix-vdi
+  source:
+    directory:
+      jsonnet: {}
+      recurse: true
+    path: cluster-go/citrix-vdi
+    repoURL: https://github.com/joelapatatechaude/ocluster
+  syncPolicy:
+    syncOptions:
+      - Prune=true
+      - CreateNamespace=true
