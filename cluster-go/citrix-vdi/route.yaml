@@ -11,6 +11,6 @@ spec:
     name: http-win-iso
   port:
     targetPort: 80
-    tls:
-      termination: edge
-      insecureEdgeTerminationPolicy: Redirect
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect
