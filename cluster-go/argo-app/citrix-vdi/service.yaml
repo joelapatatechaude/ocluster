@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: http-win-iso
+  namespace: http-win-iso
+  labels:
+    app: http-win-iso
+spec:
+  selector:
+    app: http-win-iso
+  ports:
+    - protocol: TCP
+      port: 80          # Service port
+      targetPort: 8000  # Container port
+  type: ClusterIP

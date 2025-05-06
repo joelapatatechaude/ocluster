@@ -1,0 +1,16 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: http-win-iso
+  namespace: http-win-iso
+  labels:
+    app: http-win-iso
+spec:
+  to:
+    kind: Service
+    name: http-win-iso
+  port:
+    targetPort: 80
+    tls:
+      termination: edge
+      insecureEdgeTerminationPolicy: Redirect
