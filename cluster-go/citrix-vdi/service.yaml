@@ -9,7 +9,12 @@ spec:
   selector:
     app: http-win-iso
   ports:
-    - protocol: TCP
-      port: 80          # Service port
-      targetPort: 8000  # Container port
+    - name: 8000-tcp
+      port: 8000	      port: 8000
+      protocol: TCP	      protocol: TCP
+      targetPort: 8000	      targetPort: 8000
+    - name: 8080-tcp	    - name: 8080-tcp
+      port: 8080	      port: 8080
+      protocol: TCP	      protocol: TCP
+      targetPort: 8080	      targetPort: 8080
   type: ClusterIP
