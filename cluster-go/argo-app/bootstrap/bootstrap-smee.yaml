@@ -10,7 +10,7 @@ metadata:
 spec:
   destination:
     name: in-cluster
-  project: smee
+  project: bootstrap
   source:
     directory:
       jsonnet: {}
@@ -21,3 +21,10 @@ spec:
     automated: {}
     syncOptions:
     - Prune=true
+  ignoreDifferences:
+  - group: "*"
+    kind: ConfigMap
+    jsonPointers:
+      - /data
+
+
