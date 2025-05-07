@@ -26,6 +26,10 @@ spec:
           - sleep
           - infinity
         volumeMounts:
+          - name: smee-config-volume
+            mountPath: /etc/smee/smee-config.txt
+            subPath: smee-config.txt
+            readOnly: true
           - name: smee-ca-volume
             mountPath: /opt/smee/ca
             readOnly: true
@@ -45,3 +49,9 @@ spec:
         - name: smee-ca-volume
           configMap:
             name: smee-cabundle
+        - name: smee-config-volume
+          configMap:
+            name: smee-config
+            items:
+              - key: smee-config.txt
+                path: smee-config.txt
