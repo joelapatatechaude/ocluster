@@ -3,4 +3,4 @@ apiVersion: v1
 metadata:
   name: smee
   labels:
-    a: b
+    aa: bb
