@@ -25,6 +25,10 @@ spec:
         command:
           - sleep
           - infinity
+        volumeMounts:
+          - name: smee-ca-volume
+            mountPath: /opt/smee/ca
+            readOnly: true
         name: smee
         resources: {}
         terminationMessagePath: /dev/termination-log
@@ -34,3 +38,7 @@ spec:
       schedulerName: default-scheduler
       securityContext: {}
       terminationGracePeriodSeconds: 30
+      volumes:
+        - name: smee-ca-volume
+          configMap:
+            name: smee-cabundle
