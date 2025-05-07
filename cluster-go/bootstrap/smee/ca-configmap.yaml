@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: 'cabundle'
+  namespace: smee
+  annotations:
+    service.beta.openshift.io/inject-cabundle: 'true'
+data: {}
+binaryData: {}
+immutable: false
