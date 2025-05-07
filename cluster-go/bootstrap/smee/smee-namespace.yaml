@@ -4,3 +4,4 @@ metadata:
   name: smee
   labels:
     this: test
+    toto: tata
