@@ -2,6 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: smee-config
+  namespace: smee
 data:
   smee-config.txt: |
     https://smee.io/$SMEE_CLUSTERGO_ARGOCD http://openshift-gitops-server.openshift-gitops.svc.cluster.local/api/webhook
