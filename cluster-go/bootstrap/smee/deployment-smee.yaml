@@ -29,6 +29,9 @@ spec:
           - name: smee-ca-volume
             mountPath: /opt/smee/ca
             readOnly: true
+        env:
+          - name: NODE_EXTRA_CA_CERTS
+            value: "/opt/smee/ca"
         name: smee
         resources: {}
         terminationMessagePath: /dev/termination-log
