@@ -31,7 +31,7 @@ spec:
             readOnly: true
         env:
           - name: NODE_EXTRA_CA_CERTS
-            value: "/opt/smee/ca"
+            value: "/opt/smee/ca/service-ca.crt"
         name: smee
         resources: {}
         terminationMessagePath: /dev/termination-log
