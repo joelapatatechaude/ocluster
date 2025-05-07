@@ -3,10 +3,4 @@ apiVersion: v1
 metadata:
   name: smee
   labels:
-    this: test
-    toto: tataatat
-    hoh: haha
-    asdfsdfsda: adsfdf
-    tttt: tttt
-    aaa: aaa
-    vv: vv
+    a: b
