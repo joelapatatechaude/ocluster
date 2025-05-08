@@ -22,9 +22,6 @@ spec:
       containers:
       - image: quay.io/rh_ee_cschmitz/smee:latest
         imagePullPolicy: Always
-        command:
-          - sleep
-          - infinity
         volumeMounts:
           - name: smee-config-volume
             mountPath: /etc/smee/smee-config.txt
