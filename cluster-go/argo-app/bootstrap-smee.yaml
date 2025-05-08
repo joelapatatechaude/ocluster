@@ -11,20 +11,18 @@ spec:
   destination:
     name: in-cluster
   project: bootstrap
+
   source:
-    directory:
-      jsonnet: {}
-      recurse: true
     path: cluster-go/bootstrap/smee
     repoURL: https://github.com/joelapatatechaude/ocluster
+    targetRevision: main
+    helm:
+      parameters:
+        - name: "smee_uuid"
+          value: "$SMEE_UUID"
+        - name: "smee_github_argocd"
+          value: "$SMEE_GITHUB_ARGOCD"
   syncPolicy:
     automated: {}
     syncOptions:
-    - Prune=true
-  ignoreDifferences:
-  - group: "*"
-    kind: ConfigMap
-    jsonPointers:
-      - /data
-
-
+      - Prune=true
