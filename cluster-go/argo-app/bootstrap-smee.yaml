@@ -26,3 +26,8 @@ spec:
     automated: {}
     syncOptions:
       - Prune=true
+  ignoreDifferences:
+  - group: "*"
+    kind: ConfigMap
+    jsonPointers:
+      - /data
