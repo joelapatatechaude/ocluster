@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: http-citrix-iso
+  namespace: http-citrix-iso
+  labels:
+    app: http-citrix-iso
+spec:
+  selector:
+    app: http-citrix-iso
+  ports:
+    - name: 8000-tcp
+      port: 8000
+      protocol: TCP
+      targetPort: 8000
+    - name: 8080-tcp
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+  type: ClusterIP

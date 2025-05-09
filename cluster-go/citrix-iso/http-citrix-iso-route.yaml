@@ -1,0 +1,18 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  annotations:
+    openshift.io/host.generated: 'true'
+  name: http-citrix-iso
+  namespace: http-citrix-iso
+spec:
+  path: /
+  port:
+    targetPort: 8000-tcp
+  tls:
+    termination: edge
+  to:
+    kind: Service
+    name: http-citrix-iso
+    weight: 100
+  wildcardPolicy: None
