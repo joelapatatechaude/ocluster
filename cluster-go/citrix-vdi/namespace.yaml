@@ -1,4 +1,4 @@
 ﻿kind: Namespace
 apiVersion: v1
 metadata:
-  name: http-win-iso
+  name: citrix-test02
