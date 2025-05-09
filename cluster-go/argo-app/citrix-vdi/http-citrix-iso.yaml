@@ -1,11 +1,11 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: http-win-iso
+  name: http-citrix-iso
   namespace: openshift-gitops
   labels:
     http: http
-    iso: windows
+    iso: citrix
 spec:
   destination:
     name: in-cluster
@@ -14,7 +14,7 @@ spec:
     directory:
       jsonnet: {}
       recurse: true
-    path: cluster-go/windows-iso
+    path: cluster-go/citrix-iso
     repoURL: https://github.com/joelapatatechaude/ocluster
   syncPolicy:
     syncOptions:
