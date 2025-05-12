@@ -2,10 +2,13 @@ apiVersion: redhatcop.redhat.io/v1alpha1
 kind: Patch
 metadata:
   name: add-imagepullsecret-to-default-sa
-  namespace: http-citrix-iso
+  namespace: patch-operator
 spec:
+  serviceAccountRef:
+    name: patch-operator-sa
   patches:
-    - targetObjectRef:
+    add-label:
+      targetObjectRef:
         apiVersion: v1
         kind: ServiceAccount
         name: default
