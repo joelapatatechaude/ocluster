@@ -16,4 +16,4 @@ spec:
       patchTemplate: |
         imagePullSecrets:
           - name: quay-schmitz-secret
-      patchType: merge
+      patchType: application/merge-patch+json
