@@ -1,0 +1,16 @@
+apiVersion: patch.apps/v1alpha1
+kind: Patch
+metadata:
+  name: add-imagepullsecret-to-default-sa
+  namespace: http-citrix-iso
+spec:
+  patches:
+    - targetObjectRef:
+        apiVersion: v1
+        kind: ServiceAccount
+        name: default
+        namespace: http-citrix-iso
+      patchTemplate: |
+        imagePullSecrets:
+          - name: quay-schmitz-secret
+      patchType: merge
