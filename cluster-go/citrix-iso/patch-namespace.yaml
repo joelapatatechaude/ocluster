@@ -1,4 +1,4 @@
-apiVersion: patch.apps/v1alpha1
+apiVersion: redhatcop.redhat.io/v1alpha1
 kind: Patch
 metadata:
   name: add-imagepullsecret-to-default-sa
