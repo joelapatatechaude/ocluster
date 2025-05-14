@@ -1,0 +1,6 @@
+﻿kind: Namespace
+apiVersion: v1
+metadata:
+  name: citrix-vdi-udn
+  labels:
+    k8s.ovn.org/primary-user-defined-network: ''
