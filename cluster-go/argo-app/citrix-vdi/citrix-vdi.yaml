@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: citrix-vid
+  name: citrix-vdi
   namespace: openshift-gitops
   labels:
     citrix-vdi: citrix-vdi
