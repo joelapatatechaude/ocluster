@@ -1,4 +1,4 @@
 ﻿kind: Namespace
 apiVersion: v1
 metadata:
-  name: citrix-test02
+  name: citrix-vlan
