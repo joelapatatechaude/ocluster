@@ -10,5 +10,5 @@ spec:
         "name": "nad-one",
         "type": "ovn-k8s-cni-overlay",
         "netAttachDefName": "citrix-vlan/nad-components",
-        "topology": "layer2",
+        "topology": "layer2"
     }
