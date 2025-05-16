@@ -11,5 +11,4 @@ spec:
         "type": "ovn-k8s-cni-overlay",
         "netAttachDefName": "citrix-vlan/nad-components",
         "topology": "layer2",
-        "subnets": "192.168.20.0/24"
     }
