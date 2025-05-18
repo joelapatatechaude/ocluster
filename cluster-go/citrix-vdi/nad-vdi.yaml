@@ -1,0 +1,14 @@
+apiVersion: k8s.cni.cncf.io/v1
+kind: NetworkAttachmentDefinition
+metadata:
+  name: nad-vdi
+  namespace: citrix-vdi
+spec:
+  config: |-
+    {
+        "cniVersion": "0.3.1",
+        "name": "nad-one",
+        "type": "ovn-k8s-cni-overlay",
+        "netAttachDefName": "citrix-vdi/nad-vdi",
+        "topology": "layer2"
+    }
