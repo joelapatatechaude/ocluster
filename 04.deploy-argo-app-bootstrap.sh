@@ -4,6 +4,7 @@
 set -a
 source ./env.sh
 source ~/.secrets/$MYDIR/route53
+source ~/.secrets/smee-channel-master.txt
 set +a
 
 echo "NEED TO DEPLOY APP FROM GITHUB MAYBE?"
