@@ -1,0 +1,18 @@
+apiVersion: k8s.ovn.org/v1
+kind: ClusterUserDefinedNetwork
+metadata:
+  name: cluster-udn-citrix
+  annotations:
+    argocd.argoproj.io/sync-wave: '10'
+spec:
+  namespaceSelector:
+    matchLabels:
+      udn-citrix: 'yes'
+  network:
+    layer2:
+      ipam:
+        lifecycle: Persistent
+      role: Primary
+      subnets:
+        - 192.168.80.0/24
+    topology: Layer2
