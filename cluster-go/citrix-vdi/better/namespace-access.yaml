@@ -3,4 +3,4 @@ apiVersion: v1
 metadata:
   name: citrix-access
   labels:
-    udn-citrix
+    udn-citrix: ""
