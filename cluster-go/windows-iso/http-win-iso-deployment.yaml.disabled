@@ -20,7 +20,7 @@ spec:
         deployment: http-win-iso
     spec:
       containers:
-      - image: quay.io/rh_ee_cschmitz/win-iso:latest
+      - image: quay.io/rh_ee_cschmitz/win-iso:2k19
         imagePullPolicy: Always
         name: http-win-iso
         ports:
