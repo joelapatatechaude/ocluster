@@ -32,7 +32,7 @@ spec:
           sizeLimit: "10Gi"
       containers:
       - name: vllm-cpu
-        image: quay.io/rh_ee_cschmitz/vllm-openai-cpu
+        image: public.ecr.aws/q9t5s3a7/vllm-cpu-release-repo:v0.9.0.1
         command: ["/bin/sh", "-c"]
         args: [
           "vllm serve ibm-granite/granite-3.3-2b-instruct --trust-remote-code --enable-chunked-prefill --max-model-len 8192 --device cpu"
