@@ -1,0 +1,13 @@
+apiVersion: cdi.kubevirt.io/v1beta1
+kind: DataVolume
+metadata:
+  name: windk19-base-import
+  namespace: openshift-virtualization-os-images
+spec:
+  source:
+    registry:
+      url: "docker://quay.io/rh_ee_cschmitz/golden-image:2k19"
+  storage:
+    resources:
+      requests:
+        storage: 20Gi
