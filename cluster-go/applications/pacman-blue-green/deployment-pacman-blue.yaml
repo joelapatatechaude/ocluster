@@ -6,12 +6,13 @@ metadata:
     app.openshift.io/route-disabled: "false"
   labels:
     app: pacman
+    color: blue
     app.kubernetes.io/component: pacman
     app.kubernetes.io/instance: pacman
     app.kubernetes.io/name: pacman
     app.kubernetes.io/part-of: pacman-app
     app.openshift.io/runtime: nodejs
-  name: pacman
+  name: pacman-blue
 spec:
   progressDeadlineSeconds: 600
   replicas: 3

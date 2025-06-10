@@ -12,7 +12,7 @@ metadata:
     app.kubernetes.io/part-of: pacman-app
     app.openshift.io/runtime: nodejs
     app.openshift.io/runtime-version: 16-ubi8
-  name: pacman
+  name: pacman-green
 spec:
   ports:
   - name: 8080-tcp
@@ -21,6 +21,7 @@ spec:
     targetPort: 8080
   selector:
     app: pacman
+    color: green
     deployment: pacman
   sessionAffinity: None
   type: ClusterIP
