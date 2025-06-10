@@ -22,6 +22,6 @@ spec:
     weight: 50
   alternateBackends:
     - kind: Service
-      name: pacman-blue
+      name: pacman-green
       weight: 50
   wildcardPolicy: None
