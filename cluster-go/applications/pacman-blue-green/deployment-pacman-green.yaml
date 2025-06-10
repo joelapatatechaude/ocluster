@@ -20,6 +20,7 @@ spec:
   selector:
     matchLabels:
       app: pacman
+      color: green
   strategy:
     rollingUpdate:
       maxSurge: 25%
@@ -33,7 +34,7 @@ spec:
       labels:
         app: pacman
         deployment: pacman
-        version: black
+        color: green
     spec:
       containers:
       - image: quay.io/rh_ee_cschmitz/pacman:green

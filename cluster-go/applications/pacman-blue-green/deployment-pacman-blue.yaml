@@ -20,6 +20,7 @@ spec:
   selector:
     matchLabels:
       app: pacman
+      color: blue
   strategy:
     rollingUpdate:
       maxSurge: 25%
@@ -33,7 +34,7 @@ spec:
       labels:
         app: pacman
         deployment: pacman
-        version: black
+        color: blue
     spec:
       containers:
       - image: quay.io/rh_ee_cschmitz/pacman:blue
