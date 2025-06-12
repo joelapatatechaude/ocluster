@@ -28,10 +28,12 @@ spec:
           sizeLimit: "10Gi"
       containers:
       - name: vllm-gpu
-        image: vllm/vllm-openai:latest
-        command: ["/bin/sh", "-c"]
+        image: rhaiis/vllm-cuda-rhel9:latest
+        command:
+          - /bin/sh
+          - '-c'
         args: [
-          "vllm serve ibm-granite/granite-3.3-8b-instruct --trust-remote-code --enable-chunked-prefill --max-model-len 30000 --gpu-memory-utilization 0.95"
+          "vllm serve ibm-granite/granite-3.3-8b-instruct --trust-remote-code --tensor-parallel-size=1 --max-model-len 131072"
         ]
         env:
         - name: HUGGING_FACE_HUB_TOKEN
