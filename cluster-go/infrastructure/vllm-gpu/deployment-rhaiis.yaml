@@ -45,15 +45,15 @@ spec:
         - containerPort: 8000
         resources:
           limits:
-            cpu: "0.5"
-            memory: 5G
+            cpu: "5"
+            memory: 15G
             nvidia.com/gpu: "1"
           requests:
-            cpu: "0.5"
+            cpu: "1"
             memory: 5G
             nvidia.com/gpu: "1"
         volumeMounts:
-        - mountPath: /.cache
+        - mountPath: /opt/app-root/src/.cache
           name: cache-volume
         - name: shm
           mountPath: /dev/shm
