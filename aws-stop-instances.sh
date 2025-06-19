@@ -10,4 +10,4 @@ echo $IDS
 
 
 echo "$IDS" > aws-instances-to-resume.txt
-aws ec2 stop-instances --instance-ids $IDS
+aws ec2 stop-instances --instance-ids $IDS --region $REGION

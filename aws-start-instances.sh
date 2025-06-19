@@ -9,7 +9,7 @@ set +a
 IDS=$(cat aws-instances-to-resume.txt)
 echo $IDS
 
-aws ec2 start-instances --instance-ids $IDS
+aws ec2 start-instances --instance-ids $IDS --region $REGION
 
 function test {
     echo "testing $1 kubernetes enpoint"
