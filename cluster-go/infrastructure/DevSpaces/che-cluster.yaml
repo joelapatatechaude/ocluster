@@ -27,6 +27,8 @@ spec:
     maxNumberOfRunningWorkspacesPerUser: 7
     containerBuildConfiguration:
       openShiftSecurityContextConstraint: container-build
+    ignoredUnrecoverableEvents:
+      - FailedScheduling
     defaultNamespace:
       autoProvision: true
       template: <username>-devspaces
