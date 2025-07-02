@@ -24,9 +24,6 @@ subjects:
   name: arslan-admin
 - apiGroup: rbac.authorization.k8s.io
   kind: User
-  name: johan-admin
-- apiGroup: rbac.authorization.k8s.io
-  kind: User
   name: liam-admin
 - apiGroup: rbac.authorization.k8s.io
   kind: User
@@ -34,3 +31,9 @@ subjects:
 - apiGroup: rbac.authorization.k8s.io
   kind: User
   name: someone-admin
+- apiGroup: rbac.authorization.k8s.io
+  kind: User
+  name: jpt-admin
+- apiGroup: rbac.authorization.k8s.io
+  kind: User
+  name: johng-admin
