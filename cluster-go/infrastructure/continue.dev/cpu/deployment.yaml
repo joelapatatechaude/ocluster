@@ -1,0 +1,73 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vllm-cpu
+  namespace: vllm-cpu-continue
+  labels:
+    app: vllm-cpu
+spec:
+  strategy:
+    type: Recreate
+  replicas: 0
+  selector:
+    matchLabels:
+      app: vllm-cpu
+  template:
+    metadata:
+      labels:
+        app: vllm-cpu
+    spec:
+      volumes:
+      - name: config-volume
+        persistentVolumeClaim:
+          claimName: vllm-cpu-config
+
+      - name: cache-volume
+        persistentVolumeClaim:
+          claimName: vllm-cpu
+      # vLLM needs to access the host's shared memory for tensor parallel inference.
+      - name: shm
+        emptyDir:
+          medium: Memory
+          sizeLimit: "10Gi"
+      containers:
+      - name: vllm-cpu
+        image:  registry.redhat.io/rhaiis/vllm-cuda-rhel9:latest
+        command: ["/bin/sh", "-c"]
+        args: [
+          "vllm serve ibm-granite/granite-3.3-2b-instruct --trust-remote-code --enable-chunked-prefill --max-model-len 8192 --device cpu"
+        ]
+        env:
+        - name: HUGGING_FACE_HUB_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: hf-api-token
+              key: hf-api-token
+        ports:
+        - containerPort: 8000
+        resources:
+          limits:
+            cpu: "8"
+            memory: 25G
+          requests:
+            cpu: "8"
+            memory: 25G
+        volumeMounts:
+        - mountPath: /.config
+          name: config-volume
+        - mountPath: /.cache
+          name: cache-volume
+        - name: shm
+          mountPath: /dev/shm
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 300
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 300
+          periodSeconds: 5
