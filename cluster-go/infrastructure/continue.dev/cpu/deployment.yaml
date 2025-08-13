@@ -35,7 +35,7 @@ spec:
         image:  registry.redhat.io/rhaiis/vllm-cuda-rhel9:3.0
         command: ["/bin/sh", "-c"]
         args: [
-          "vllm serve ibm-granite/granite-embedding-125m-english --trust-remote-code --enable-chunked-prefill --max-model-len 512 --device cpu"
+          "vllm serve ibm-granite/granite-embedding-125m-english --trust-remote-code --max-model-len 512 --device cpu"
         ]
         env:
         - name: HUGGING_FACE_HUB_TOKEN
