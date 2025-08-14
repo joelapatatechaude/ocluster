@@ -32,7 +32,7 @@ spec:
           sizeLimit: "10Gi"
       containers:
       - name: vllm-cpu
-        image:  registry.redhat.io/rhaiis/vllm-cuda-rhel9:3.0
+        image:  public.ecr.aws/q9t5s3a7/vllm-cpu-release-repo:v0.10.0
         command: ["/bin/sh", "-c"]
         args: [
           "vllm serve ibm-granite/granite-embedding-125m-english --trust-remote-code --max-model-len 512 --device cpu"
