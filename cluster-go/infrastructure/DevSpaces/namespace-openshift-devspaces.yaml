@@ -4,8 +4,8 @@ metadata:
   labels:
     mutate-cpu: 'true'
     github-oauth-devspaces-sandbox: yes-please
+    openai-token: yes-please
   annotations:
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
     argocd.argoproj.io/sync-wave: '-10'
   name: openshift-devspaces
-
