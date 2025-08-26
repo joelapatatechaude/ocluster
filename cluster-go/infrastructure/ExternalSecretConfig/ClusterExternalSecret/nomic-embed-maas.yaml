@@ -1,0 +1,23 @@
+apiVersion: external-secrets.io/v1beta1
+kind: ClusterExternalSecret
+metadata:
+  name: nomic-embed-mass-secret
+  namespace: external-secrets
+spec:
+  externalSecretName: "nomic-embed-mass-secret-generated"
+  refreshTime: "1m"
+  namespaceSelector:
+    matchLabels:
+      nomic-embed-mass: yes-please
+  externalSecretSpec:
+    secretStoreRef:
+      kind: ClusterSecretStore
+      name: akeyless-cluster-secret-store
+
+    refreshInterval: 1h
+    target:
+      name: nomic-embed-mass
+      creationPolicy: Owner
+    dataFrom:
+      - extract: apitoken
+          key: /openshift-hub/nomic-embed-maas
