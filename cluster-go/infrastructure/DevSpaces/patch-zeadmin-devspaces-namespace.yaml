@@ -16,5 +16,6 @@ spec:
         metadata:
           labels:
             openai-token: yes-please
-            nomic-embed-mass: yes-please
+            nomic-embed-maas: yes-please
+            granite-maas: yes-please
       patchType: application/merge-patch+json
