@@ -19,5 +19,5 @@ spec:
       name: nomic-embed-mass
       creationPolicy: Owner
     dataFrom:
-    - extract: apitoken
-      key: /openshift-hub/nomic-embed-maas
+      - extract: apitoken
+        key: /openshift-hub/nomic-embed-maas
