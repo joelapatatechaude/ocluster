@@ -10,7 +10,7 @@ spec:
     add-label:
       targetObjectRef:
         apiVersion: v1
-        kind: namespace
+        kind: Namespace
         name: zeadmin-devspaces
       patchTemplate: |
         metadata:
