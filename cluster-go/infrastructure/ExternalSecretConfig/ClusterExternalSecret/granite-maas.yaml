@@ -1,14 +1,14 @@
 apiVersion: external-secrets.io/v1beta1
 kind: ClusterExternalSecret
 metadata:
-  name: granite-mass-secret
+  name: granite-maas-secret
   namespace: external-secrets
 spec:
-  externalSecretName: "granite-mass-secret-generated"
+  externalSecretName: "granite-maas-secret-generated"
   refreshTime: "1m"
   namespaceSelector:
     matchLabels:
-      granite-mass: yes-please
+      granite-maas: yes-please
   externalSecretSpec:
     secretStoreRef:
       kind: ClusterSecretStore
@@ -16,7 +16,7 @@ spec:
 
     refreshInterval: 1h
     target:
-      name: granite-mass
+      name: granite-maas
       creationPolicy: Owner
     dataFrom:
       - extract:
