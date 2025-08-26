@@ -10,10 +10,14 @@ spec:
     add-label:
       targetObjectRef:
         apiVersion: v1
-        kind: Namespace
-        name: zeadmin-devspaces
+        kind: Secret
+        namespace: zeadmin-devspaces
+        name: openai-api-keys
       patchTemplate: |
         metadata:
           labels:
-            openai-token: yes-please
+            controller.devfile.io/mount-to-devworkspace: 'true'
+            controller.devfile.io/watch-secret: 'true'
+          annotations:
+            controller.devfile.io/mount-as: env
       patchType: application/merge-patch+json
