@@ -18,4 +18,5 @@ spec:
             openai-token: yes-please
             nomic-embed-maas: yes-please
             granite-3-3-8b-maas: yes-please
+            qwen-14b-maas: yes-please
       patchType: application/merge-patch+json
