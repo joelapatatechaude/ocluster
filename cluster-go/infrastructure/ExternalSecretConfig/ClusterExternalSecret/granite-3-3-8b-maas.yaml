@@ -1,10 +1,10 @@
 apiVersion: external-secrets.io/v1beta1
 kind: ClusterExternalSecret
 metadata:
-  name: granite-maas-secret
+  name: granite-3-3-8b-maas-secret
   namespace: external-secrets
 spec:
-  externalSecretName: "granite-maas-secret-generated"
+  externalSecretName: "granite-3-3-8b-maas-secret-generated"
   refreshTime: "1m"
   namespaceSelector:
     matchLabels:
@@ -16,8 +16,8 @@ spec:
 
     refreshInterval: 1h
     target:
-      name: granite-maas
+      name: granite-3-3-8b-maas
       creationPolicy: Owner
     dataFrom:
       - extract:
-          key: /openshift-hub/granite-maas
+          key: /openshift-hub/granite-3-3-8b-maas
