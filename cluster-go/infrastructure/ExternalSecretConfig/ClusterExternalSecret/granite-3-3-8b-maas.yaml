@@ -8,7 +8,7 @@ spec:
   refreshTime: "1m"
   namespaceSelector:
     matchLabels:
-      granite-maas: yes-please
+      granite-3-3-8b-maas: yes-please
   externalSecretSpec:
     secretStoreRef:
       kind: ClusterSecretStore
