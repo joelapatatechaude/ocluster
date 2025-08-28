@@ -76,4 +76,6 @@ else
 fi
 echo "it could be I lost OpenShift connectivity, maybe due to auth changes, for a few minutes"
 
-echo "I t could be I need to reapply the 03.argo-setup.sh to fix some permission agina..."
+echo "I t could be I need to reapply the 03.argo-setup.sh to fix some permission again..."
+
+echo "/!\ Most likely I need to patch the patch-operator yaml resource. The default limits for the manager container is too small: 500mi, and I crash at ~570Mi. Make it 1000Mi /!\"
