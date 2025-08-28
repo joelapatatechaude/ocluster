@@ -30,15 +30,6 @@ spec:
         type: openai
         url: http://vllm-cpu.vllm-cpu.svc.cluster.local/v1/
 
-      - credentialsSedretRef:
-          name: granite-lightspeed-maas
-        models:
-          - name: granite-3-3-8b-instruct
-        name: granite-maas
-        type: openai
-        url: https://granite-3-3-8b-instruct-maas-apicast-production.apps.prod.rhoai.rh-aiservices-bu.com:443/v1/
-
-
 
   ols:
     defaultModel: gpt-5-mini
