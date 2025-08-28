@@ -1,14 +1,14 @@
 apiVersion: external-secrets.io/v1beta1
 kind: ClusterExternalSecret
 metadata:
-  name: qwen-14b-lightspeed-maas-secret
+  name: granite-lightspeed-maas-secret
   namespace: external-secrets
 spec:
-  externalSecretName: "qwen-14b-lightspeed-maas-secret-generated"
+  externalSecretName: "granite-lightspeed-maas-secret-generated"
   refreshTime: "1m"
   namespaceSelector:
     matchLabels:
-      qwen-14b-lightspeed-maas: yes-please
+      granite-lightspeed-maas: yes-please
   externalSecretSpec:
     secretStoreRef:
       kind: ClusterSecretStore
@@ -16,8 +16,8 @@ spec:
 
     refreshInterval: 1h
     target:
-      name: qwen-14b-lightspeed-maas
+      name: granite-lightspeed-maas
       creationPolicy: Owner
     dataFrom:
       - extract:
-          key: /openshift-hub/qwen-lightspeed-maas
+          key: /openshift-hub/granite-lightspeed-maas
