@@ -49,10 +49,10 @@ spec:
       - credentialsSecretRef:
           name: mistral-24b-lightspeed-maas
         models:
-          - name: https://mistral-small-24b-w8a8-maas-apicast-production.apps.prod.rhoai.rh-aiservices-bu.com:443
+          - name: mistral-small-24b-w8a8
         name: mistral-maas
         type: openai
-        url: mistral-small-24b-w8a8
+        url: https://mistral-small-24b-w8a8-maas-apicast-production.apps.prod.rhoai.rh-aiservices-bu.com:443
 
   ols:
     defaultModel: mistral-small-24b-w8a8
