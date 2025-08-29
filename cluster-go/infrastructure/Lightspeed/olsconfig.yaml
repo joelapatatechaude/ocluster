@@ -47,7 +47,7 @@ spec:
         url: https://deepseek-r1-qwen-14b-w4a16-maas-apicast-production.apps.prod.rhoai.rh-aiservices-bu.com:443/v1/
 
   ols:
-    defaultModel: gpt-5-mini
+    defaultModel: gpt-4.1-mini
     defaultProvider: myOpenai
     logLevel: INFO
     userDataCollection:
