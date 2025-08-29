@@ -18,4 +18,5 @@ spec:
             openai-token: yes-please
             granite-lightspeed-maas: yes-please
             qwen-14b-lightspeed-maas: yes-please
+            mistral-24b-lightspeed-maas: yes-please
       patchType: application/merge-patch+json
