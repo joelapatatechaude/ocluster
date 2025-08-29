@@ -46,10 +46,22 @@ spec:
         type: openai
         url: https://deepseek-r1-qwen-14b-w4a16-maas-apicast-production.apps.prod.rhoai.rh-aiservices-bu.com:443/v1/
 
+      - credentialsSecretRef:
+          name: mistral-24b-lightspeed-maas
+        models:
+          - name: https://mistral-small-24b-w8a8-maas-apicast-production.apps.prod.rhoai.rh-aiservices-bu.com:443
+        name: mistral-maas
+        type: openai
+        url: mistral-small-24b-w8a8
+
   ols:
-    defaultModel: gpt-4.1-mini
-    defaultProvider: myOpenai
+    defaultModel: mistral-small-24b-w8a8
+    defaultProvider: mistral-maas
     logLevel: INFO
+    rag:
+      - image: 'quay.io/rh_ee_cschmitz/byok-image:kyverno'
+        indexID: vector_db_index
+        indexPath: /rag/vector_db
     userDataCollection:
       feedbackDisabled: false
       transcriptsDisabled: false
