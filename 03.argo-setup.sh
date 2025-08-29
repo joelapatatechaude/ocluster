@@ -57,7 +57,7 @@ KUBECONFIG=$KUBECONFIG  create_app_project trbl-workshop
 KUBECONFIG=$KUBECONFIG  create_app_project citrix-vdi
 
 echo """
-    $ oc edit prometheusrule -n openshift-gitops 
+    $ ./oc edit prometheusrule -n openshift-gitops
     Change the line that looks like below :
     expr: argocd_app_info{namespace=\"openshift-gitops\",sync_status=\"OutOfSync\"} > 0
     set it to  be > 1
