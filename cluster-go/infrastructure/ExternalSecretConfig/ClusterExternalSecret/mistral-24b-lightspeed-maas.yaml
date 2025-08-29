@@ -1,0 +1,23 @@
+apiVersion: external-secrets.io/v1beta1
+kind: ClusterExternalSecret
+metadata:
+  name: mistral-24b-lightspeed-maas-secret
+  namespace: external-secrets
+spec:
+  externalSecretName: "mistral-24b-lightspeed-maas-secret-generated"
+  refreshTime: "1m"
+  namespaceSelector:
+    matchLabels:
+      mistral-24b-lightspeed-maas: yes-please
+  externalSecretSpec:
+    secretStoreRef:
+      kind: ClusterSecretStore
+      name: akeyless-cluster-secret-store
+
+    refreshInterval: 1h
+    target:
+      name: mistral-24b-lightspeed-maas
+      creationPolicy: Owner
+    dataFrom:
+      - extract:
+          key: /openshift-hub/mistral-24b-lightspeed-maas
