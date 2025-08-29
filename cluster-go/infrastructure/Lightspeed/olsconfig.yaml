@@ -52,7 +52,7 @@ spec:
           - name: mistral-small-24b-w8a8
         name: mistral-maas
         type: openai
-        url: https://mistral-small-24b-w8a8-maas-apicast-production.apps.prod.rhoai.rh-aiservices-bu.com:443
+        url: https://mistral-small-24b-w8a8-maas-apicast-production.apps.prod.rhoai.rh-aiservices-bu.com:443/v1/
 
   ols:
     defaultModel: mistral-small-24b-w8a8
