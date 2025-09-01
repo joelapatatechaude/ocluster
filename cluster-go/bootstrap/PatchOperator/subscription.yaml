@@ -11,3 +11,11 @@ spec:
   name: patch-operator
   source: community-operators
   sourceNamespace: openshift-marketplace
+  config:
+    resources:
+      requests:
+        memory: "64Mi"
+        cpu: "250m"
+      limits:
+        memory: "1024Mi"
+        cpu: "500m"
