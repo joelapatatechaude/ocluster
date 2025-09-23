@@ -6,41 +6,41 @@ metadata:
     app.openshift.io/route-disabled: 'false'
     deployment.kubernetes.io/revision: '1'
 
-  name: files-tools
+  name: filebrowser
   namespace: http-server
   labels:
-    app: files-tools
-    app.kubernetes.io/component: files-tools
-    app.kubernetes.io/instance: files-tools
-    app.kubernetes.io/name: files-tools
-    app.openshift.io/runtime: java
+    app: filebrowser
+    app.kubernetes.io/component: filebrowser
+    app.kubernetes.io/instance: filebrowser
+    app.kubernetes.io/name: filebrowser
+    app.openshift.io/runtime: go
     app.openshift.io/runtime-namespace: http-server
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: files-tools
+      app: filebrowser
   template:
     metadata:
       creationTimestamp: null
       labels:
-        app: files-tools
-        deployment: files-tools
+        app: filebrowser
+        deployment: filebrowser
       annotations:
         openshift.io/generated-by: OpenShiftWebConsole
     spec:
       volumes:
-        - name: files-tools-1
+        - name: filebrowser-1
           emptyDir: {}
       containers:
-        - name: files-tools
-          image: 'quay.io/rh_ee_cschmitz/files-tools:latest'
+        - name: filebrowser
+          image: 'quay.io/rh_ee_cschmitz/filebrowser:latest'
           ports:
-            - containerPort: 8000
+            - containerPort: 8080
               protocol: TCP
           resources: {}
           volumeMounts:
-            - name: files-tools-1
+            - name: filebrowser-1
               mountPath: /tmp
           terminationMessagePath: /dev/termination-log
           terminationMessagePolicy: File
