@@ -1,10 +1,10 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: citrix-vdi
+  name: vm-base-images
   namespace: openshift-gitops
   labels:
-    citrix-vdi: citrix-vdi
+    virtualization: core
 spec:
   destination:
     name: in-cluster
@@ -13,7 +13,7 @@ spec:
     directory:
       jsonnet: {}
       recurse: true
-    path: cluster-go/citrix-vdi/better
+    path: cluster-go/vm-base-images
     repoURL: https://github.com/joelapatatechaude/ocluster
   syncPolicy:
     syncOptions:
