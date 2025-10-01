@@ -1,0 +1,7 @@
+﻿kind: Namespace
+apiVersion: v1
+metadata:
+  name: citrix
+#  labels:
+#    udn-citrix: "yes"
+#    k8s.ovn.org/primary-user-defined-network: "true"
