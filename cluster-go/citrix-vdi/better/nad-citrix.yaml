@@ -1,13 +1,13 @@
 apiVersion: k8s.cni.cncf.io/v1
 kind: NetworkAttachmentDefinition
 metadata:
-  name: nad-citrix-resources
-  namespace: citrix-resources
+  name: nad-citrix
+  namespace: citrix
 spec:
   config: |-
     {
         "cniVersion": "0.3.1",
-        "name": "nad-test",
+        "name": "nad-citrix",
         "type": "bridge",
         "bridge": "br-chris",
         "ipam": {},
