@@ -33,7 +33,7 @@ spec:
           - /bin/sh
           - '-c'
         args: [
-          "vllm serve ibm-granite/granite-4.0-micro --trust-remote-code --tensor-parallel-size=1 --max-model-len 131072"
+          "HF_HUB_OFFLINE=0 vllm serve ibm-granite/granite-4.0-micro --trust-remote-code --tensor-parallel-size=1 --max-model-len 131072"
         ]
         env:
         - name: HUGGING_FACE_HUB_TOKEN
