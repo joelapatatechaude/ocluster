@@ -41,6 +41,8 @@ spec:
             secretKeyRef:
               name: hf-api-token
               key: hf-api-token
+        - name: HF_HUB_OFFLINE
+          value: 0
         ports:
         - containerPort: 8000
         resources:
@@ -61,11 +63,11 @@ spec:
           httpGet:
             path: /health
             port: 8000
-          initialDelaySeconds: 420
+          initialDelaySeconds: 120
           periodSeconds: 20
         readinessProbe:
           httpGet:
             path: /health
             port: 8000
-          initialDelaySeconds: 420
+          initialDelaySeconds: 120
           periodSeconds: 20
