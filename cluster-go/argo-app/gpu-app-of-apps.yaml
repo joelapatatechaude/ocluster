@@ -1,25 +1,21 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: http-server
+  name: gpu-app-of-apps
   namespace: openshift-gitops
   labels:
-    bootstrap: bootstrap
-    http-server: core
-    app: many
+    app-of-apps: app-of-apps
 spec:
   destination:
     name: in-cluster
-    namespace: http-server
+    namespace: default
   project: hub
   source:
     directory:
       jsonnet: {}
-      recurse: true
-    path: cluster-go/infrastructure/http-server
+      recurse: false
+    path: cluster-go/argo-app/GPU
     repoURL: https://github.com/joelapatatechaude/ocluster
   syncPolicy:
-    automated: {}
     syncOptions:
-      - Prune=true
-      - CreateNamespace=true
+    - Prune=true
