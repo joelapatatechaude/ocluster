@@ -10,6 +10,8 @@ metadata:
     app.openshift.io/runtime: nodejs
     app.openshift.io/runtime-version: 16-ubi8
   name: pacman-split
+  annotations:
+    haproxy.router.openshift.io/disable_cookies: "true"
 spec:
   port:
     targetPort: 8080-tcp
