@@ -15,7 +15,7 @@ spec:
       annotations:
         # Attach the secondary interface from your NAD as "net1"
         k8s.v1.cni.cncf.io/networks: |
-          [{ "name": "citrix-nad", "interface": "net1" }]
+          [{ "name": "nad-citrix", "interface": "net1" }]
     spec:
       serviceAccountName: tailscale-router
       containers:
