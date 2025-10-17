@@ -1,0 +1,74 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tailscale-subnet-router
+  namespace: citrix
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tailscale-subnet-router
+  template:
+    metadata:
+      labels:
+        app: tailscale-subnet-router
+      annotations:
+        # Attach the secondary interface from your NAD as "net1"
+        k8s.v1.cni.cncf.io/networks: |
+          [{ "name": "citrix-nad", "interface": "net1" }]
+    spec:
+      serviceAccountName: tailscale-router
+      containers:
+      - name: tailscale
+        image: tailscale/tailscale:latest
+        securityContext:
+          privileged: true
+          capabilities:
+            add: ["NET_ADMIN", "NET_RAW"]
+        env:
+        - name: TS_AUTHKEY
+          valueFrom:
+            secretKeyRef:
+              name: tailscale-auth
+              key: TS_AUTHKEY
+        - name: TS_USERSPACE
+          value: "false"             # use kernel tun if available
+        - name: TS_ACCEPT_DNS
+          value: "false"             # keep cluster DNS untouched
+        - name: TS_HOSTNAME
+          value: "ocp-citrix-subnet-router"
+        - name: TS_ROUTES
+          value: "192.168.100.0/24"  # what we advertise to tailnet
+        - name: TS_NO_LOGS_NO_SUPPORT
+          value: "true"
+        volumeMounts:
+        - name: tailscale-state
+          mountPath: /var/lib/tailscale
+        - name: dev-net-tun
+          mountPath: /dev/net/tun
+        # Start tailscaled, then bring the interface up and advertise routes
+        command: ["/bin/sh","-c"]
+        args:
+        - |
+          sysctl -w net.ipv4.ip_forward=1
+          sysctl -w net.ipv6.conf.all.forwarding=1
+          /usr/sbin/tailscaled --state=/var/lib/tailscale/tailscaled.state &
+          # Wait for tailscaled to come up
+          for i in $(seq 1 30); do tailscale status >/dev/null 2>&1 && break; sleep 1; done
+          tailscale up --authkey=${TS_AUTHKEY} \
+                       --hostname=${TS_HOSTNAME} \
+                       --advertise-routes=${TS_ROUTES} \
+                       --accept-dns=${TS_ACCEPT_DNS}
+          # keep container alive
+          tail -f /dev/null
+        readinessProbe:
+          exec: { command: ["tailscale","status"] }
+          initialDelaySeconds: 5
+          periodSeconds: 10
+      volumes:
+      - name: tailscale-state
+        emptyDir: {}
+      - name: dev-net-tun
+        hostPath:
+          path: /dev/net/tun
+          type: CharDevice
