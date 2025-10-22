@@ -55,13 +55,10 @@ spec:
         url: https://mistral-small-24b-w8a8-maas-apicast-production.apps.prod.rhoai.rh-aiservices-bu.com:443/v1/
 
   ols:
-    defaultModel: mistral-small-24b-w8a8
-    defaultProvider: mistral-maas
+    defaultModel: gpt-4.1-mini
+    defaultProvider: myOpenai
     logLevel: INFO
-    rag:
-      - image: 'quay.io/rh_ee_cschmitz/byok-image:kyverno'
-        indexID: vector_db_index
-        indexPath: /rag/vector_db
+    introspectionEnabled: true
     userDataCollection:
       feedbackDisabled: false
       transcriptsDisabled: false
