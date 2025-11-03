@@ -1,0 +1,53 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io  # or .../background
+  annotations:
+    argocd.argoproj.io/sync-wave: "4"
+  name: tailscale-operator
+  namespace: openshift-gitops
+  labels:
+    tailscale: tailscale
+spec:
+  destination:
+    name: in-cluster
+    namespace: tailscale-operator
+  project: hub
+
+  sources:
+    - repoURL: https://pkgs.tailscale.com/helmcharts
+      chart: tailscale-operator
+      targetRevision: "v1.90.6"
+      helm:
+        parameters:
+          - name: "oauth.clientId"
+            value: "$TAILSCALE_OAUTH_CLIENT_ID"
+          - name: "oauth.clientSecret"
+            value: "$TAILSCALE_OAUTH_CLIENT_SECRET"
+          - name: "apiServerProxyConfig.mode"
+            value: "true"
+            forceString: true
+          - name: "proxyConfig.defaultTags"
+            value: "tag:k8s"
+          - name: "operatorConfig.hostname"
+            value: "ocp-cluster-a-operator"
+    - repoURL: https://github.com/joelapatatechaude/ocluster
+      directory:
+        jsonnet: {}
+        recurse: true
+      path: cluster-go/infrastructure/tailscale-rbac
+
+    - repoURL: https://github.com/joelapatatechaude/ocluster/
+      path: cluster-go/infrastructure/tailscale-network
+      targetRevision: main
+      helm:
+        parameters:
+          - name: "subnet1"
+            value: "$CORP_SUBNET"
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: false
+    syncOptions:
+      - CreateNamespace=true
