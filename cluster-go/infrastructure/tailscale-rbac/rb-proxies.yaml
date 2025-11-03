@@ -8,7 +8,7 @@ metadata:
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: system:openshift:scc:anyuid
+  name: system:openshift:scc:privileged
 subjects:
   - kind: ServiceAccount
     name: proxies          # must match the SA created by the Helm chart
