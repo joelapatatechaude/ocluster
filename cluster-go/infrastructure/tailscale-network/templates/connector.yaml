@@ -8,4 +8,4 @@ spec:
   hostnamePrefix: corp-lan
   subnetRouter:
     advertiseRoutes:
-      - "{{ .Values.subnet1 | quote }}"
+      - {{ .Values.subnet1 | quote }}
