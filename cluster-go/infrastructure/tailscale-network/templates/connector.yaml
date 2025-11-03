@@ -1,0 +1,11 @@
+apiVersion: tailscale.com/v1alpha1
+kind: Connector
+metadata:
+  name: corp-lan-router
+  namespace: tailscale-operatro
+spec:
+  replicas: 1
+  hostnamePrefix: corp-lan
+  subnetRouter:
+    advertiseRoutes:
+      - "{{ .Values.subnet1 }}"
