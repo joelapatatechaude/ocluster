@@ -1,0 +1,15 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: use-anyuid
+  namespace: tailscale-operator
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"   # ensure this applies before the operator pods
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: system:openshift:scc:anyuid
+subjects:
+  - kind: ServiceAccount
+    name: operator          # must match the SA created by the Helm chart
+    namespace: tailscale-operator
