@@ -2,7 +2,7 @@ apiVersion: tailscale.com/v1alpha1
 kind: Connector
 metadata:
   name: corp-lan-router
-  namespace: tailscale-operatro
+  namespace: tailscale-operator
 spec:
   replicas: 1
   hostnamePrefix: corp-lan
