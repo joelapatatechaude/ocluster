@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tailscale-subnet-router
+  namespace: tailscale-not-operator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tailscale-subnet-router
+  template:
+    metadata:
+      labels:
+        app: tailscale-subnet-router
+      annotations:
+        # Attach the secondary interface from your NAD as "net1"
+        #k8s.v1.cni.cncf.io/networks: |
+        #  [{ "name": "nad-citrix", "interface": "net1" }]
+    spec:
+      serviceAccountName: tailscale-router
+      containers:
+      - name: tailscale
+        image: tailscale/tailscale:latest
+        securityContext:
+          privileged: true
+          capabilities:
+            add: ["NET_ADMIN", "NET_RAW"]
+        env:
+        - name: TS_AUTHKEY
+          valueFrom:
+            secretKeyRef:
+              name: tailscale-auth
+              key: TS_AUTHKEY
+        - name: TS_USERSPACE
+          value: "false"             # use kernel tun if available
+        - name: TS_ACCEPT_DNS
+          value: "false"             # keep cluster DNS untouched
+        - name: TS_HOSTNAME
+          value: "ocp-nodes-subnet-router"
+        - name: TS_ROUTES
+          value: "10.76.18.0/23"  # what we advertise to tailnet
+        - name: TS_NO_LOGS_NO_SUPPORT
+          value: "true"
+        - name: TS_ADVERTISE_TAGS
+          value: "tag:subnetrouter" # that's what I use in my acl in tailscale adnim. --advertise-tags=tag:subnetrouter
+        volumeMounts:
+        - name: tailscale-state
+          mountPath: /var/lib/tailscale
+        - name: dev-net-tun
+          mountPath: /dev/net/tun
+        command: ["sleep", "9999"]
+      volumes:
+      - name: tailscale-state
+        persistentVolumeClaim:
+          claimName: tailscale-state-pvc
+      - name: dev-net-tun
+        hostPath:
+          path: /dev/net/tun
+          type: CharDevice
