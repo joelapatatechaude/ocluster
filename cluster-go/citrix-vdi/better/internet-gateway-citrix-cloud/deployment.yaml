@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: net-gw
+  namespace: citrix-cloud
+spec:
+  replicas: 1
+  selector:
+    matchLabels: { app: net-gw }
+  template:
+    metadata:
+      labels: { app: net-gw }
+      annotations:
+        # uses your existing NAD; no IPAM needed
+        k8s.v1.cni.cncf.io/networks: '[{"name":"nad-citrix","interface":"net1"}]'
+    spec:
+      serviceAccountName: gw-sa
+      # Optional: pin to nodes that have the host bridge br100
+      # nodeSelector:
+      #   kubernetes.io/hostname: <node-with-br100>
+      containers:
+        - name: router
+          image: ghcr.io/nicolaka/netshoot:latest
+          securityContext:
+            privileged: true
+          command: ["/bin/bash","-c"]
+          args:
+            - |
+              set -euo pipefail
+              # wait for Multus to create net1
+              until ip link show net1 >/dev/null 2>&1; do sleep 0.5; done
+              ip link set net1 up
+              # configure static IP on net1 (NOT via NAD)
+              ip addr flush dev net1 || true
+              ip addr add 192.168.100.101/24 dev net1
+              # routing / NAT
+              sysctl -w net.ipv4.ip_forward=1
+              sysctl -w net.ipv4.conf.all.rp_filter=0
+              sysctl -w net.ipv4.conf.net1.rp_filter=0
+              iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+              iptables -A FORWARD -i net1 -o eth0 -j ACCEPT
+              iptables -A FORWARD -i eth0 -o net1 -m state --state RELATED,ESTABLISHED -j ACCEPT
+              # keep alive
+              exec tail -f /dev/null
+          resources:
+            requests: { cpu: "50m", memory: "64Mi" }
+            limits:   { cpu: "500m", memory: "256Mi" }
