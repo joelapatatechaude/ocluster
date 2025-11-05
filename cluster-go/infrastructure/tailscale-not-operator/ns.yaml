@@ -1,0 +1,6 @@
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: tailscale-not-operator
+  labels:
+    tailscale-not-operator: yes-please
