@@ -8,7 +8,7 @@ spec:
     registry:
       url: "docker://quay.io/rh_ee_cschmitz/golden-image:2k19"
   storage:
-    storageClassName: gp3-csi
+    storageClassName: gp3-csi-chris
     volumeMode: Block
     accessModes:
       - ReadWriteOnce
