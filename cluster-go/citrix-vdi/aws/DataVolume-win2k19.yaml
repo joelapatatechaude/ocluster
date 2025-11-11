@@ -8,10 +8,10 @@ spec:
     registry:
       url: "docker://quay.io/rh_ee_cschmitz/golden-image:2k19"
   storage:
-    storageClassName: ocs-storagecluster-ceph-rbd-virtualization
+    storageClassName: gp3-csi
     volumeMode: Block
     accessModes:
-      - ReadWriteMany
+      - ReadWriteOnce
     resources:
       requests:
         storage: 20Gi
