@@ -1,0 +1,10 @@
+﻿kind: Namespace
+apiVersion: v1
+metadata:
+  name: citrix
+  labels:
+    tailscale-citrix: yes-please
+
+#  labels:
+#    udn-citrix: "yes"
+#    k8s.ovn.org/primary-user-defined-network: "true"
