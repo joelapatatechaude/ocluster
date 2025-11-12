@@ -29,6 +29,7 @@ spec:
               set -euo pipefail
               # wait for Multus to create net1
               until ip link show net1 >/dev/null 2>&1; do sleep 0.5; done
+              ip link set net1 mtu 1400
               ip link set net1 up
               # configure static IP on net1 (NOT via NAD)
               ip addr flush dev net1 || true
