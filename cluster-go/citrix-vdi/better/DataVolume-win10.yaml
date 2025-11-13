@@ -6,7 +6,7 @@ metadata:
 spec:
   source:
     registry:
-      url: "docker://quay.io/rh_ee_cschmitz/golden-image:win10"
+      url: "docker://quay.io/rh_ee_cschmitz/golden-image:win10pro"
   storage:
     storageClassName: ocs-storagecluster-ceph-rbd-virtualization
     volumeMode: Block
