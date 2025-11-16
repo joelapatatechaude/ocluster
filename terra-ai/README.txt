@@ -9,3 +9,5 @@ on the console, find the machine, kebab, edit route settings - accept (can do it
 
 from the subnet router:
 sudo iptables -t nat -A POSTROUTING -s 10.0.0.0/16 -d 100.64.0.0/10 -j MASQUERADE
+
+

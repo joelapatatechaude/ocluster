@@ -36,8 +36,8 @@ resource "aws_key_pair" "deployer" {
 }
 
 variable "my_ip" {
-  description = "Your IP address for SSH access (CIDR notation, e.g., 1.2.3.4/32)"
-  type        = string
+  description = "Your IP address(es) for SSH access (CIDR notation, e.g., ['1.2.3.4/32', '5.6.7.8/32'])"
+  type        = list(string)
 }
 
 variable "ami_id" {
@@ -52,10 +52,15 @@ variable "openshift_cluster_name" {
   default     = "my-cluster"
 }
 
-variable "worker_ignition_url" {
-  description = "URL to worker ignition config (optional - can be added later)"
+variable "corporate_subnet_cidr" {
+  description = "Corporate subnet CIDR to route via Tailscale (e.g., 10.76.18.0/23)"
   type        = string
-  default     = ""
+}
+
+variable "tailscale_router_private_ip" {
+  description = "Static private IP for Tailscale router"
+  type        = string
+  default     = "10.0.1.10"
 }
 
 # Data source for specific Fedora AMI by name
@@ -154,6 +159,15 @@ resource "aws_route_table_association" "public" {
   route_table_id = aws_route_table.public.id
 }
 
+# Route to corporate subnet via Tailscale router
+resource "aws_route" "corporate_subnet" {
+  route_table_id         = aws_route_table.public.id
+  destination_cidr_block = var.corporate_subnet_cidr
+  network_interface_id   = aws_instance.tailscale_router.primary_network_interface_id
+
+  depends_on = [aws_instance.tailscale_router]
+}
+
 # Route Table - Private
 resource "aws_route_table" "private" {
   vpc_id = aws_vpc.main.id
@@ -169,11 +183,22 @@ resource "aws_route_table_association" "private" {
   route_table_id = aws_route_table.private.id
 }
 
+# Route to corporate subnet via Tailscale router (for private subnet)
+resource "aws_route" "corporate_subnet_private" {
+  route_table_id         = aws_route_table.private.id
+  destination_cidr_block = var.corporate_subnet_cidr
+  network_interface_id   = aws_instance.tailscale_router.primary_network_interface_id
+
+  depends_on = [aws_instance.tailscale_router]
+}
+
 # Data source for availability zones
 data "aws_availability_zones" "available" {
   state = "available"
 }
 
+
+###
 # Security Group for Tailscale Router (Instance 1)
 resource "aws_security_group" "tailscale_router" {
   name        = "tailscale-router-sg"
@@ -185,8 +210,8 @@ resource "aws_security_group" "tailscale_router" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = [var.my_ip]
-    description = "SSH from my IP"
+    cidr_blocks = var.my_ip
+    description = "SSH from allowed IPs"
   }
 
   # Tailscale UDP
@@ -205,6 +230,15 @@ resource "aws_security_group" "tailscale_router" {
     protocol    = "-1"
     cidr_blocks = [aws_vpc.main.cidr_block]
     description = "All traffic from VPC"
+  }
+
+  # NEW: Allow all traffic from corporate subnet
+  ingress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = [var.corporate_subnet_cidr]
+    description = "All traffic from corporate subnet"
   }
 
   # Allow all outbound
@@ -227,6 +261,15 @@ resource "aws_security_group" "private_instance" {
   description = "Security group for private instance accessible via Tailscale"
   vpc_id      = aws_vpc.main.id
 
+  # SSH from your IP addresses
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = var.my_ip
+    description = "SSH from allowed IPs"
+  }
+
   # SSH from within VPC (via Tailscale router)
   ingress {
     from_port   = 22
@@ -245,6 +288,15 @@ resource "aws_security_group" "private_instance" {
     description = "All traffic from VPC"
   }
 
+  # NEW: Allow all traffic from corporate subnet
+  ingress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = [var.corporate_subnet_cidr]
+    description = "All traffic from corporate subnet"
+  }
+
   # Allow all outbound
   egress {
     from_port   = 0
@@ -258,6 +310,8 @@ resource "aws_security_group" "private_instance" {
     Name = "private-instance-sg"
   }
 }
+###
+
 
 # Security Group for OpenShift Worker
 resource "aws_security_group" "openshift_worker" {
@@ -272,6 +326,15 @@ resource "aws_security_group" "openshift_worker" {
     protocol    = "-1"
     cidr_blocks = [aws_vpc.main.cidr_block]
     description = "All traffic from VPC"
+  }
+
+  # Allow traffic from corporate subnet
+  ingress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = [var.corporate_subnet_cidr]
+    description = "All traffic from corporate subnet"
   }
 
   # Allow all outbound
@@ -295,6 +358,7 @@ resource "aws_instance" "tailscale_router" {
   key_name               = aws_key_pair.deployer.key_name
   subnet_id              = aws_subnet.public.id
   vpc_security_group_ids = [aws_security_group.tailscale_router.id]
+  private_ip             = var.tailscale_router_private_ip
   source_dest_check      = false # Required for subnet routing
 
   user_data = <<-EOF
@@ -349,84 +413,6 @@ resource "aws_instance" "private_instance" {
   }
 }
 
-data "local_file" "discovery_ign" {
-  filename = "${path.module}/discovery.ign"
-}
-
-# EC2 Instance 3 - OpenShift Worker Node
-resource "aws_instance" "openshift_worker" {
-  ami                    = data.aws_ami.rhcos.id
-  instance_type          = "m6i.xlarge"
-  key_name               = aws_key_pair.deployer.key_name
-  subnet_id              = aws_subnet.public.id
-  vpc_security_group_ids = [aws_security_group.openshift_worker.id]
-
-  user_data                   = data.local_file.discovery_ign.content
-  user_data_replace_on_change = true
-  
-  # Enable public IP for outbound internet access
-  associate_public_ip_address = true
-
-  # Larger root volume for OpenShift
-  root_block_device {
-    volume_size = 300
-    volume_type = "gp3"
-    encrypted   = true
-  }
-
-  # User data for ignition - will be configured after instance creation
-  # For now, we'll use a basic script to set up routing
-  user_data = base64encode(jsonencode({
-    ignition = {
-      version = "3.2.0"
-    }
-    storage = {
-      files = [
-        {
-          path = "/etc/sysconfig/network-scripts/route-eth0"
-          mode = 420
-          contents = {
-            source = "data:,10.76.18.0/23%20via%20${aws_instance.tailscale_router.private_ip}"
-          }
-        }
-      ]
-    }
-    systemd = {
-      units = [
-        {
-          name    = "configure-routes.service"
-          enabled = true
-          contents = <<-EOF
-            [Unit]
-            Description=Configure static route to OpenShift cluster
-            After=network-online.target
-            Wants=network-online.target
-            
-            [Service]
-            Type=oneshot
-            ExecStart=/usr/sbin/ip route add 10.76.18.0/23 via ${aws_instance.tailscale_router.private_ip}
-            RemainAfterExit=yes
-            
-            [Install]
-            WantedBy=multi-user.target
-          EOF
-        }
-      ]
-    }
-  }))
-
-  tags = {
-    Name                                              = "openshift-worker-${var.openshift_cluster_name}"
-    Role                                              = "worker"
-    "kubernetes.io/cluster/${var.openshift_cluster_name}" = "owned"
-  }
-
-  # Prevent accidental deletion
-  lifecycle {
-    ignore_changes = [user_data]
-  }
-}
-
 # Outputs
 output "tailscale_router_public_ip" {
   description = "Public IP of Tailscale router instance"
@@ -463,15 +449,15 @@ output "fedora_ami_name" {
   value       = data.aws_ami.fedora.name
 }
 
-output "openshift_worker_public_ip" {
-  description = "Public IP of OpenShift worker node"
-  value       = aws_instance.openshift_worker.public_ip
-}
+# output "openshift_worker_public_ip" {
+#   description = "Public IP of OpenShift worker node"
+#   value       = aws_instance.openshift_worker.public_ip
+# }
 
-output "openshift_worker_private_ip" {
-  description = "Private IP of OpenShift worker node"
-  value       = aws_instance.openshift_worker.private_ip
-}
+# output "openshift_worker_private_ip" {
+#   description = "Private IP of OpenShift worker node"
+#   value       = aws_instance.openshift_worker.private_ip
+# }
 
 output "rhcos_ami_id" {
   description = "RHEL CoreOS AMI ID used"
