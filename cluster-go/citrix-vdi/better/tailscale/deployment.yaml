@@ -4,7 +4,7 @@ metadata:
   name: tailscale-subnet-router
   namespace: citrix
 spec:
-  replicas: 0
+  replicas: 1
   selector:
     matchLabels:
       app: tailscale-subnet-router
