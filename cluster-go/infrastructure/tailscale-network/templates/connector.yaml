@@ -3,7 +3,7 @@ kind: Connector
 metadata:
   name: corp-lan-router
 spec:
-  replicas: 1
+  replicas: 0
   hostnamePrefix: corp-lan
   subnetRouter:
     advertiseRoutes:
