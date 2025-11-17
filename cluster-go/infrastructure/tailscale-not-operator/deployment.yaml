@@ -4,7 +4,7 @@ metadata:
   name: tailscale-subnet-router
   namespace: tailscale-not-operator
 spec:
-  replicas: 1
+  replicas: 0
   selector:
     matchLabels:
       app: tailscale-subnet-router
