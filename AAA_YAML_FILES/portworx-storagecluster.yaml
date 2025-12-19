@@ -1,0 +1,87 @@
+# Portworx StorageCluster for OpenShift 4.20 Lab
+#
+# Storage configuration:
+#   - nvme0n1p6 (3GB): Journal device
+#   - nvme0n1p5 (64GB): Internal KVDB / system metadata
+#   - nvme0n1p7 (~692GB): Storage pool
+#
+# Network:
+#   - Data interface: enp0s20f0u1.50 (VLAN 50, 10.50.0.x/24)
+#   - Mgmt interface: auto-detect (default route, routable network)
+#
+# Features enabled:
+#   - PX-StoreV2 storage engine
+#   - CSI driver
+#   - Stork scheduler
+#   - Prometheus monitoring
+#   - Autopilot
+#
+# To apply:
+#   oc create namespace portworx
+#   oc apply -f portworx-storagecluster.yaml
+#
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: portworx
+---
+apiVersion: core.libopenstorage.org/v1
+kind: StorageCluster
+metadata:
+  name: px-cluster
+  namespace: portworx
+  annotations:
+    portworx.io/install-source: "manual"
+    portworx.io/is-openshift: "true"
+    portworx.io/misc-args: " -T px-storev2 "
+spec:
+  # Portworx image version
+  image: portworx/oci-monitor:3.5.0
+  imagePullPolicy: Always
+
+  # Use internal KVDB
+  kvdb:
+    internal: true
+
+  # Storage configuration
+  storage:
+    # Main storage pool
+    devices:
+      - /dev/nvme0n1p7
+    # Journal device for write performance
+    journalDevice: /dev/nvme0n1p6
+    # System metadata device for internal KVDB
+    systemMetadataDevice: /dev/nvme0n1p5
+    # Don't use unpartitioned disks automatically
+    useAll: false
+    useAllWithPartitions: false
+
+  # Network configuration - VLAN 50 for storage, default interface for management
+  network:
+    dataInterface: enp0s20f0u1.50
+    # mgmtInterface omitted = Portworx uses default route interface (routable network)
+
+  # Secrets provider
+  secretsProvider: k8s
+
+  # Enable CSI driver
+  csi:
+    enabled: true
+
+  # Enable Stork for storage-aware scheduling
+  stork:
+    enabled: true
+    args:
+      webhook-controller: "true"
+
+  # Enable Autopilot for capacity management
+  autopilot:
+    enabled: true
+
+  # Monitoring configuration
+  monitoring:
+    telemetry:
+      enabled: false
+    prometheus:
+      exportMetrics: true

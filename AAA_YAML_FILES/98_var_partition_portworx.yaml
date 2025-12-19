@@ -1,0 +1,30 @@
+apiVersion: machineconfiguration.openshift.io/v1
+kind: MachineConfig
+metadata:
+  labels:
+    machineconfiguration.openshift.io/role: master
+  name: 98-create-partitions-lvmstorage
+spec:
+  config:
+    ignition:
+      version: 3.4.0
+    storage:
+      disks:
+        - device: /dev/nvme0n1
+          partitions:
+            # RHCOS installer-created partitions are typically nvme0n1p1..p4
+            # so start custom partitions at p5+ for determinism.
+            - number: 5
+              label: partition-2-64gb
+              startMiB: 200000
+              sizeMiB: 65536
+
+            - number: 6
+              label: partition-3-3gb
+              startMiB: 265536
+              sizeMiB: 3072
+
+            - number: 7
+              label: partition-4-remainder
+              startMiB: 268608
+              sizeMiB: 0

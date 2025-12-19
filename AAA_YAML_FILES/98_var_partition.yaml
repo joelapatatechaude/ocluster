@@ -1,0 +1,17 @@
+apiVersion: machineconfiguration.openshift.io/v1
+kind: MachineConfig
+metadata:
+  labels:
+    machineconfiguration.openshift.io/role: master
+  name: 98-create-a-partition-for-lvmstorage
+spec:
+  config:
+    ignition:
+      version: 3.4.0
+    storage:
+      disks:
+        - device: /dev/nvme0n1
+          partitions:
+            - label: data
+              sizeMiB: 0
+              startMiB: 200000

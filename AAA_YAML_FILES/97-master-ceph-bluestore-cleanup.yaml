@@ -1,0 +1,40 @@
+apiVersion: machineconfiguration.openshift.io/v1
+kind: MachineConfig
+metadata:
+  labels:
+    machineconfiguration.openshift.io/role: master
+  name: 97-master-ceph-bluestore-cleanup
+spec:
+  config:
+    ignition:
+      version: 3.2.0
+    storage:
+      files:
+      - contents:
+          source: data:text/plain;charset=utf-8;base64,IyEvYmluL2Jhc2gKc2V0IC11eCAtbyBwaXBlZmFpbAoKQ0VQSFRPT0xTX0lNQUdFPSR7MTotcXVheS5pby9jZXBoL2NlcGg6djE5fQpSRUdJU1RSWV9BVVRIRklMRT0kezI6LS92YXIvbGliL2t1YmVsZXQvY29uZmlnLmpzb259CgppZiBbIC1mIC92YXIvbGliL2NlcGgtYmx1ZXN0b3JlLXJlbW92ZWQgXQp0aGVuCiAgZWNobyAiQ2VwaCBCbHVlU3RvcmUgYWxyZWFkeSByZW1vdmVkIgogIGV4aXQgMApmaQoKZm9yIGRldiBpbiAkKC91c3IvYmluL2xzYmxrIC1kbiB8IC91c3IvYmluL2dyZXAgZGlzayB8IC91c3IvYmluL2F3ayAne3ByaW50ICQxfScpCmRvCiAgREVWSUNFPS9kZXYvJHtkZXZ9CiAgZWNobyAiQ2hlY2tpbmcgaWYgQ2VwaCBibHVlc3RvcmUgbWV0YWRhdGEgZXhpc3RzIGluIGRldmljZSAke0RFVklDRX0iCiAgTUVUQURBVEFfRVhJU1RTPSQoL3Vzci9iaW4vcG9kbWFuIHJ1biAtLWF1dGhmaWxlICR7UkVHSVNUUllfQVVUSEZJTEV9IC0tcm0gLXRpIC0tcHJpdmlsZWdlZCAtLWRldmljZSAke0RFVklDRX0gLS1lbnRyeXBvaW50IGNlcGgtdm9sdW1lICR7Q0VQSFRPT0xTX0lNQUdFfSByYXcgbGlzdCAke0RFVklDRX0gLS1mb3JtYXQganNvbiB8IC91c3IvYmluL2dyZXAgLWMgYmx1ZXN0b3JlKQogIGlmIFsgIjAke01FVEFEQVRBX0VYSVNUU30iIC1ndCAiMDAiIF0KICB0aGVuCiAgICBlY2hvICJEZXRlY3RlZCBDZXBoIEJsdWVTdG9yZSBtZXRhZGF0YSBpbiAke0RFVklDRX0sIHJlbW92aW5nIGl0IgogICAgZWNobyAiU3RlcCAxIC0gWmFwIGRldmljZSB3aXRoIHNnZGlzayIKICAgIC91c3Ivc2Jpbi9zZ2Rpc2sgLVogJHtERVZJQ0V9CiAgICBpZiBbICQ/IC1uZSAwIF0KICAgIHRoZW4KICAgICAgZWNobyAic2dkaXNrIGZhaWxlZCIKICAgICAgZXhpdCAxCiAgICBmaQogICAgZWNobyAiU3RlcCAyIC0gUmVtb3ZlIGJsdWVzdG9yZSBtZXRhZGF0YSB3aXRoIGNlcGgtYmx1ZXN0b3JlLXRvb2wiCiAgICAvdXNyL2Jpbi9wb2RtYW4gcnVuIC0tYXV0aGZpbGUgJHtSRUdJU1RSWV9BVVRIRklMRX0gLS1ybSAtdGkgLS1wcml2aWxlZ2VkIC0tZGV2aWNlICR7REVWSUNFfSAtLWVudHJ5cG9pbnQgY2VwaC1ibHVlc3RvcmUtdG9vbCAke0NFUEhUT09MU19JTUFHRX0gemFwLWRldmljZSAtLWRldiAke0RFVklDRX0gLS15ZXMtaS1yZWFsbHktcmVhbGx5LW1lYW4taXQKICAgIGlmIFsgJD8gLW5lIDAgXQogICAgdGhlbgogICAgICBlY2hvICJjZXBoLWJsdWVzdG9yZS10b29sIGZhaWxlZCIKICAgICAgZXhpdCAxCiAgICBmaQogIGVsc2UKICAgIGVjaG8gIkNlcGggQmx1ZVN0b3JlIG1ldGFkYXRhIG5vdCBkZWN0ZWN0ZWQgaW4gJHtERVZJQ0V9LCBub3RoaW5nIHRvIGRvIgogIGZpCmRvbmUKdG91Y2ggL3Zhci9saWIvY2VwaC1ibHVlc3RvcmUtcmVtb3ZlZAo=
+        filesystem: root
+        mode: 493
+        path: /usr/local/sbin/ceph-bluestore-cleanup
+    systemd:
+      units:
+      - contents: |
+          [Unit]
+          Description=Cleans Ceph bluestore metadata on a given disk
+          Wants=network-online.target
+          After=network-online.target
+          After=kubelet.service
+          ConditionPathExists=/var/lib/kubelet/config.json
+          ConditionPathExists=!/var/lib/ceph-bluestore-removed
+
+          [Service]
+          Type=oneshot
+          RemainAfterExit=yes
+          User=root
+          ExecStart=/usr/local/sbin/ceph-bluestore-cleanup registry.redhat.io/odf4/rook-ceph-rhel9-operator:v4.18 /var/lib/kubelet/config.json
+
+          TimeoutSec=300
+
+          [Install]
+          WantedBy=multi-user.target
+        enabled: true
+        name: "ceph-bluestore-cleanup.service"

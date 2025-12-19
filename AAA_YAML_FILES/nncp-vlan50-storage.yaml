@@ -1,0 +1,138 @@
+# NNCP for Secondary Network (br0) and Portworx Storage Network (VLAN 50)
+#
+# Network setup:
+#   - br0: Linux bridge for pods/VMs via NADs (untagged network)
+#   - enp0s20f0u1.50: VLAN 50 interface for Portworx storage traffic
+#
+# To apply:
+#   oc apply -f nncp-vlan50-storage.yaml
+#
+# IP assignments:
+#   Node                  br0 (untagged)      enp0s20f0u1.50 (VLAN 50)
+#   80-3f-5d-f6-90-7b     192.168.100.1/24    10.50.0.1/24
+#   80-3f-5d-f9-da-40     192.168.100.2/24    10.50.0.2/24
+#   80-3f-5d-f9-e1-b2     192.168.100.3/24    10.50.0.3/24
+#
+---
+apiVersion: nmstate.io/v1
+kind: NodeNetworkConfigurationPolicy
+metadata:
+  name: secondary-network-node1
+  annotations:
+    description: Secondary network (br0 + VLAN 50) for storage and VMs - Node 1
+spec:
+  nodeSelector:
+    kubernetes.io/hostname: 80-3f-5d-f6-90-7b
+  desiredState:
+    interfaces:
+    # br0 Linux bridge (untagged network for pods/VMs)
+    - name: br0
+      type: linux-bridge
+      state: up
+      bridge:
+        options:
+          stp:
+            enabled: false
+        port:
+        - name: enp0s20f0u1
+      ipv4:
+        enabled: true
+        dhcp: false
+        address:
+        - ip: 192.168.100.1
+          prefix-length: 24
+    # VLAN 50 interface directly on physical NIC (Portworx storage network)
+    - name: enp0s20f0u1.50
+      type: vlan
+      state: up
+      vlan:
+        base-iface: enp0s20f0u1
+        id: 50
+      ipv4:
+        enabled: true
+        dhcp: false
+        address:
+        - ip: 10.50.0.1
+          prefix-length: 24
+---
+apiVersion: nmstate.io/v1
+kind: NodeNetworkConfigurationPolicy
+metadata:
+  name: secondary-network-node2
+  annotations:
+    description: Secondary network (br0 + VLAN 50) for storage and VMs - Node 2
+spec:
+  nodeSelector:
+    kubernetes.io/hostname: 80-3f-5d-f9-da-40
+  desiredState:
+    interfaces:
+    # br0 Linux bridge (untagged network for pods/VMs)
+    - name: br0
+      type: linux-bridge
+      state: up
+      bridge:
+        options:
+          stp:
+            enabled: false
+        port:
+        - name: enp0s20f0u1
+      ipv4:
+        enabled: true
+        dhcp: false
+        address:
+        - ip: 192.168.100.2
+          prefix-length: 24
+    # VLAN 50 interface directly on physical NIC (Portworx storage network)
+    - name: enp0s20f0u1.50
+      type: vlan
+      state: up
+      vlan:
+        base-iface: enp0s20f0u1
+        id: 50
+      ipv4:
+        enabled: true
+        dhcp: false
+        address:
+        - ip: 10.50.0.2
+          prefix-length: 24
+---
+apiVersion: nmstate.io/v1
+kind: NodeNetworkConfigurationPolicy
+metadata:
+  name: secondary-network-node3
+  annotations:
+    description: Secondary network (br0 + VLAN 50) for storage and VMs - Node 3
+spec:
+  nodeSelector:
+    kubernetes.io/hostname: 80-3f-5d-f9-e1-b2
+  desiredState:
+    interfaces:
+    # br0 Linux bridge (untagged network for pods/VMs)
+    - name: br0
+      type: linux-bridge
+      state: up
+      bridge:
+        options:
+          stp:
+            enabled: false
+        port:
+        - name: enp0s20f0u1
+      ipv4:
+        enabled: true
+        dhcp: false
+        address:
+        - ip: 192.168.100.3
+          prefix-length: 24
+    # VLAN 50 interface directly on physical NIC (Portworx storage network)
+    - name: enp0s20f0u1.50
+      type: vlan
+      state: up
+      vlan:
+        base-iface: enp0s20f0u1
+        id: 50
+      ipv4:
+        enabled: true
+        dhcp: false
+        address:
+        - ip: 10.50.0.3
+          prefix-length: 24
