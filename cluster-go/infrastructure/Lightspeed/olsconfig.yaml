@@ -8,51 +8,11 @@ spec:
       - credentialsSecretRef:
           name: openai-api-keys
         models:
-          - name: gpt-5-mini
           - name: gpt-4.1-mini
+            parameters: {}
         name: myOpenai
         type: openai
-        url: https://api.openai.com/v1
-
-      - credentialsSecretRef:
-          name: local-llm-api-keys
-        models:
-          - name: ibm-granite/granite-4.0-micro
-        name: vllm-gpu
-        type: openai
-        url: http://vllm-gpu.vllm-gpu.svc.cluster.local/v1/
-
-      - credentialsSecretRef:
-          name: local-llm-api-keys
-        models:
-          - name: ibm-granite/granite-3.3-2b-instruct
-        name: vllm-cpu
-        type: openai
-        url: http://vllm-cpu.vllm-cpu.svc.cluster.local/v1/
-
-      - credentialsSecretRef:
-          name: granite-lightspeed-maas
-        models:
-          - name: granite-3-3-8b-instruct
-        name: granite-maas
-        type: openai
-        url: https://granite-3-3-8b-instruct-maas-apicast-production.apps.prod.rhoai.rh-aiservices-bu.com:443/v1/
-
-      - credentialsSecretRef:
-          name: qwen-14b-lightspeed-maas
-        models:
-          - name: r1-qwen-14b-w4a16
-        name: qwen-maas
-        type: openai
-        url: https://deepseek-r1-qwen-14b-w4a16-maas-apicast-production.apps.prod.rhoai.rh-aiservices-bu.com:443/v1/
-
-      - credentialsSecretRef:
-          name: mistral-24b-lightspeed-maas
-        models:
-          - name: mistral-small-24b-w8a8
-        name: mistral-maas
-        type: openai
-        url: https://mistral-small-24b-w8a8-maas-apicast-production.apps.prod.rhoai.rh-aiservices-bu.com:443/v1/
+        url: 'https://api.openai.com/v1'
 
   ols:
     defaultModel: gpt-4.1-mini
