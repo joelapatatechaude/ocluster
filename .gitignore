@@ -29,3 +29,4 @@ secret-rhdh2.yaml
 andromeda-secret-github-basic-auth.yaml
 latest-secret-rhdh.yaml
 devspaces-github-auth-secret.yaml
+toolhive/

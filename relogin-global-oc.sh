@@ -6,6 +6,7 @@ set -eux
 #exit
 
 #KUBECONFIG=$KUBECONFIG oc login -u kubeadmin -p `cat ~/.secrets/$MYDIR/kubeadmin-password`  https://api.$CLUSTER_NAME.$ROUTE53_DOMAIN:6443
-
-
+echo "first login locally"
+./relogin.sh
+echo "then login globally"
 oc login $(./oc whoami --show-server) --token=$(./oc whoami --show-token)
