@@ -1,6 +1,5 @@
 #!/bin/sh
 
-
 source ./env.sh
 
 if [ $CLUSTER_TYPE == "bm" ];
