@@ -10,6 +10,7 @@ metadata:
 spec:
   destination:
     name: in-cluster
+    namespace: minio
   project: hub
 
   source:
@@ -26,3 +27,4 @@ spec:
     automated: {}
     syncOptions:
       - Prune=true
+      - CreateNamespace=true
