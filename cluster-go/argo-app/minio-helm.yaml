@@ -1,0 +1,28 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "4"
+  name: minio
+  namespace: openshift-gitops
+  labels:
+    minio: minio
+spec:
+  destination:
+    name: in-cluster
+  project: hub
+
+  source:
+    path: cluster-go/infrastructure/minio
+    repoURL: https://github.com/joelapatatechaude/ocluster
+    targetRevision: main
+    helm:
+      parameters:
+        - name: "minio_root_user"
+          value: "$MINIO_ROOT_USER"
+        - name: "minio_root_password"
+          value: "$MINIO_ROOT_PASSWORD"
+  syncPolicy:
+    automated: {}
+    syncOptions:
+      - Prune=true
