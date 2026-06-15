@@ -6,6 +6,7 @@ source ./env.sh
 source ~/.secrets/$MYDIR/route53
 source ~/.secrets/smee-channel-master.txt
 source ~/.secrets/tailscale.txt
+source ~/.secrets/minio.txt
 set +a
 
 echo "NEED TO DEPLOY APP FROM GITHUB MAYBE?"
