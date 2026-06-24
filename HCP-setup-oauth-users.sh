@@ -75,17 +75,19 @@ oc patch hostedcluster ${HC_NAME} -n ${HC_NAMESPACE} \
   }
 }'
 
-echo "    Waiting for OAuth config to propagate to guest cluster..."
+echo "    Waiting for oauth-openshift pods to roll out on management cluster..."
+# On HCP, auth pods run in the control plane namespace on the mgmt cluster.
+# The guest cluster's OAuth/cluster resource may stay spec:{} — that's normal.
+HC_CP_NAMESPACE="${HC_NAMESPACE}-${HC_NAME}"
 for i in $(seq 1 30); do
-  idp_count=$(./oc get oauth cluster -o jsonpath='{.spec.identityProviders}' 2>/dev/null | grep -c htpasswd || true)
-  if [[ "${idp_count}" -ge 1 ]]; then
-    echo "    OAuth htpasswd IDP is active on guest cluster."
+  ready=$(oc get deployment oauth-openshift -n "${HC_CP_NAMESPACE}" -o jsonpath='{.status.readyReplicas}' 2>/dev/null || echo "0")
+  if [[ "${ready}" -ge 1 ]]; then
+    echo "    oauth-openshift is ready (${ready} replicas) in ${HC_CP_NAMESPACE}."
     break
   fi
   if [[ "${i}" -eq 30 ]]; then
-    echo "    WARNING: OAuth not propagated after 60s."
-    echo "    Debug with: oc get hostedcluster ${HC_NAME} -n ${HC_NAMESPACE} -o jsonpath='{.spec.configuration.oauth}'"
-    echo "                ./oc get oauth cluster -o yaml"
+    echo "    WARNING: oauth-openshift not ready after 60s."
+    echo "    Debug with: oc get deployment oauth-openshift -n ${HC_CP_NAMESPACE}"
   fi
   sleep 2
 done
@@ -123,9 +125,6 @@ oc get hostedcluster ${HC_NAME} -n ${HC_NAMESPACE} \
   oc get hostedcluster ${HC_NAME} -n ${HC_NAMESPACE} \
   -o jsonpath='{.spec.configuration.oauth}'
 echo ""
-echo ""
-echo "--- OAuth resource on guest cluster ---"
-./oc get oauth cluster -o yaml | grep -A 20 'identityProviders' || echo "(OAuth spec may still be empty — auth is handled by HyperShift on the mgmt cluster)"
 echo ""
 echo "--- ClusterRoleBinding on guest cluster ---"
 ./oc get clusterrolebinding cluster-admin-0 -o wide
