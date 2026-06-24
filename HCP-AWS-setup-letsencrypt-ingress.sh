@@ -29,6 +29,8 @@ echo "  Route53 zone:  ${HOSTED_ZONE_ID}"
 echo "  AWS region:    ${AWS_DEFAULT_REGION}"
 echo ""
 
+echo "CHECK ABOVE and press a key to continue, ctrl-c to cancel"
+read a
 
 # --- Step 0: Patch cert-manager to use recursive nameservers ---
 # HCP clusters have a private Route53 zone (ai.hcp.$DOMAIN) that shadows the
