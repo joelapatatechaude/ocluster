@@ -16,19 +16,22 @@ source ./env.sh
 source ~/.secrets/$MYDIR/route53
 
 CLUSTER_NAME="${CLUSTER_NAME:?CLUSTER_NAME is not set (from env.sh)}"
-HC_NAMESPACE="hcp-ai"
-HC_NAME="ai"
+HC_NAMESPACE="hcp-$SHORT_NAME"
+HC_NAME="$SHORT_NAME"
 
 echo "=== HCP OAuth / user setup ==="
 echo "  HostedCluster:   ${HC_NAMESPACE}/${HC_NAME}"
 echo "  Guest cluster:   $(./oc whoami --show-server)"
 echo "  Mgmt cluster:    $(oc whoami --show-server)"
 echo ""
+echo "CHECK ABOVE and press a key to continue, ctrl-c to cancel"
+read a
+
 
 # --- Step 1: Create htpasswd secret on the management cluster ---
 # HyperShift syncs secrets referenced by the HostedCluster CR from the HC
 # namespace down to openshift-config on the guest cluster.
-echo "[1/3] Creating htpasswd secret in ${HC_NAMESPACE} on management cluster..."
+echo "[1/4] Creating htpasswd secret in ${HC_NAMESPACE} on management cluster..."
 
 HTPASSWD_DATA="YWxpY2U6JGFwcjEkakV3MG82MDYkZnRyaGtVMUl1Y1dkRjRXM2tVdVhPLgpib2I6JGFwcjEkQWRiQTRzcjYkVWNCZWdBL3pMS3V3dUJLWVhlNy82MApjaGFybGllOiRhcHIxJDVSYW5GcVdXJE5XZFlpRlgyNjAvbXUuNnNEdEdHTjEKemVhZG1pbjokYXByMSRLcWVqMXEzZiRuMnpsUndaQlVvS0t1alZUcHRRWnEwCmNocmlzOiRhcHIxJGxkVXhFSlFmJERtLkcxSWRTenk3Vy9EYWQudzJCUi8KY2hyaXMtYWRtaW46JGFwcjEkMEdxSC9oZDIkdXhxdlpmOUY5ZHJCWk9kcktGVktGLwo="
 
@@ -47,7 +50,7 @@ EOF
 # This is the HCP equivalent of editing the OAuth/cluster resource directly.
 # HyperShift will reconcile this into the guest cluster's OAuth config via
 # the privileged system:hosted-cluster-config service account.
-echo "[2/3] Patching HostedCluster ${HC_NAMESPACE}/${HC_NAME} with OAuth config..."
+echo "[2/4] Patching HostedCluster ${HC_NAMESPACE}/${HC_NAME} with OAuth config..."
 
 oc patch hostedcluster ${HC_NAME} -n ${HC_NAMESPACE} \
   --type=merge \
@@ -87,9 +90,32 @@ for i in $(seq 1 30); do
   sleep 2
 done
 
-# --- Step 3: Verification ---
+# --- Step 3: Create ClusterRoleBinding on the guest cluster ---
+# ArgoCD's in-cluster-users app manages this CRB, but its sync is blocked by
+# the OAuth admission policy. Apply it directly so htpasswd users get
+# cluster-admin immediately.
+echo "[3/4] Creating ClusterRoleBinding cluster-admin-0 on guest cluster..."
+./oc apply -f - <<EOF
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: cluster-admin-0
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cluster-admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: User
+  name: zeadmin
+- apiGroup: rbac.authorization.k8s.io
+  kind: User
+  name: chris-admin
+EOF
+
+# --- Step 4: Verification ---
 echo ""
-echo "=== [3/3] Verification ==="
+echo "=== [4/4] Verification ==="
 echo ""
 echo "--- HostedCluster OAuth config (management cluster) ---"
 oc get hostedcluster ${HC_NAME} -n ${HC_NAMESPACE} \
@@ -99,7 +125,10 @@ oc get hostedcluster ${HC_NAME} -n ${HC_NAMESPACE} \
 echo ""
 echo ""
 echo "--- OAuth resource on guest cluster ---"
-./oc get oauth cluster -o yaml | grep -A 20 'identityProviders'
+./oc get oauth cluster -o yaml | grep -A 20 'identityProviders' || echo "(OAuth spec may still be empty — auth is handled by HyperShift on the mgmt cluster)"
+echo ""
+echo "--- ClusterRoleBinding on guest cluster ---"
+./oc get clusterrolebinding cluster-admin-0 -o wide
 echo ""
 echo "Done."
 echo ""
