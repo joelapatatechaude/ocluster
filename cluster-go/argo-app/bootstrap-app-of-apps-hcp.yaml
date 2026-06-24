@@ -1,0 +1,22 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: bootstrap-app-of-apps-hcp
+  namespace: openshift-gitops
+  labels:
+    app-of-apps: app-of-apps
+spec:
+  destination:
+    name: in-cluster
+    namespace: default
+  project: bootstrap
+  source:
+    directory:
+      jsonnet: {}
+      recurse: false
+    path: cluster-go/argo-app/bootstrap-hcp
+    repoURL: https://github.com/joelapatatechaude/ocluster
+  syncPolicy:
+    automated: {}
+    syncOptions:
+    - Prune=true
