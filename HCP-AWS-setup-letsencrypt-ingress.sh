@@ -30,8 +30,25 @@ echo "  AWS region:    ${AWS_DEFAULT_REGION}"
 echo ""
 
 
+# --- Step 0: Patch cert-manager to use recursive nameservers ---
+# HCP clusters have a private Route53 zone (ai.hcp.$DOMAIN) that shadows the
+# public zone (hcp.$DOMAIN). cert-manager's default authoritative-NS discovery
+# picks up the private zone's nameservers, which refuse direct queries.
+# Using public recursive nameservers avoids this split-horizon DNS issue.
+echo "[0/5] Patching cert-manager to use public recursive nameservers..."
+./oc patch certmanager cluster --type=merge -p '
+spec:
+  controllerConfig:
+    overrideArgs:
+    - --dns01-recursive-nameservers=8.8.8.8:53,1.1.1.1:53
+    - --dns01-recursive-nameservers-only=true
+'
+
+echo "    Waiting for cert-manager controller to restart..."
+./oc rollout status deployment/cert-manager -n cert-manager --timeout=60s
+
 # --- Step 1: AWS credentials secret for cert-manager ---
-echo "[1/4] Creating AWS credentials secret in cert-manager namespace..."
+echo "[1/5] Creating AWS credentials secret in cert-manager namespace..."
 ./oc create secret generic aws-route53-credentials \
   -n cert-manager \
   --from-literal=access-key-id="${AWS_ACCESS_KEY_ID}" \
@@ -40,7 +57,7 @@ echo "[1/4] Creating AWS credentials secret in cert-manager namespace..."
 
 
 # --- Step 2: ClusterIssuer with Route53 DNS-01 solver ---
-echo "[2/4] Creating Let's Encrypt ClusterIssuer (Route53 DNS-01)..."
+echo "[2/5] Creating Let's Encrypt ClusterIssuer (Route53 DNS-01)..."
 ./oc apply -f - <<EOF
 apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
@@ -80,7 +97,7 @@ done
 
 
 # --- Step 3: Wildcard Certificate for ingress ---
-echo "[3/4] Creating wildcard Certificate for *.${INGRESS_DOMAIN}..."
+echo "[3/5] Creating wildcard Certificate for *.${INGRESS_DOMAIN}..."
 ./oc apply -f - <<EOF
 apiVersion: cert-manager.io/v1
 kind: Certificate
@@ -116,13 +133,13 @@ done
 
 
 # --- Step 4: Patch IngressController to use the new cert ---
-echo "[4/4] Patching IngressController to use Let's Encrypt certificate..."
+echo "[4/5] Patching IngressController to use Let's Encrypt certificate..."
 ./oc patch ingresscontroller default -n openshift-ingress-operator \
   --type=merge \
   -p '{"spec":{"defaultCertificate":{"name":"ingress-certificate-production"}}}'
 
 echo ""
-echo "=== Verification ==="
+echo "=== [5/5] Verification ==="
 echo ""
 ./oc get certificate -n openshift-ingress
 echo ""
