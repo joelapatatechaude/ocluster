@@ -1,2 +1,23 @@
 enable the management plugin on the operator
-use the cli to add the key
+
+use the cli to add the key:
+pxctl license activate saas --key 'dafafada'
+
+get cursor to help. But hey, on a reinstall, it's likely the partitions are already tagged, which may interfere. Ideallly I should create a machineconfig for cleanup for next time. Cursor recommended to run those commands:
+Command	Purpose	Risk
+mdadm --stop /dev/md127	Deactivates the stale RAID array	None (not in use)
+wipefs -a /dev/nvme0n1p5	Removes old XFS/KVDB signatures	None (your partition, not OS)
+wipefs -a /dev/nvme0n1p6	Removes any signatures	None (already clean)
+wipefs -a /dev/nvme0n1p7	Removes RAID member signature	None (your partition)
+mdadm --zero-superblock	Clears RAID metadata	None (cleanup only)
+
+apply the nncp
+
+Install openshift virtualization first, no need to creat the hyperconverged yet though.
+
+apply the portworx storage cluster, hopefully it will create the kubevirt storage classes
+
+ducplicate px-csi-db, make it replication of two, and make it default
+
+then install hyperconverged -> boot source will download automatically :)
+
