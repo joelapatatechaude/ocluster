@@ -1,3 +1,9 @@
+
+Devspaces: If the cluster name change, I will need to update the applciation
+here:
+https://github.com/organizations/openshift-chris/settings/applications
+
+
 Fix patch-operator / patch quay.io credentials:
 I need to write the patch that will update the default service account
 to add the imagePullSecrets of my quay.io stuff automatically.

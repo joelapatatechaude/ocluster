@@ -1,3 +1,6 @@
+If the cluster name change, make sure to update the callback link here:
+https://github.com/organizations/openshift-chris/settings/applications
+
 Remember I moved from sealed secret to akeyless + external secret operator (ESO)
 
 ALSO, check th eTECH-DEBT.md document
