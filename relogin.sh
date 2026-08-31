@@ -9,4 +9,4 @@ echo "trying to login without username / password, if it fails edit me"
 
 KUBECONFIG=$KUBECONFIG oc login  https://api.$CLUSTER_NAME.$ROUTE53_DOMAIN:6443
 
-KUBECONFIG=$KUBECONFIG oc login -u kubeadmin -p `cat ~/.secrets/$MYDIR/kubeadmin-password`  https://api.$CLUSTER_NAME.$ROUTE53_DOMAIN:6443
+KUBECONFIG=$KUBECONFIG oc login -u `cat ~/.secrets/$MYDIR/admin-username` -p `cat ~/.secrets/$MYDIR/admin-password`  https://api.$CLUSTER_NAME.$ROUTE53_DOMAIN:6443
