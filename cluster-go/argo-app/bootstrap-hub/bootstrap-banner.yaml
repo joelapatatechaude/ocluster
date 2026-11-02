@@ -13,9 +13,6 @@ spec:
     namespace: default
   project: bootstrap
   source:
-    directory:
-      jsonnet: {}
-      recurse: false
     path: cluster-go/bootstrap/banner
     repoURL: https://github.com/joelapatatechaude/ocluster
   syncPolicy:
