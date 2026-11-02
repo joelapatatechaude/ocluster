@@ -14,4 +14,4 @@ spec:
           partitions:
             - label: data
               sizeMiB: 0
-              startMiB: 200000
+              startMiB: 250000

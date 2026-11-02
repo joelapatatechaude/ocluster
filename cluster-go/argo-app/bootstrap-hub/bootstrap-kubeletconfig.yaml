@@ -1,21 +1,23 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: banner-spoke01
+  annotations:
+    argocd.argoproj.io/sync-wave: "3"
+  name: hub-kubeletconfig
   namespace: openshift-gitops
   labels:
-    bootstrap: bootstrap
+    type: infrastructure
 spec:
   destination:
     name: in-cluster
-    namespace: default
-  project: hub
+  project: bootstrap
   source:
     directory:
       jsonnet: {}
       recurse: true
-    path: cluster-go/bootstrap/banner/banner-spoke01
+    path: cluster-go/bootstrap/KubeletConfig
     repoURL: https://github.com/joelapatatechaude/ocluster
   syncPolicy:
+    automated: {}
     syncOptions:
       - Prune=true

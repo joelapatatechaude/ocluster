@@ -54,7 +54,7 @@ KUBECONFIG=$KUBECONFIG  create_app_project operator
 KUBECONFIG=$KUBECONFIG  create_app_project infrastructure
 KUBECONFIG=$KUBECONFIG  create_app_project apps
 KUBECONFIG=$KUBECONFIG  create_app_project trbl-workshop
-KUBECONFIG=$KUBECONFIG  create_app_project citrix-vdi
+
 
 echo """
     $ ./oc edit prometheusrule -n openshift-gitops

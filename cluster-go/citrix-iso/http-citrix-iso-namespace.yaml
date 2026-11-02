@@ -1,6 +1,0 @@
-﻿kind: Namespace
-apiVersion: v1
-metadata:
-  name: http-citrix-iso
-  labels:
-    quay-schmitz-secret: yes-please

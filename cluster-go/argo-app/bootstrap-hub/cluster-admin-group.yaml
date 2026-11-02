@@ -1,21 +1,21 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: banner-bare-metal
+  name: cluster-admin-group
   namespace: openshift-gitops
   labels:
     bootstrap: bootstrap
 spec:
   destination:
     name: in-cluster
-    namespace: default
-  project: hub
+  project: bootstrap
   source:
     directory:
       jsonnet: {}
       recurse: true
-    path: cluster-go/bootstrap/banner/banner-bare-metal
+    path: cluster-go/bootstrap/groups
     repoURL: https://github.com/joelapatatechaude/ocluster
   syncPolicy:
+    automated: {}
     syncOptions:
-      - Prune=true
+    - Prune=true
