@@ -1,0 +1,47 @@
+# MachineConfig to set battery charge thresholds on ThinkPad nodes
+# 
+# This preserves battery health by keeping charge in the optimal 40-50% range
+# - Start charging when battery drops below 40%
+# - Stop charging when battery reaches 50%
+#
+# This is ideal for laptops that are always plugged in (like OpenShift nodes)
+#
+# To apply:
+#   oc apply -f machineconfig-battery-threshold.yaml
+#
+# To verify after reboot:
+#   ssh core@<node-ip> "cat /sys/class/power_supply/BAT0/charge_*_threshold"
+#
+# To remove/revert:
+#   oc delete machineconfig 99-battery-charge-threshold-master
+#   (nodes will reboot and return to default 0/100 thresholds)
+#
+# Ideal for laptops always on AC power - maximizes battery lifespan
+#
+---
+apiVersion: machineconfiguration.openshift.io/v1
+kind: MachineConfig
+metadata:
+  labels:
+    machineconfiguration.openshift.io/role: master
+  name: 99-battery-charge-threshold-master
+spec:
+  config:
+    ignition:
+      version: 3.5.0
+    systemd:
+      units:
+        - name: battery-charge-threshold.service
+          enabled: true
+          contents: |
+            [Unit]
+            Description=Set battery charge thresholds for longevity
+            After=multi-user.target
+            
+            [Service]
+            Type=oneshot
+            RemainAfterExit=yes
+            ExecStart=/bin/bash -c 'echo 40 > /sys/class/power_supply/BAT0/charge_start_threshold && echo 50 > /sys/class/power_supply/BAT0/charge_stop_threshold'
+            
+            [Install]
+            WantedBy=multi-user.target
