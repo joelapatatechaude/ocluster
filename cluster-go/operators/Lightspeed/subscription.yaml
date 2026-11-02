@@ -5,7 +5,7 @@ metadata:
   namespace: openshift-lightspeed
 spec:
   channel: alpha
-  installPlanApproval: Automatic
+  installPlanApproval: Manual
   name: lightspeed-operator
   source: redhat-operators
   sourceNamespace: openshift-marketplace
